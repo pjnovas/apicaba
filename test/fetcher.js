@@ -1,7 +1,8 @@
 var expect = require('expect.js')
   , Fetcher = require('../models/fetcher.js')
   , Stream = require('stream').Stream
-  , config = require(__dirname + '/config/test.json');
+  , config = require(__dirname + '/config/test.json')
+  , configZip = require(__dirname + '/config/zip.json');
 
 describe('Fetcher', function(){
 
@@ -18,6 +19,17 @@ describe('Fetcher', function(){
       var fetcher = new Fetcher();
       expect(fetcher.fetch).to.be.a('function');
     });
+
+    it('should be able to extract a ZIP file'/*, function(done){
+      var fetcher = new Fetcher(configZip.source.url, configZip.source.extract);
+
+      fetcher.on('data', function(data){
+        expect(data).to.be.a('string');
+        done();
+      });
+
+      fetcher.fetch();
+    }*/);
 
   });
 

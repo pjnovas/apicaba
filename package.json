@@ -17,7 +17,8 @@
     "less-middleware": "*",
     "cron": "1.0.x",
     "superagent": "0.10.x",
-    "xml2js": "0.2.x"
+    "xml2js": "0.2.x",
+    "adm-zip": "https://github.com/cthackers/adm-zip/tarball/master"
   },
   "devDependencies": {
     "mocha": "*",

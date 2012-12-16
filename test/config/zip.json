@@ -1,0 +1,24 @@
+{
+  "name": "zip", 
+  "cron": "00 52 16 * * *",
+  "source": {
+    "url": "http://localhost:3050/test.zip",
+    "parser": "csv",
+    "extract": { 
+      "type": "zip",
+      "file": "test.csv"
+    }
+  },
+  "destination": {
+    "uri": "/zip",
+    "file": "zip.json"
+  },
+  "fields": {
+    "from": 1,
+    "transform": [{
+      "source": "",
+      "dest": "",
+      "type": "string"
+    }]
+  }
+}
