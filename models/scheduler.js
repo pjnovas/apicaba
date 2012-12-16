@@ -1,7 +1,8 @@
 
 var events = require('events')
   , fs = require('fs')
-  , Job = require('./job');
+  , Job = require('./job')
+  , CronJob = require('cron').CronJob;
 
 var emitter = new events.EventEmitter();
 var jobs = [];
@@ -26,6 +27,18 @@ function createJob(fileName){
   job.on('run', function(){
     emitter.emit('run', this);
   });
+
+  (function(job){
+    
+    var j = new CronJob({
+      cronTime: cfg.cron,
+      onTick: function(){
+        job.run();
+      },
+      start: true
+    });
+
+  })(job);
 
   jobs.push(job);
 }

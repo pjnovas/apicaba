@@ -1,6 +1,6 @@
 {
   "name": "test", 
-  "expiration": 7, 
+  "cron": "00 52 16 * * *",
   "source": {
     "url": "http://localhost:3000/test.csv",
     "parser": "csv"

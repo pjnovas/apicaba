@@ -14,7 +14,8 @@
   "dependencies": {
     "express": "3.0.4",
     "jade": "*",
-    "less-middleware": "*"
+    "less-middleware": "*",
+    "cron": "1.0.x"
   },
   "devDependencies": {
     "mocha": "*",
