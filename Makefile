@@ -1,4 +1,4 @@
-ORDERED_TESTS = test/
+ORDERED_TESTS = test/index.js
 
 test:	
 	node test/testServer/ & 
