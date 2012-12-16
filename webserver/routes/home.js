@@ -1,7 +1,7 @@
 
-app.get('/', routes.index);
+app.get('/', index);
 
-exports.index = function(req, res){
+function index(req, res){
   res.render('index', { title: 'Express' });
 };
 

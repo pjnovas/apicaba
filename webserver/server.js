@@ -28,6 +28,8 @@ app.configure('development', function(){
 
 require('./routes');
 
-http.createServer(app).listen(app.get('port'), function(){
-  console.log("Express server listening on port " + app.get('port'));
-});
+module.exports.start = function(){
+  http.createServer(app).listen(app.get('port'), function(){
+    console.log("Express server listening on port " + app.get('port'));
+  });
+};

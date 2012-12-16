@@ -1,2 +1,2 @@
 
-require('home.js');
+require('./home.js');
