@@ -40,12 +40,11 @@ describe('scheduler', function(){
     it('should allow to suscribe to a job run or done', function(done){
       scheduler.on('run', function(job){
         expect(job).to.be.a(Job);
+        scheduler.removeAllListeners('run');
         done();
       });
 
-      scheduler.initialize(configPath, function(){
-        scheduler.getJobs()[0].run();
-      });
+      scheduler.initialize(configPath);
     });
 
   });

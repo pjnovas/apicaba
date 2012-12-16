@@ -1,0 +1,20 @@
+{
+  "name": "test", 
+  "cron": "* * * * * *",
+  "source": {
+    "url": "http://localhost:3050/test.csv",
+    "parser": "csv"
+  },
+  "destination": {
+    "uri": "/test",
+    "file": "test.json"
+  },
+  "fields": {
+    "from": 1,
+    "transform": [{
+      "source": "",
+      "dest": "",
+      "type": "string"
+    }]
+  }
+}

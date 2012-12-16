@@ -14,7 +14,7 @@ function initialize(configs, done){
       createJob(configs + '/' + files[i]);
     }
 
-    done();
+    if (done) done();
   });
   
   return this;
