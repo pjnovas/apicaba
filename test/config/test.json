@@ -2,7 +2,7 @@
   "name": "test", 
   "cron": "00 52 16 * * *",
   "source": {
-    "url": "http://localhost:3000/test.csv",
+    "url": "http://localhost:3050/test.csv",
     "parser": "csv"
   },
   "destination": {

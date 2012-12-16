@@ -15,7 +15,9 @@
     "express": "3.0.4",
     "jade": "*",
     "less-middleware": "*",
-    "cron": "1.0.x"
+    "cron": "1.0.x",
+    "superagent": "0.10.x",
+    "xml2js": "0.2.x"
   },
   "devDependencies": {
     "mocha": "*",
