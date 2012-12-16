@@ -1,4 +1,4 @@
-ORDERED_TESTS = test/core.js
+ORDERED_TESTS = test/
 
 test:	
 	./node_modules/.bin/mocha $(ORDERED_TESTS) -R spec

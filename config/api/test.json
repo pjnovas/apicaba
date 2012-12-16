@@ -1,0 +1,24 @@
+{
+  "name": "test", // resource ID
+  "expiration": 7, //expiration time in days
+  "source": {
+    "url": "",
+    "parser": "", //xml || csv
+    "extract": { // needs extraction
+      "type": "", // zip || rar
+      "file": "" // file name to use after extract
+    }
+  },
+  "destination": {
+    "uri": "/", //relative uri to expose
+    "file": "" // file name to be stored
+  },
+  "fields": {
+    "from": 1,
+    "transform": [{
+      "source": "",
+      "dest": "",
+      "type": "string"
+    }]
+  }
+}

@@ -1,3 +1,3 @@
 
-require('./webserver/server').start();
+require('./webserver').start();
 
