@@ -1,7 +1,8 @@
 
 var expect = require('expect.js')
   , Job = require('../models/job.js')
-  , events = require('events');
+  , events = require('events')
+  , config = require(__dirname + '/config/test.json');
 
 describe('Job', function(){
 
@@ -12,11 +13,9 @@ describe('Job', function(){
     expect(job).to.be.a(events.EventEmitter);
   });
 
-  it('should allow to set a resource id by constructor', function(){
-    var idResource = 'testResource'
-      , job = new Job(idResource);
-
-    expect(job.resource).to.be.equal(idResource);
+  it('should allow to set configuration by constructor', function(){
+    var job = new Job(config);
+    expect(job.resource).to.be.equal(config.name);
   });
 
   describe('#run()', function(){
@@ -31,11 +30,10 @@ describe('Job', function(){
   describe('events', function(){
 
     it('should expose event run telling the resource id', function(done){
-      var idResource = 'testResource'
-        , job = new Job(idResource);
+      var job = new Job(config);
 
-      job.on('run', function(id){
-        expect(id).to.be.equal(idResource);
+      job.on('run', function(){
+        expect(this.resource).to.be.equal(config.name);
         done();
       });
 

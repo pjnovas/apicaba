@@ -1,17 +1,13 @@
 {
   "name": "test", 
-  "expiration": 7,
+  "expiration": 7, 
   "source": {
-    "url": "",
-    "parser": "", 
-    "extract": { 
-      "type": "", 
-      "file": "" 
-    }
+    "url": "http://localhost:3000/test.csv",
+    "parser": "csv"
   },
   "destination": {
-    "uri": "/", 
-    "file": "" 
+    "uri": "/test",
+    "file": "test.json"
   },
   "fields": {
     "from": 1,
