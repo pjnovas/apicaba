@@ -7,12 +7,15 @@ var emitter = new events.EventEmitter();
 var jobs = [];
 
 function initialize(configs, done){
-  var files = fs.readdirSync(configs);
-  for(var i=0; i<files.length; i++) {
-    createJob(configs + '/' + files[i]);
-  }
+  var files = fs.readdir(configs, function(err, files){
+    
+    for(var i=0; i<files.length; i++) {
+      createJob(configs + '/' + files[i]);
+    }
 
-  done();
+    done();
+  });
+  
   return this;
 }
 
