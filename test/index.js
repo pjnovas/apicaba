@@ -9,4 +9,4 @@ require("blanket")([
 require('./scheduler');
 require('./job');
 require('./fetcher');
-
+require('./formatter');

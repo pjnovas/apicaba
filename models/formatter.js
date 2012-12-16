@@ -18,11 +18,14 @@ util.inherits(Formatter, Stream);
 
 Formatter.prototype.write = function(str) {
 
-  if(this.type === "xml") this.formatXML(str);
+  if(this.type === "xml") 
+    this.formatXML(str);
 
-  else if(this.type === "csv") this.formatCSV(str);
+  else if(this.type === "csv") 
+    this.formatCSV(str);
 
-  else this.emit('data', str);
+  else 
+    this.emit('data', str);
 
 };
 
