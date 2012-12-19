@@ -1,9 +1,10 @@
 
 var server = require('./webserver')
-  , scheduler = require('./models/scheduler');
+  , scheduler = require('./models/scheduler')
+  , appConfig = require('./config/app.json');
 
 scheduler
-  .initialize(__dirname + '/config/api', function(){
+  .initialize(__dirname + '/config/api', appConfig, function(){
     console.log('all jobs created');
     server.start();
   })

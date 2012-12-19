@@ -9,10 +9,6 @@
       "file": "" 
     }
   },
-  "destination": {
-    "uri": "/", 
-    "file": "" 
-  },
   "fields": {
     "from": 1,
     "transform": [{

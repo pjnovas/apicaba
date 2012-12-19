@@ -1,0 +1,8 @@
+{
+  "name": "bicis", 
+  "cron": "* * * * * *",
+  "source": {
+    "url": "http://localhost:3050/bicis.csv",
+    "parser": "csv"
+  }
+}

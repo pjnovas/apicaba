@@ -2,7 +2,8 @@
 var expect = require('expect.js')
   , Job = require('../models/job.js')
   , events = require('events')
-  , config = require(__dirname + '/config/test.json');
+  , config = require(__dirname + '/config/test.json')
+  , appConfig = { "dest": "./data" };
 
 describe('Job', function(){
 
@@ -30,14 +31,17 @@ describe('Job', function(){
   describe('events', function(){
 
     it('should expose event run telling the resource id', function(done){
-      var job = new Job(config);
+      var job = new Job(config, appConfig);
 
-      job.on('run', function(){
-        expect(this.resource).to.be.equal(config.name);
-        done();
-      });
-
-      job.run();
+      job
+        .on('run', function(){
+          expect(this.resource).to.be.equal(config.name);
+        })
+        .on('done', function(){
+          expect(this.resource).to.be.equal(config.name);
+          done();
+        })
+        .run();
     });
 
   });

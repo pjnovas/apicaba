@@ -1,27 +1,35 @@
 
-var events = require('events')
+var EventEmitter = require('events').EventEmitter
   , Fetcher = require('./fetcher')
   , Formatter = require('./formatter')
 //  , Sanitizer = require('./sanitizer')
-//  , Persist = require('./persist');
+  , Persist = require('./persist')
+  , util = require('util');
 
-function Job(options){
+var Job = module.exports = function (options, appConfigs) {
+
   this.resource = (options && options.name) || '';
 
-  if(options && options.source) {
+  if(options && options.source && appConfigs && appConfigs.dest) {
     this.fetcher = new Fetcher(options.source.url, options.source.extract);
     this.formatter = new Formatter(options.source.parser);
+    this.persist = new Persist(options.name, appConfigs.dest);
   }
 }
 
-module.exports = Job;
-module.exports.prototype = new events.EventEmitter();
+util.inherits(Job, EventEmitter);
 
-module.exports.prototype.run = function(){
- 
-  this.fetcher.pipe(this.formatter).pipe(process.stdout); 
- 
-  //this.fetcher.fetch();
+Job.prototype.run = function() {
+  var self = this;
 
   this.emit('run');
-}
+
+  this.fetcher
+    .pipe(this.formatter)
+    .pipe(this.persist)
+    .pipe(process.stdout);
+
+  this.fetcher.fetch();
+  
+  self.emit('done');
+};

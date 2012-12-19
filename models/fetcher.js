@@ -3,7 +3,6 @@ var request = require('superagent')
   , Stream = require('stream').Stream
   , util = require('util');
 
-
 var Fetcher = module.exports = function(url, extract) {
 
   Stream.call(this);
@@ -21,7 +20,7 @@ Fetcher.prototype.fetch = function() {
 
     // need to add logic for zip and rar data
     if(res.ok) self.emit('data', res.text); 
-
+    
   });
 
 };

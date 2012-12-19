@@ -9,10 +9,6 @@
       "file": "" // file name to use after extract
     }
   },
-  "destination": {
-    "uri": "/", //relative uri to expose
-    "file": "" // file name to be stored
-  },
   "fields": {
     "from": 1,
     "transform": [{

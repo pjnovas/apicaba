@@ -2,12 +2,14 @@
 var events = require('events')
   , fs = require('fs')
   , Job = require('./job')
-  , CronJob = require('cron').CronJob;
+  , CronJob = require('cron').CronJob
+  , appConfig;
 
 var emitter = new events.EventEmitter();
 var jobs = [];
 
-function initialize(configs, done){
+function initialize(configs, _appConfig, done){
+  appConfig = _appConfig;
   fs.readdir(configs, function(err, files){
 
     for(var i=0; i<files.length; i++) {
@@ -23,10 +25,14 @@ function initialize(configs, done){
 function createJob(fileName){
   var cfg = require(fileName);
   
-  var job = new Job(cfg);
-  job.on('run', function(){
-    emitter.emit('run', this);
-  });
+  var job = new Job(cfg, appConfig);
+  job
+    .on('run', function(){
+      emitter.emit('run', this);
+    })
+    .on('done', function(){
+      emitter.emit('done', this);
+    });
 
   (function(job){
     
