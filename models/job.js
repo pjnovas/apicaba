@@ -26,10 +26,11 @@ Job.prototype.run = function() {
 
   this.fetcher
     .pipe(this.formatter)
-    .pipe(this.persist)
-    .pipe(process.stdout);
+    .pipe(this.persist);
+
+  this.persist.on('end', function(){
+    self.emit('done');
+  });
 
   this.fetcher.fetch();
-  
-  self.emit('done');
 };

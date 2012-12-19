@@ -32,9 +32,8 @@ describe('Integration #CSV', function(){
       })
       .on('done', function(){
         expect(this.resource).to.be.equal('bicis');
-
         var bicis = require('./data/bicis.json');
-        expect(bicis.length).to.be.equal(27);
+        expect(bicis.length).to.be.equal(28);
         done();
       })
       .run();

@@ -9,10 +9,6 @@
       "file": "test.csv"
     }
   },
-  "destination": {
-    "uri": "/zip",
-    "file": "zip.json"
-  },
   "fields": {
     "from": 1,
     "transform": [{

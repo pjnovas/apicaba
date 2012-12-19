@@ -41,7 +41,7 @@ Formatter.prototype.formatXML = function(xml) {
 };
 
 Formatter.prototype.formatCSV = function(csv) {
-
+  
   this.emit('data', csv_parser(csv));
 
 };

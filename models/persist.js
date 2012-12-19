@@ -6,6 +6,7 @@ var Stream = require('stream').Stream
 var Persist = module.exports = function(name, path) {
 
   Stream.call(this);
+  this.writable = true;
 
   this.name = name;
   this.path = path;
@@ -19,7 +20,7 @@ Persist.prototype.write = function(data) {
 
   fs.writeFile(this.path + '/' + this.name + '.json', dataStr, function (err) {
     if (err) throw err;
-    self.emit('data', dataStr);
+    self.emit('end', dataStr);
   });
 
 };

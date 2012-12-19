@@ -3,7 +3,7 @@ var expect = require('expect.js')
   , Job = require('../models/job.js')
   , events = require('events')
   , config = require(__dirname + '/config/test.json')
-  , appConfig = { "dest": "./data" };
+  , appConfig = { "dest": "./test/data" };
 
 describe('Job', function(){
 

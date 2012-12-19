@@ -5,7 +5,7 @@ var expect = require('expect.js')
   , events = require('events')
   , fs = require('fs')
   , configPath = __dirname + '/config'
-  , appConfig = { "dest": "./data" };
+  , appConfig = { "dest": "./test/data" };
 
 describe('scheduler', function(){
 

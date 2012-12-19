@@ -33,7 +33,7 @@ describe('Persist', function(){
       var jsonDummyData = { "hello": "world" };
       var persist = new Persist('bicicletas', dataDir);
 
-      persist.on('data', function(data){
+      persist.on('end', function(data){
         expect(data).to.be.a('string');
         expect(data).to.be.equal("{\"hello\":\"world\"}");
 
@@ -54,7 +54,7 @@ describe('Persist', function(){
     it('should expose event data passing the formatted data', function(done){
       var persist = new Persist("bicicletas", dataDir);
 
-      persist.on('data', function(data){
+      persist.on('end', function(data){
         expect(data).to.be.a('string');
         expect(data).to.be.equal("{\"persist\":\"me\"}");
         done();
