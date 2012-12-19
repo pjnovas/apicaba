@@ -2,7 +2,7 @@
 var expect = require('expect.js')
   , csv = require('../models/csv.js')
   , fs = require('fs')
-  , testFilePath = __dirname + '/testServer/public/test.csv';
+  , testFilePath = __dirname + '/GBA_FakeWebServer/public/test.csv';
 
 describe('CSV', function(){
   var dummyData;

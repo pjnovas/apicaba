@@ -1,13 +1,13 @@
 
-//TODO: replace 'main' by a dynamic category
-app.get('/api/v1/:category/:resource', isValid, getResource);
+//TODO: build dynamic categories
+app.get('/api/v1/:resource', isValid, getResource);
 
 function isValid(req, res, next){
+  req.resource = req.params.resource;
   next();
 }
 
 function getResource(req, res){
-  res.send({});
+  var resource = require('../../data/' + req.resource + '.json');
+  res.send(resource);
 };
-
-

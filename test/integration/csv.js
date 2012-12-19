@@ -1,29 +1,37 @@
 
 var expect = require('expect.js')
+  request = require('superagent')
   , Job = require('../../models/job.js')
   , fs = require('fs')
-  , dataDir = './test/integration/data'
-  , fullDir = __dirname + '/data/bicis.json'
+  , dataDir = '../../data'
+  , file = '/bicis.json'
+  , APIServerURL = 'http://localhost:3000/api/v1/'
   , config = require(__dirname + '/config/bicis.json')
   , appConfig = {
-      dest: dataDir
+      dest: './data'
     };
 
 describe('Integration #CSV', function(){
 
+  require('../../webserver').start();
+
   afterEach(function(done){
-    fs.lstat(fullDir, function(err, stats){
-      if (stats) {
-        fs.unlink(dataDir + '/bicis.json', function(err){
-          if (err) throw err;
-          done();
-        });
-      }
-      else done();
+    fs.realpath(appConfig.dest, function (err, resolvedPath) {
+      if (err) throw err;
+
+      fs.lstat(resolvedPath + file, function(err, stats){
+        if (stats) {
+          fs.unlink(resolvedPath + file, function(err){
+            if (err) throw err;
+            done();
+          });
+        }
+        else done();
+      });
     });
   });
 
-  it("should create a JSON file parsing from a CSV file", function(done){
+  it("should create a JSON file parsing from a CSV URL and expose on the Rest API", function(done){
     var job = new Job(config, appConfig);
 
     job
@@ -32,9 +40,17 @@ describe('Integration #CSV', function(){
       })
       .on('done', function(){
         expect(this.resource).to.be.equal('bicis');
-        var bicis = require('./data/bicis.json');
+        var bicis = require(dataDir + file);
         expect(bicis.length).to.be.equal(28);
-        done();
+
+        request(APIServerURL + 'bicis', function(res){
+
+          expect(res.ok).to.be.ok();
+          expect(res.body).to.be.an('array');
+          expect(res.body.length).to.be.equal(28);
+        
+          done();  
+        });
       })
       .run();
   });
