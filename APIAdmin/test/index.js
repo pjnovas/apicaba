@@ -10,8 +10,9 @@ app = {
   mockGBA: "http://localhost:3050/"
 };
 
-describe('Scheduler', function(){
+describe('API Admin', function(){
 
+  require('./scheduler.js');
   require('./csv.js');
   //require('./xml.js');
   //require('./zip.js');

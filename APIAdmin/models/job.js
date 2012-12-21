@@ -15,6 +15,8 @@ var Job = module.exports = function (options) {
     this.formatter = new Formatter(options.source.parser);
     this.persist = new Persist(options.name);
   }
+
+  this.cronJob;
 }
 
 util.inherits(Job, EventEmitter);
@@ -33,4 +35,10 @@ Job.prototype.run = function() {
   });
 
   this.fetcher.fetch();
+};
+
+Job.prototype.cronJob = function(cronJob) {
+  if (!cronJob)
+    return this.cronJob;
+  else this.cronJob = cronJob;
 };

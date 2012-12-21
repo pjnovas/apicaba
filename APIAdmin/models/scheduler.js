@@ -15,13 +15,15 @@ scheduler.initialize = function (done){
     else done();
 
     for (var i=0; i< jobList.length; i++){
-      create(jobList[i], true);
+      create(jobList[i], false);
     }
 
   });
   
   return this;
 };
+
+scheduler.addJob = create;
 
 function create(jobConfig, runNow){
   
@@ -38,11 +40,15 @@ function create(jobConfig, runNow){
     
     var j = new CronJob({
       cronTime: jobConfig.cron,
-      onTick: function(){
-        job.run();
-      },
-      start: runNow
+      onTick: job.run,
+      start: true,
+      context: job
     });
+
+    if(runNow)
+      job.run();
+
+    job.cronJob(j);
 
   })(job);
 

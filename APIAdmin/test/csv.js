@@ -14,23 +14,34 @@ describe('#CSV', function(){
   });
 
   after(function(done){
+    scheduler
+      .removeAllListeners('run')
+      .removeAllListeners('done');
+
     clearJobs(done);
   });
 
-  it("should create a Scheduled Job, run it and generate a Resource", function(done){
+  it("should create a Scheduled Job and run it in 1 second generating a Resource", function(done){
+    var hasRun = false;
 
     scheduler
-      .on('run', function(job){
-        expect(job.resource).to.be.equal(name);
-      })
+      .on('run', checkJob)
       .on('done', jobDone)
       .initialize(function(err){
         expect(err).to.not.be.ok();
       });
 
+    setTimeout(function(){
+      expect(hasRun).to.be.equal(true);
+    }, 1005);
+
+    function checkJob(job){
+      expect(job.resource).to.be.equal(name);
+      hasRun = true;
+    }
+
     function jobDone(job){
       expect(job.resource).to.be.equal(name);
-
       resources.getByName(name, checkResource);
     }
 
