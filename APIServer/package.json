@@ -19,7 +19,7 @@
   "devDependencies": {
     "mocha": "*",
     "expect.js": ">=0.1.2",
-    "blanket": "0.9.x",
+    "blanket": "1.0.x",
     "sinon": "1.5.x"
   },
   "scripts": {

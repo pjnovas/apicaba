@@ -1,12 +1,3 @@
-/*
-require("blanket")([
-  "/models/csv.js", 
-  "/models/fetcher.js", 
-  "/models/persist.js", 
-  "/models/job.js", 
-  "/models/scheduler.js", 
-  "/models/formatter.js"]);
-*/
 
 var mongoJS = require('mongojs')
   secrets = require('../../secrets.json');

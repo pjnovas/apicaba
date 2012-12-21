@@ -9,7 +9,7 @@ test:
 coverage:
 	node test/MockGBA/ & 
 	sleep 0.1
-	./node_modules/.bin/mocha $(ORDERED_TESTS) -R html-cov > coverage.html
+	./node_modules/.bin/mocha $(ORDERED_TESTS) --require blanket -R html-cov > coverage.html
 	pkill node
 
 .PHONY: test

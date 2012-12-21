@@ -4,6 +4,6 @@ test:
 	./node_modules/.bin/mocha $(ORDERED_TESTS) -R spec
 
 coverage:
-	./node_modules/.bin/mocha $(ORDERED_TESTS) -R html-cov > coverage.html
+	./node_modules/.bin/mocha $(ORDERED_TESTS) --require blanket -R html-cov > coverage.html
 
 .PHONY: test
