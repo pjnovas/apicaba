@@ -10,7 +10,9 @@ var expect = require('expect.js')
 describe('#CSV', function(){
   
   before(function(done){
-    createTestJobs(done);
+    clearData(function(){
+      createTestJobs(done);
+    });
   });
 
   after(function(done){
@@ -18,7 +20,7 @@ describe('#CSV', function(){
       .removeAllListeners('run')
       .removeAllListeners('done');
 
-    clearJobs(done);
+    clearData(done);
   });
 
   it("should create a Scheduled Job and run it in 1 second generating a Resource", function(done){
@@ -33,7 +35,8 @@ describe('#CSV', function(){
 
     setTimeout(function(){
       expect(hasRun).to.be.equal(true);
-    }, 1005);
+      resources.getByName(name, checkResource);
+    }, 1500);
 
     function checkJob(job){
       expect(job.resource).to.be.equal(name);
@@ -42,7 +45,6 @@ describe('#CSV', function(){
 
     function jobDone(job){
       expect(job.resource).to.be.equal(name);
-      resources.getByName(name, checkResource);
     }
 
     function checkResource(err, resource){
@@ -50,7 +52,8 @@ describe('#CSV', function(){
       expect(resource.data).to.be.an('array');
       expect(resource.data.length).to.be.equal(28);
 
-      var aBiciData = resource.data[0];
+      var aBiciData = resource.data[5];
+      expect(aBiciData).to.be.an('object');
       expect(aBiciData).to.have.property('EtacionID');
       expect(aBiciData).to.have.property('EstacionNombre');
       expect(aBiciData).to.have.property('cLat');
@@ -77,9 +80,10 @@ function createTestJobs(done){
   done();
 }
 
-function clearJobs(done){
+function clearData(done){
 
   db.jobs.remove();
+  db.resources.remove();
 
   done();
 }

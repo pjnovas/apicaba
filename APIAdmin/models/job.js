@@ -1,9 +1,9 @@
 
 var EventEmitter = require('events').EventEmitter
-  , Fetcher = require('./fetcher')
-  , Formatter = require('./formatter')
-//  , Sanitizer = require('./sanitizer')
-  , Persist = require('./persist')
+  , Fetcher = require('./stream/fetcher')
+  , Formatter = require('./stream/formatter')
+//  , Sanitizer = require('./stream/sanitizer')
+  , Persist = require('./stream/persist')
   , util = require('util');
 
 var Job = module.exports = function (options) {
