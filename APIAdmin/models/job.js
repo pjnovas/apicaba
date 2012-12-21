@@ -6,14 +6,14 @@ var EventEmitter = require('events').EventEmitter
   , Persist = require('./persist')
   , util = require('util');
 
-var Job = module.exports = function (options, appConfigs) {
+var Job = module.exports = function (options) {
 
   this.resource = (options && options.name) || '';
 
-  if(options && options.source && appConfigs && appConfigs.dest) {
+  if(options && options.source) {
     this.fetcher = new Fetcher(options.source.url, options.source.extract);
     this.formatter = new Formatter(options.source.parser);
-    this.persist = new Persist(options.name, appConfigs.dest);
+    this.persist = new Persist(options.name);
   }
 }
 

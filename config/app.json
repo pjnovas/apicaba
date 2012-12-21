@@ -1,6 +1,0 @@
-{
-  "paths": {
-    "sources": "./temp/sources",
-    "dest": "./data"
-  }
-}

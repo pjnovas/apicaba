@@ -1,0 +1,33 @@
+{
+  "name": "api.apicaba",
+  "description": "",
+  "main" : "server.js",
+  "version": "0.0.1",
+  "private": false,
+  "scripts": {
+    "start": "node server"
+  },
+  "engines": {
+    "node": "0.8.x"
+  },
+  "dependencies": {
+    "express": "3.0.x",
+    "jade": "*",
+    "less-middleware": "*",
+    "mongojs": "0.4.x"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "expect.js": ">=0.1.2",
+    "blanket": "0.9.x",
+    "sinon": "1.5.x"
+  },
+  "scripts": {
+    "test": "make test"
+  },
+  "author": {
+    "name": "Pablo Novas",
+    "email": "pjnovas@gmail.com"
+  },
+  "license": "MIT"
+}

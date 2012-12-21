@@ -1,6 +1,7 @@
 {
   "name": "apicaba",
   "description": "",
+  "author": "",
   "main" : "app.js",
   "version": "0.0.1",
   "private": false,
@@ -10,9 +11,19 @@
   "engines": {
     "node": "0.8.x"
   },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/pjnovas/apicaba.git"
+  "dependencies": {
+    "cron": "1.0.x",
+    "superagent": "0.10.x",
+    "xml2js": "0.2.x",
+    "mongojs": "0.4.x"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "expect.js": ">=0.1.2",
+    "blanket": "0.9.x"
+  },
+  "scripts": {
+    "test": "make test"
   },
   "author": {
     "name": "Pablo Novas",
