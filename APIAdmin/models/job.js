@@ -9,11 +9,12 @@ var EventEmitter = require('events').EventEmitter
 var Job = module.exports = function (options) {
 
   this.resource = (options && options.name) || '';
+  this.group = (options && options.group) || '';
 
   if(options && options.source) {
     this.fetcher = new Fetcher(options.source.url, options.source.extract);
     this.formatter = new Formatter(options.source.parser);
-    this.persist = new Persist(options.name);
+    this.persist = new Persist(options.name, options.group);
   }
 
   this.cronJob;

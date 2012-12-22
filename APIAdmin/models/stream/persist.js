@@ -4,12 +4,13 @@ var Stream = require('stream').Stream
   , util = require('util')
   , resources = require('../../../collections/resources');
 
-var Persist = module.exports = function(name) {
+var Persist = module.exports = function(name, group) {
 
   Stream.call(this);
   this.writable = true;
 
   this.name = name;
+  this.group = group;
 };
 
 util.inherits(Persist, Stream);
@@ -19,6 +20,7 @@ Persist.prototype.write = function(data) {
 
   resources.create({
     name: this.name,
+    group: this.group,
     data: data
   }, function(err){
     if (err) throw err;

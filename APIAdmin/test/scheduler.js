@@ -5,7 +5,8 @@ var expect = require('expect.js')
 
   , db = app.db
   , mockGBA = app.mockGBA
-  , name = 'bicis_Create';
+  , name = 'bicis_Create'
+  , group = 'urbano';
 
 describe('Scheduler', function(){
   var jobInfo = {
@@ -37,11 +38,13 @@ describe('Scheduler', function(){
 
     function checkJob(job){
       expect(job.resource).to.be.equal(name);
+      expect(job.group).to.be.equal(group);
     }
 
     function jobDone(job){
       expect(job.resource).to.be.equal(name);
-
+      expect(job.group).to.be.equal(group);
+      
       done();
     }
 
