@@ -24,7 +24,7 @@ describe('Scheduler', function(){
       .removeAllListeners('done');
 
     db.jobs.remove();
-  })
+  });
 
   it("should allow to add a job and run it immediatly", function(done){
 
