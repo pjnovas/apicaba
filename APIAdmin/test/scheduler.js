@@ -10,6 +10,7 @@ var expect = require('expect.js')
 describe('Scheduler', function(){
   var jobInfo = {
     "name": name,
+    "group": "urbano",
     "cron": "*/40 * * * * *", //every 40 seconds
     "source": {
       "url": mockGBA + "bicis.csv",

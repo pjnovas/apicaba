@@ -5,16 +5,23 @@ var mongoJS = require('mongojs')
 app = {
   db: mongoJS.connect(
         secrets.mongodb.connectionString, 
-        ['jobs', 'resources']),
+        ['jobs', 'groups', 'resources']),
 
   mockGBA: "http://localhost:3050/"
 };
 
 describe('API Admin', function(){
+  var db = app.db;
+  
+  before(function(){
+    db.groups.insert({ "name": "urbano" });
+  });
+
+  after(function(){
+    db.groups.remove();
+  });
 
   require('./scheduler.js');
   require('./csv.js');
-  //require('./xml.js');
-  //require('./zip.js');
-  //require('./rar.js');
+
 });

@@ -70,6 +70,7 @@ function createTestJobs(done){
 
   db.jobs.insert({
     "name": name,
+    "group": "urbano",
     "cron": "* * * * * *",
     "source": {
       "url": mockGBA + "bicis.csv",

@@ -6,7 +6,7 @@ var scheduler = require('./models/scheduler')
 app = {
   db: mongoJS.connect(
           secrets.mongodb.connectionString, 
-          ['jobs', 'resources'])
+          ['jobs', 'categories', 'resources'])
 };
 
 scheduler
