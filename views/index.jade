@@ -1,5 +1,45 @@
 extends layout
 
+block header
+  link(rel='stylesheet', href='/css/index.css')
+
 block content
-  h1= title
-  p Welcome to #{title}
+  .container-narrow
+    .masthead
+      ul.nav.nav-pills.pull-right
+        li.active
+          a(href='#') Inicio
+        li
+          a(href='#') About
+        li
+          a(href='#') Contacto
+      h3.muted APICABA
+    hr
+    .jumbotron
+      h1 Super awesome marketing speak!
+      p.lead
+        | Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+      a.btn.btn-large.btn-success(href='#') Sign up today
+    hr
+    .row-fluid.marketing
+      .span6
+        h4 Subheading
+        p
+          | Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.
+        h4 Subheading
+        p
+          | Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.
+        h4 Subheading
+        p Maecenas sed diam eget risus varius blandit sit amet non magna.
+      .span6
+        h4 Subheading
+        p
+          | Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.
+        h4 Subheading
+        p
+          | Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.
+        h4 Subheading
+        p Maecenas sed diam eget risus varius blandit sit amet non magna.
+    hr
+    .footer
+      p © Company 2012

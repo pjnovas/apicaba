@@ -1,0 +1,84 @@
+<script id="search-tmpl" type="text/template">
+	<form class="form-search">
+	  <div class="input-prepend">
+	    <button class="btn">Search</button>
+	    <input type="text" class="search-query input-xlarge">
+	  </div>
+	</form>
+</script>
+
+<script id="jobList-tmpl" type="text/template">
+	{{#items}}
+		<tr id="{{_id}}">
+			<td>{{name}}</td>
+			<td>{{group}}</td>
+			<td>{{cron}}</td>
+			<td>{{source.parser}}</td>
+			<td>{{source.url}}</td>
+		</tr>
+	{{/items}}
+</script>
+
+<script id="jobEdit-tmpl" type="text/template">
+
+	<form class="form-horizontal">
+		<div class="control-group">
+			<span class="control-label" for="name">Name</span>
+			<div class="controls">
+				<input id="name" type="text" placeholder="" value="{{name}}">
+			</div>
+		</div>
+
+		<div class="control-group">
+			<span class="control-label" for="group">Group</span>
+			<div class="controls">
+				<select id="group">
+					<option selected="true" value="finanzas-publicas">Finanzas Públicas</option>
+				</select>
+			</div>
+		</div>
+
+		<div class="control-group">
+			<span class="control-label" for="cron">Cron Expression</span>
+			<div class="controls">
+				<input id="cron" type="text" class="input-small" placeholder="* * * * * *" value="{{cron}}">
+			</div>
+		</div>
+
+		<div class="control-group">
+			<span class="control-label" for="parser">Parser</span>
+			<div class="controls">
+				<select id="parser">
+					<option selected="true" value="csv">CSV</option>
+				</select>
+			</div>
+		</div>
+
+		<div class="control-group">
+			<span class="control-label" for="url">URL to Fetch</span>
+			<div class="controls">
+				<textarea id="url" class="input-xlarge" placeholder="paste a url" rows="3">
+					{{source.url}}
+				</textarea>
+			</div>
+		</div>
+
+		<div class="control-group">
+			<div class="controls">
+				<label class="checkbox" for="runnow">
+					<input id="runnow" type="checkbox">
+					Run Now
+				</label>
+			</div>
+		</div>
+
+		<div class="control-group">
+			<div class="controls">
+				<input id="save" type="submit" value="Save" class="btn btn-primary">
+				<input id="cancel" type="submit" value="Cancel" class="btn">
+			</div>
+		</div>
+	</form>
+
+</script>
+

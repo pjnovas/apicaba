@@ -6,8 +6,7 @@
 var express = require('express')
   , http = require('http')
   , path = require('path')
-  , scheduler = require('./models/scheduler')
-  , secrets = require('../secrets.json')
+  , secrets = require('./secrets.json')
   , mongoJS = require('mongojs');
 
 app = express();
@@ -35,13 +34,15 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
-require('./routes');
+require('./routes/admin');
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
 });
 
 function startScheduler(){
+  var scheduler = require('./models/scheduler');
+
   scheduler
     .on('run', function(job){
       console.log('JOB-RUN %s', job.resource);

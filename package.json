@@ -18,14 +18,16 @@
     "mongojs": "0.4.x",
     "express": "~3.0.5",
     "less-middleware": "~0.1.9",
-    "underscore": "1.4.3"
+    "underscore": "1.4.3",
+    "jade": "0.27.x"
   },
   "devDependencies": {
     "mocha": "*",
     "expect.js": ">=0.1.2",
     "blanket": "1.0.x",
     "sinon": "1.5.x",
-    "superagent": "0.10.x"
+    "superagent": "0.10.x",
+    "grunt": "0.3.x"
   },
   "engines": {
     "node": "0.8.x"

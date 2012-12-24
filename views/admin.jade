@@ -1,0 +1,24 @@
+extends layout
+
+block header
+  link(rel='stylesheet', href='/css/admin.css')
+
+block content
+  .container
+    div.job-form
+      
+    div.current-jobs
+      div.search
+      table.table.table-hover
+        thead
+          tr
+           th name
+           th group
+           th cron
+           th parser
+           th url
+        tbody#job-list
+
+block scripts
+  script(src='/scripts/apicaba-0.0.1.js')
+  script(src='/scripts/admin.js')

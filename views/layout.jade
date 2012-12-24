@@ -1,7 +1,12 @@
 doctype 5
-html
+html(lang='es')
   head
-    title= title
-    link(rel='stylesheet', href='/css/style.css')
+    title Apicaba
+    link(rel='stylesheet', href='/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/css/bootstrap-responsive.min.css')
+    block header
   body
     block content
+
+    script(src='http://code.jquery.com/jquery-latest.js')
+    block scripts

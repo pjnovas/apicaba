@@ -1,0 +1,47 @@
+
+.current-jobs, .job-form {
+  background-color: white;
+  border: 1px solid #DDD;
+  position: relative;
+  margin: 15px 0;
+  padding: 39px 19px 14px;
+
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+
+.current-jobs::after, .job-form::after {
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  padding: 3px 7px;
+  font-size: 12px;
+  font-weight: bold;
+  background-color: whiteSmoke;
+  border: 1px solid #DDD;
+  color: #9DA0A4;
+  -webkit-border-radius: 4px 0 4px 0;
+  -moz-border-radius: 4px 0 4px 0;
+  border-radius: 4px 0 4px 0;
+}
+
+.job-form {
+
+}
+
+.current-jobs {
+  
+}
+
+.job-form::after {
+  content: "New Job";
+}
+
+.current-jobs::after {
+  content: "Current Jobs";
+}
+
+.table-hover tr {
+  cursor: pointer;
+}
