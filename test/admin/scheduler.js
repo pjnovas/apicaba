@@ -1,6 +1,6 @@
 
 var expect = require('expect.js')
-  , scheduler = require('../models/scheduler')
+  , scheduler = require('../../models/scheduler')
   , resources = require('../../collections/resources')
 
   , db = app.db

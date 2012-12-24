@@ -6,7 +6,7 @@
 var express = require('express')
   , http = require('http')
   , path = require('path')
-  , secrets = require('../secrets.json')
+  , secrets = require('./secrets.json')
   , mongoJS = require('mongojs');
 
 app = express();

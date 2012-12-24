@@ -1,5 +1,5 @@
 var mongoJS = require('mongojs')
-  secrets = require('../../secrets.json');
+  secrets = require('../secrets.json');
 
 app = {
   db: mongoJS.connect(

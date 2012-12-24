@@ -1,4 +1,4 @@
-var collDir = '../../collections'
+var collDir = '../collections'
   , groups = require(collDir + '/groups')
   , resources = require(collDir + '/resources')
   , _ = require('underscore')

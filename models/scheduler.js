@@ -1,6 +1,6 @@
 
 var EventEmitter = require('events').EventEmitter
-  , jobs = require('../../collections/jobs')
+  , jobs = require('../collections/jobs')
   , Job = require('./job')
   , CronJob = require('cron').CronJob;
 

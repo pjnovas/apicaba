@@ -1,7 +1,7 @@
 
 var expect = require('expect.js')
-  , groups = require('../../collections/groups')
-  , resources = require('../../collections/resources')
+  , groups = require('../collections/groups')
+  , resources = require('../collections/resources')
   , request = require('superagent')
   , host = app.server;
 

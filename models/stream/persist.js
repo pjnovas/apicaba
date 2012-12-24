@@ -2,7 +2,7 @@
 var Stream = require('stream').Stream
   , fs = require('fs')
   , util = require('util')
-  , resources = require('../../../collections/resources');
+  , resources = require('../../collections/resources');
 
 var Persist = module.exports = function(name, group) {
 

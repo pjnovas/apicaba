@@ -5,7 +5,27 @@
   "version": "0.0.1",
   "private": false,
   "scripts": {
-    "start": "node app"
+    "start": "node server",
+    "test": "make test",
+    "blanket": {
+      "pattern": ["/models/"]
+    }
+  },
+  "dependencies": {
+    "cron": "1.0.x",
+    "superagent": "0.10.x",
+    "xml2js": "0.2.x",
+    "mongojs": "0.4.x",
+    "express": "~3.0.5",
+    "less-middleware": "~0.1.9",
+    "underscore": "1.4.3"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "expect.js": ">=0.1.2",
+    "blanket": "1.0.x",
+    "sinon": "1.5.x",
+    "superagent": "0.10.x"
   },
   "engines": {
     "node": "0.8.x"
