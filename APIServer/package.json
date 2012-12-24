@@ -5,7 +5,11 @@
   "version": "0.0.1",
   "private": false,
   "scripts": {
-    "start": "node server"
+    "start": "node server",
+    "test": "make test",
+    "blanket": {
+      "pattern": "/models/"
+    }
   },
   "engines": {
     "node": "0.8.x"
@@ -14,13 +18,15 @@
     "express": "3.0.x",
     "jade": "*",
     "less-middleware": "*",
-    "mongojs": "0.4.x"
+    "mongojs": "0.4.x",
+    "underscore": "1.4.3"
   },
   "devDependencies": {
     "mocha": "*",
     "expect.js": ">=0.1.2",
     "blanket": "1.0.x",
-    "sinon": "1.5.x"
+    "sinon": "1.5.x",
+    "superagent": "0.10.x"
   },
   "scripts": {
     "test": "make test"

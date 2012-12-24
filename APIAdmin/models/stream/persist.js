@@ -10,6 +10,7 @@ var Persist = module.exports = function(name, group) {
   this.writable = true;
 
   this.name = name;
+  this.canonical = name.toLowerCase().replace(/ /g, '-');
   this.group = group;
 };
 
@@ -20,6 +21,7 @@ Persist.prototype.write = function(data) {
 
   resources.create({
     name: this.name,
+    canonical: this.canonical,
     group: this.group,
     data: data
   }, function(err){

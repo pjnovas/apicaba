@@ -10,3 +10,12 @@ exports.getAll = function(done){
     });
 
 };
+
+
+exports.getByCanonical = function(canonical, done){
+  
+  db.groups
+    .findOne({ canonical: canonical }
+    , done);
+
+};

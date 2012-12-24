@@ -6,13 +6,14 @@
 var express = require('express')
   , http = require('http')
   , path = require('path')
+  , scheduler = require('./models/scheduler')
   , secrets = require('../secrets.json')
   , mongoJS = require('mongojs');
 
 app = express();
 
 app.configure(function(){
-  app.set('port', process.env.PORT || 3000);
+  app.set('port', process.env.PORT || 3050);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
   app.use(express.favicon());
@@ -26,8 +27,8 @@ app.configure(function(){
   app.db = mongoJS.connect(
           secrets.mongodb.connectionString, 
           ['jobs', 'groups', 'resources']);
-  
-  app.host = 'http://localhost:' + app.get('port');
+
+  startScheduler();
 });
 
 app.configure('development', function(){
@@ -39,3 +40,17 @@ require('./routes');
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
 });
+
+function startScheduler(){
+  scheduler
+    .on('run', function(job){
+      console.log('JOB-RUN %s', job.resource);
+    })
+    .on('done', function(job){
+      console.log('JOB-DONE: %s', job.resource);
+    })
+    .initialize(function(err){
+      if (err) throw err;
+      else console.log('Scheduler Initialized');
+    });
+}

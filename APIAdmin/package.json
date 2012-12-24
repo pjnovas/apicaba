@@ -5,13 +5,14 @@
     "name": "Pablo Novas",
     "email": "pjnovas@gmail.com"
   },
-  "main": "app.js",
+  "main": "server.js",
   "version": "0.0.1",
   "private": false,
   "scripts": {
+    "start": "node server",
     "test": "make test",
     "blanket": {
-      "pattern": "/models/"
+      "pattern": "/routes/"
     }
   },
   "engines": {
