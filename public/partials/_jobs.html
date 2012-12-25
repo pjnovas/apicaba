@@ -20,8 +20,10 @@
 </script>
 
 <script id="jobEdit-tmpl" type="text/template">
-
+	<span id="access" class="accessURL"></span>
 	<form class="form-horizontal">
+		<input id="jobId" type="hidden" {{#_id}}value="{{_id}}"{{/_id}}>
+
 		<div class="control-group">
 			<span class="control-label" for="name">Name</span>
 			<div class="controls">
@@ -31,11 +33,7 @@
 
 		<div class="control-group">
 			<span class="control-label" for="group">Group</span>
-			<div class="controls">
-				<select id="group">
-					<option selected="true" value="finanzas-publicas">Finanzas Públicas</option>
-				</select>
-			</div>
+			<div id="group-list" class="controls"></div>
 		</div>
 
 		<div class="control-group">
@@ -74,8 +72,8 @@
 
 		<div class="control-group">
 			<div class="controls">
-				<input id="save" type="submit" value="Save" class="btn btn-primary">
-				<input id="cancel" type="submit" value="Cancel" class="btn">
+				<input id="save" type="button" value="Save" class="btn btn-primary">
+				<input id="cancel" type="button" value="Cancel" class="btn">
 			</div>
 		</div>
 	</form>

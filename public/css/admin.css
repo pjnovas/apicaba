@@ -33,3 +33,10 @@
 .table-hover tr {
   cursor: pointer;
 }
+.accessURL {
+  position: absolute;
+  top: 5px;
+  left: 200px;
+  color: #78A4CC;
+  font-weight: bold;
+}

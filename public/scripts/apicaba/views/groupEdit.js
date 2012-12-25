@@ -2,10 +2,10 @@
 var apicaba = apicaba || {};
 apicaba.views = apicaba.views || {};
 
-apicaba.views.jobEdit = (function($){
-  var model = "jobs",
-    container = '.job-form';
- 
+apicaba.views.groupEdit = (function($){
+  var model = "groups",
+    container = '.group-form';
+
   var events = {
     "click::#save": save,
     "click::#cancel": cancel,
@@ -13,8 +13,8 @@ apicaba.views.jobEdit = (function($){
   };
 
   function save() {
-    var job = buildJob();
-    apicaba.models.save(job);
+    var group = buildgroup();
+    apicaba.models.save(group);
 
     render();
   }
@@ -33,9 +33,9 @@ apicaba.views.jobEdit = (function($){
     $('#access', container).text('/' + group + '/' + name);
   }
 
-  function buildJob(){
+  function buildgroup(){
     return {
-      _id: $('#jobId', container).val(),
+      _id: $('#groupId', container).val(),
       name: $('#name', container).val(),
       group: $('#group', container).val(),
       cron: $('#cron', container).val(),
@@ -44,18 +44,16 @@ apicaba.views.jobEdit = (function($){
     };
   }
 
-  function render(aJob, done) {
-    var job = aJob || {};
+  function render(agroup, done) {
+    var group = agroup || {};
     
-    apicaba.utils.template.render(model, 'jobEdit', job, 
+    apicaba.utils.template.render(model, 'groupEdit', group, 
       function(err, rendered){
         $('form', container).remove();
         $(container).html(rendered);
 
         $('body').scrollTop(0);
         $('#name', container).focus();
-
-        apicaba.models.group.bind();
 
         if (done) done();
     });
@@ -66,6 +64,3 @@ apicaba.views.jobEdit = (function($){
   };
 
 })(jQuery);
-
-
-

@@ -35,15 +35,11 @@ apicaba.models.job = (function(){
       });
     },
 
-    add: function(url) {
-      url = apicaba.utils.url.setProtocol(url);
-
-      if (apicaba.utils.url.isValid(url)){
-        apicaba.api.job.new(url, function(err, newjob){
-          jobs.unshift(newjob);
-          apicaba.views.jobList.render();
-        });
-      }
+    add: function(job) {
+      apicaba.api.job.new(job, function(err, newjob){
+        jobs.unshift(newjob);
+        apicaba.views.jobList.render();
+      });
     },
 
     update: function(job) {
@@ -68,6 +64,11 @@ apicaba.models.job = (function(){
       });
 
       apicaba.views.job.render();
+    },
+
+    save: function(job){
+      if (job._id) this.update(job);
+      else this.insert(job);
     },
 
     remove: function(id) {
