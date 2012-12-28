@@ -5,18 +5,13 @@ apicaba.views = apicaba.views || {};
 apicaba.views.groupList = (function($){
   var model = "groups",
     container = '#group-list';
-
+ 
   var events = {
-    "change::select": selectGroup,
-    "click::#newGroup": showCreate
+    "click::tr": selectGroup
   };
 
   function selectGroup(e){
-    
-  }
-
-  function showCreate(e){
-    apicaba.views.groupEdit.render();
+    apicaba.models.group.selectGroup($(this).val());
   }
 
   apicaba.utils.events.build(container, events);
@@ -24,10 +19,10 @@ apicaba.views.groupList = (function($){
   return {
     render: function(done) {
       var groups = apicaba.models.group.getGroups();
-      
+
       apicaba.utils.template.render(model, 'groupList', { items: groups }, 
         function(err, rendered){
-          $('*', container).remove();
+          $('tr', container).remove();
           $(container).html(rendered);
           if (done) done();
       });
@@ -35,3 +30,6 @@ apicaba.views.groupList = (function($){
   };
 
 })(jQuery);
+
+
+

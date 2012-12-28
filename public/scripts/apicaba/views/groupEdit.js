@@ -4,7 +4,7 @@ apicaba.views = apicaba.views || {};
 
 apicaba.views.groupEdit = (function($){
   var model = "groups",
-    container = '#group-list';
+    container = '.group-form';
 
   var events = {
     "click::#save-group": save,
@@ -30,7 +30,7 @@ apicaba.views.groupEdit = (function($){
 
   function showCanonical(){
     var name = $('#name-group', container).val(),
-      canonical = $('#canonical', container);
+      canonical = $('#name-canonical', container);
 
     name = name.toLowerCase().replace(/ /g, '-');
     canonical.val(name);
@@ -41,7 +41,7 @@ apicaba.views.groupEdit = (function($){
     
     apicaba.utils.template.render(model, 'groupEdit', group, 
       function(err, rendered){
-        $('*', container).remove();
+        //$('*', container).remove();
         $(container).html(rendered);
         if (done) done();
     });

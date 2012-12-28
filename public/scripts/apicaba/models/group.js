@@ -8,11 +8,12 @@ apicaba.models.group = (function(){
 
   return {
 
-    bind: function(done){
+    bind: function(){
       apicaba.api.group.getAll(function(err, _groups){
         groups = _groups;
         cache = _groups;
-        apicaba.views.groupList.render(done);
+        apicaba.views.groupCombo.render();
+        apicaba.views.groupList.render();
       });
     },
 
@@ -21,6 +22,7 @@ apicaba.models.group = (function(){
         if (!err) {
           groups.unshift(group);
           apicaba.views.groupList.render();
+          apicaba.views.groupCombo.render();
         }
       });
     },
@@ -46,7 +48,8 @@ apicaba.models.group = (function(){
         // back again and re-render
       });
 
-      apicaba.views.group.render();
+      apicaba.views.groupList.render();
+      apicaba.views.groupCombo.render();
     },
 
     save: function(group){
@@ -74,7 +77,17 @@ apicaba.models.group = (function(){
         // back again and re-render
       });
 
-      apicaba.views.group.render();
+      apicaba.views.groupList.render();
+      apicaba.views.groupCombo.render();
+    },
+
+    selectGroup: function(id){
+      for(var i = 0; i < groups.length; i++){
+        if (groups[i]._id === id){
+          apicaba.views.groupEdit.render(groups[i]);
+          return;
+        }
+      }
     },
 
     getGroups: function(){

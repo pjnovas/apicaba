@@ -1,5 +1,7 @@
 .current-jobs,
-.job-form {
+.job-form,
+.current-groups,
+.group-form {
   background-color: white;
   border: 1px solid #DDD;
   position: relative;
@@ -10,7 +12,9 @@
   border-radius: 4px;
 }
 .current-jobs::after,
-.job-form::after {
+.job-form::after,
+.current-groups::after,
+.group-form::after {
   position: absolute;
   top: -1px;
   left: -1px;
@@ -25,10 +29,16 @@
   border-radius: 4px 0 4px 0;
 }
 .job-form::after {
-  content: "New Job";
+  content: "Job";
 }
 .current-jobs::after {
   content: "Current Jobs";
+}
+.group-form::after {
+  content: "Group";
+}
+.current-groups::after {
+  content: "Current Groups";
 }
 .table-hover tr {
   cursor: pointer;

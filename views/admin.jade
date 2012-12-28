@@ -19,6 +19,25 @@ block content
            th url
         tbody#job-list
 
+    div#group-modal.modal.hide.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+      div.modal-header
+        button.close(type='button', data-dismiss='modal', aria-hidden='true') x
+        h3 Groups Manager
+      div.modal-body
+        div.group-form
+        div.current-groups
+          table.table.table-hover
+            thead
+              tr
+               th name
+               th canonical
+            tbody#group-list
+      div.modal-footer
+        button.btn(data-dismiss='modal', aria-hidden='true') Close
+
 block scripts
   script(src='/scripts/apicaba-0.0.1.js')
   script(src='/scripts/admin.js')
+
+
+  

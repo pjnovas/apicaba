@@ -28,7 +28,7 @@ apicaba.views.jobEdit = (function($){
 
   function showCanonical(){
     var name = $('#name', container).val(),
-      group = $('#group', container).val();
+      group = $('#group option:selected', container).attr('data-canonical');
 
     name = name.toLowerCase().replace(/ /g, '-');
     $('#access', container).text('/' + group + '/' + name);
@@ -61,7 +61,9 @@ apicaba.views.jobEdit = (function($){
         $('body').scrollTop(0);
         $('#name', container).focus();
 
-        apicaba.models.group.bind();
+        apicaba.views.groupEdit.render(null, function(){
+          apicaba.models.group.bind();
+        });
 
         if (done) done();
     });
