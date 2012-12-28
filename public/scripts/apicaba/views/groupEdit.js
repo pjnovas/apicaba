@@ -4,19 +4,22 @@ apicaba.views = apicaba.views || {};
 
 apicaba.views.groupEdit = (function($){
   var model = "groups",
-    container = '.group-form';
+    container = '#group-list';
 
   var events = {
-    "click::#save": save,
-    "click::#cancel": cancel,
-    "keyup::#name": showCanonical
+    "click::#save-group": save,
+    "click::#cancel-group": cancel,
+    "keyup::#name-group": showCanonical
   };
 
   function save() {
-    var group = buildgroup();
-    apicaba.models.save(group);
+    var name = $('#name-group', container).val(),
+      canonical = $('#canonical', container).val();
 
-    render();
+    apicaba.models.group.add({
+      name: name,
+      canonical: canonical
+    });
   }
 
   function cancel() {
@@ -26,35 +29,20 @@ apicaba.views.groupEdit = (function($){
   apicaba.utils.events.build(container, events);
 
   function showCanonical(){
-    var name = $('#name', container).val(),
-      group = $('#group', container).val();
+    var name = $('#name-group', container).val(),
+      canonical = $('#canonical', container);
 
     name = name.toLowerCase().replace(/ /g, '-');
-    $('#access', container).text('/' + group + '/' + name);
+    canonical.val(name);
   }
 
-  function buildgroup(){
-    return {
-      _id: $('#groupId', container).val(),
-      name: $('#name', container).val(),
-      group: $('#group', container).val(),
-      cron: $('#cron', container).val(),
-      parser: $('#parser', container).val(),
-      url: $('#url', container).text()
-    };
-  }
-
-  function render(agroup, done) {
-    var group = agroup || {};
+  function render(aGroup, done) {
+    var group = aGroup || {};
     
     apicaba.utils.template.render(model, 'groupEdit', group, 
       function(err, rendered){
-        $('form', container).remove();
+        $('*', container).remove();
         $(container).html(rendered);
-
-        $('body').scrollTop(0);
-        $('#name', container).focus();
-
         if (done) done();
     });
   }

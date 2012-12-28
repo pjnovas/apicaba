@@ -18,8 +18,10 @@ apicaba.models.group = (function(){
 
     add: function(group) {
       apicaba.api.group.new(group, function(err, newgroup){
-        groups.unshift(newgroup);
-        apicaba.views.groupList.render();
+        if (!err) {
+          groups.unshift(group);
+          apicaba.views.groupList.render();
+        }
       });
     },
 

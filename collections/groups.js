@@ -22,7 +22,6 @@ exports.getById = function(id, done){
 };
 
 exports.create = function(group, done){
-
   db.groups.insert(group, function(err, data){
     done(err, data);
   });

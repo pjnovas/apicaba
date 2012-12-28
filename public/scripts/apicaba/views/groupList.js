@@ -5,13 +5,18 @@ apicaba.views = apicaba.views || {};
 apicaba.views.groupList = (function($){
   var model = "groups",
     container = '#group-list';
- 
+
   var events = {
-    "change::select": selectGroup
+    "change::select": selectGroup,
+    "click::#newGroup": showCreate
   };
 
   function selectGroup(e){
     
+  }
+
+  function showCreate(e){
+    apicaba.views.groupEdit.render();
   }
 
   apicaba.utils.events.build(container, events);
