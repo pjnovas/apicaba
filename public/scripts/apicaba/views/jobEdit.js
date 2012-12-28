@@ -9,12 +9,13 @@ apicaba.views.jobEdit = (function($){
   var events = {
     "click::#save": save,
     "click::#cancel": cancel,
-    "keyup::#name": showCanonical
+    "keyup::#name": showCanonical,
+    "change::#group": showCanonical
   };
 
   function save() {
     var job = buildJob();
-    apicaba.models.save(job);
+    apicaba.models.job.save(job);
 
     render();
   }
@@ -34,14 +35,19 @@ apicaba.views.jobEdit = (function($){
   }
 
   function buildJob(){
-    return {
+    var j = {
       _id: $('#jobId', container).val(),
       name: $('#name', container).val(),
       group: $('#group', container).val(),
       cron: $('#cron', container).val(),
-      parser: $('#parser', container).val(),
-      url: $('#url', container).text()
+      source: {
+        parser: $('#parser', container).val(),
+        url: $('#url', container).val()
+      }
     };
+
+    if (!j._id) delete j._id;
+    return j;
   }
 
   function render(aJob, done) {

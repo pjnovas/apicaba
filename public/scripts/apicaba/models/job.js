@@ -68,7 +68,7 @@ apicaba.models.job = (function(){
 
     save: function(job){
       if (job._id) this.update(job);
-      else this.insert(job);
+      else this.add(job);
     },
 
     remove: function(id) {

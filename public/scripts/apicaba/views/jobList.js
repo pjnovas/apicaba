@@ -19,7 +19,7 @@ apicaba.views.jobList = (function($){
   return {
     render: function(done) {
       var jobs = apicaba.models.job.getJobs();
-      
+
       apicaba.utils.template.render(model, 'jobList', { items: jobs }, 
         function(err, rendered){
           $('tr', container).remove();

@@ -23,7 +23,7 @@ apicaba.views.groupEdit = (function($){
   }
 
   function cancel() {
-    render();
+    apicaba.views.groupList.render();
   }
 
   apicaba.utils.events.build(container, events);

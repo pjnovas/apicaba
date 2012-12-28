@@ -25,9 +25,9 @@ exports.getById = function(id, done){
 };
 
 exports.create = function(job, done){
-
+  console.dir(job);
   db.jobs.insert(job, function(err, data){
-    done(err, data);
+    done(err, data[0]);
   });
 };
 
