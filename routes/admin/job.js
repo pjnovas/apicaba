@@ -21,7 +21,7 @@ function create(req, res){
 }
 
 function update(req, res){
-  var jobId = req.params.job;
+  var jobId = req.params.jobId;
 
   jobs.update(jobId, req.body.job, function(err){
     if (err) return res.send(500);
@@ -30,7 +30,7 @@ function update(req, res){
 }
 
 function remove(req, res){
-  var jobId = req.params.job;
+  var jobId = req.params.jobId;
 
   jobs.remove(jobId, function(err){
     if (err) return res.send(500);

@@ -13,24 +13,32 @@ apicaba.views.groupEdit = (function($){
   };
 
   function save() {
-    var name = $('#name-group', container).val(),
-      canonical = $('#canonical', container).val();
+    var group = buildGroup();
+    apicaba.models.group.save(group);
 
-    apicaba.models.group.add({
-      name: name,
-      canonical: canonical
-    });
+    render();
   }
 
   function cancel() {
-    apicaba.views.groupList.render();
+    render();
+  }
+
+  function buildGroup(){
+    var g = {
+      _id: $('#groupId', container).val(),
+      name: $('#name-group', container).val(),
+      canonical: $('#canonical-group', container).val(),
+    };
+
+    if (!g._id) delete g._id;
+    return g;
   }
 
   apicaba.utils.events.build(container, events);
 
   function showCanonical(){
     var name = $('#name-group', container).val(),
-      canonical = $('#name-canonical', container);
+      canonical = $('#canonical-group', container);
 
     name = name.toLowerCase().replace(/ /g, '-');
     canonical.val(name);

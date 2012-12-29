@@ -8,12 +8,16 @@ apicaba.models.group = (function(){
 
   return {
 
-    bind: function(){
+    bind: function(done){
       apicaba.api.group.getAll(function(err, _groups){
         groups = _groups;
         cache = _groups;
-        apicaba.views.groupCombo.render();
-        apicaba.views.groupList.render();
+        
+        apicaba.views.groupCombo.render(function(){
+          apicaba.views.groupList.render(function(){
+            if (done) done();
+          });  
+        });
       });
     },
 
@@ -21,8 +25,12 @@ apicaba.models.group = (function(){
       apicaba.api.group.new(group, function(err, newgroup){
         if (!err) {
           groups.unshift(group);
+
           apicaba.views.groupList.render();
-          apicaba.views.groupCombo.render();
+          apicaba.views.groupCombo.render(function(){
+            apicaba.views.groupCombo.select(group);
+            apicaba.views.jobEdit.updateCanonical();
+          });          
         }
       });
     },
@@ -49,12 +57,16 @@ apicaba.models.group = (function(){
       });
 
       apicaba.views.groupList.render();
-      apicaba.views.groupCombo.render();
+      apicaba.views.groupCombo.render(function(){
+        apicaba.views.groupCombo.select(group);
+        apicaba.views.jobEdit.updateCanonical();
+        apicaba.models.job.bind();
+      });
     },
 
     save: function(group){
       if (group._id) this.update(group);
-      else this.insert(group);
+      else this.add(group);
     },
 
     remove: function(id) {
@@ -85,6 +97,8 @@ apicaba.models.group = (function(){
       for(var i = 0; i < groups.length; i++){
         if (groups[i]._id === id){
           apicaba.views.groupEdit.render(groups[i]);
+          apicaba.views.groupCombo.select(groups[i]);
+          apicaba.views.jobEdit.updateCanonical();
           return;
         }
       }
@@ -92,6 +106,14 @@ apicaba.models.group = (function(){
 
     getGroups: function(){
       return cache;
+    },
+
+    getByCanonical: function(canonical){
+      for(var i = 0; i < groups.length; i++){
+        if (groups[i].canonical === canonical){
+          return groups[i];
+        }
+      }
     },
 
     getRealGroups: function(){

@@ -1,5 +1,6 @@
 
 var groups = require('../../collections/groups');
+  jobs = require('../../collections/jobs');
 
 app.get('/grupos', getList);
 app.post('/grupos', create);
@@ -21,11 +22,20 @@ function create(req, res){
 }
 
 function update(req, res){
-  var groupId = req.params.group;
+  var groupId = req.params.group,
+    group = req.body.group;
 
-  groups.update(groupId, req.body.group, function(err){
+  groups.getById(groupId, function(err, aGroup){
     if (err) return res.send(500);
-    res.send(204); //Ok with No Content
+
+    jobs.updateGroup(aGroup.canonical, group.canonical, function(err){
+      if (err) return res.send(500);
+
+      groups.update(groupId, group, function(err){
+        if (err) return res.send(500);
+        res.send(204); //Ok with No Content
+      });
+    });
   });
 }
 

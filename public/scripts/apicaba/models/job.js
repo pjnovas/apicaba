@@ -39,6 +39,7 @@ apicaba.models.job = (function(){
       apicaba.api.job.new(job, function(err, newjob){
         jobs.unshift(newjob);
         apicaba.views.jobList.render();
+        apicaba.views.jobEdit.render(job);
       });
     },
 
@@ -63,7 +64,8 @@ apicaba.models.job = (function(){
         // back again and re-render
       });
 
-      apicaba.views.job.render();
+      apicaba.views.jobList.render();
+      apicaba.views.jobEdit.render(job);
     },
 
     save: function(job){
@@ -97,7 +99,10 @@ apicaba.models.job = (function(){
     selectJob: function(id){
       for(var i = 0; i < jobs.length; i++){
         if (jobs[i]._id === id){
-          apicaba.views.jobEdit.render(jobs[i]);
+          apicaba.views.jobEdit.render(jobs[i], function(){
+            var group = apicaba.models.group.getByCanonical(jobs[i].group);
+            apicaba.models.group.selectGroup(group._id);
+          });
           return;
         }
       }

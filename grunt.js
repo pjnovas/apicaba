@@ -31,6 +31,10 @@ module.exports = function(grunt) {
         dest: 'public/scripts/<%= pkg.name %>-<%= pkg.version %>.min.js'
       }
     },
+    watch: {
+      files: 'public/scripts/**/*.js',
+      tasks: 'concat'
+    }
   });
 
   grunt.registerTask('default', 'concat');

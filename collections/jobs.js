@@ -24,8 +24,19 @@ exports.getById = function(id, done){
     , done);
 };
 
+exports.updateGroup = function(groupOld, groupNew, done){
+
+  db.jobs.update(
+      { group: groupOld },
+      { $set: {group: groupNew } }, 
+      { multi: true },
+      function(err, data){
+    done(err, data);
+  });
+};
+
 exports.create = function(job, done){
-  console.dir(job);
+  
   db.jobs.insert(job, function(err, data){
     done(err, data[0]);
   });

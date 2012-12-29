@@ -38,7 +38,7 @@ apicaba.views.jobEdit = (function($){
     var j = {
       _id: $('#jobId', container).val(),
       name: $('#name', container).val(),
-      group: $('#group', container).val(),
+      group: $('#group option:selected', container).attr('data-canonical'),
       cron: $('#cron', container).val(),
       source: {
         parser: $('#parser', container).val(),
@@ -62,15 +62,16 @@ apicaba.views.jobEdit = (function($){
         $('#name', container).focus();
 
         apicaba.views.groupEdit.render(null, function(){
-          apicaba.models.group.bind();
-        });
-
-        if (done) done();
+          apicaba.models.group.bind(function(){
+            if (done) done();
+          });
+        });        
     });
   }
 
   return {
-    render: render
+    render: render,
+    updateCanonical: showCanonical
   };
 
 })(jQuery);
