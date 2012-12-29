@@ -1,5 +1,6 @@
 
-var jobs = require('../../collections/jobs');
+var jobs = require('../../collections/jobs')
+  , scheduler = require('../../models/scheduler');
 
 app.get('/jobs', getList);
 app.post('/jobs', create);
@@ -14,8 +15,14 @@ function getList(req, res){
 }
 
 function create(req, res){
-  jobs.create(req.body.job, function(err, job){
+  var newJob = req.body.job,
+    runNow = req.body.runNow;
+
+  jobs.create(newJob, function(err, job){
     if (err) return res.send(500);
+
+    scheduler.addJob(newJob, runNow);
+
     res.send(201, job); //OK Resource created
   });
 }

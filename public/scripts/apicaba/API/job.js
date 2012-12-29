@@ -18,12 +18,12 @@ apicaba.api.job = (function(){
         url: root + id
       }, done);
     },
-    new: function(job, done) {
+    new: function(job, runNow, done) {
       apicaba.utils.ajax.call({
         method: 'POST',
         url: root,
         dataType: "json",
-        data: {job: job}
+        data: {job: job, runNow: runNow}
       }, done);
     },
     update: function(job, done) {

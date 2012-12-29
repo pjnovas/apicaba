@@ -7,16 +7,16 @@ apicaba.views.jobEdit = (function($){
     container = '.job-form';
  
   var events = {
-    "click::#save": save,
+    "click::#save": function(e){ save(e, false); },
+    "click::#save-run": function(e){ save(e, true); },
     "click::#cancel": cancel,
     "keyup::#name": showCanonical,
     "change::#group": showCanonical
   };
 
-  function save() {
+  function save(e, runNow) {
     var job = buildJob();
-    apicaba.models.job.save(job);
-
+    apicaba.models.job.save(job, runNow);
     render();
   }
 
