@@ -6,8 +6,7 @@
 var express = require('express')
   , http = require('http')
   , path = require('path')
-  , mongoJS = require('mongojs')
-  , secrets;
+  , mongoJS = require('mongojs');
 
 app = express();
 
@@ -26,22 +25,22 @@ app.configure(function(){
 
 app.configure('development', function(){
   app.use(express.errorHandler());
-  secrets = require('./secrets.json');
+  app.secrets = require('./secrets.json');
   connectToMongo();
 });
 
 app.configure('production', function(){
   app.use(express.errorHandler());
-  secrets = require('./secrets_prod.json');
+  app.secrets = require('./secrets_prod.json');
   connectToMongo();
 });
 
 function connectToMongo(){
   app.db = mongoJS.connect(
-          secrets.mongodb.connectionString, 
+          app.secrets.mongodb.connectionString, 
           ['jobs', 'groups', 'resources']);
 
-  app.host = secrets.APIhost;
+  app.host = app.secrets.APIhost;
 }
 
 require('./routes');

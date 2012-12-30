@@ -2,7 +2,7 @@
 var request = require('superagent')
   , Stream = require('stream').Stream
   , util = require('util')
-  , maxRetries = require('../../secrets').request_retries;
+  , maxRetries = app.secrets.request_retries;
 
 var Fetcher = module.exports = function(url, extract) {
 
@@ -14,9 +14,8 @@ var Fetcher = module.exports = function(url, extract) {
 util.inherits(Fetcher, Stream);
 
 Fetcher.prototype.fetch = function() {
-
-  var self = this;
-  var retries = 0;
+  var self = this
+    , retries = 0;
 
   function reTry(){ 
     retries++;
@@ -29,7 +28,7 @@ Fetcher.prototype.fetch = function() {
 
     }).on('error', function(){
       if (retries < maxRetries){
-        console.log('retring from response [%s / %s] ...', retries, maxRetries);
+        console.log('retring [%s / %s] ...', retries, maxRetries);
         reTry(); //TODO: manage errors
       }
     });
