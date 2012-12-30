@@ -6,6 +6,7 @@
 var express = require('express')
   , http = require('http')
   , path = require('path')
+  , socketIO = require('socket.io')
   , mongoJS = require('mongojs');
 
 app = express();
@@ -45,8 +46,16 @@ function init(){
 
 require('./routes/admin');
 
-http.createServer(app).listen(app.get('port'), function(){
+var server = http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
+});
+
+var io = socketIO.listen(server, {
+  "log level": 1
+});
+
+io.sockets.on('connection', function (socket) {
+
 });
 
 function startScheduler(){
@@ -55,12 +64,22 @@ function startScheduler(){
   scheduler
     .on('run', function(job){
       console.log('JOB-RUN %s', job.resource);
+      emitJobStatus(job, 'running');
     })
     .on('done', function(job){
       console.log('JOB-DONE: %s', job.resource);
+      emitJobStatus(job, 'done');
+    })
+    .on('error', function(job){
+      console.log('JOB-ERROR: %s', job.resource);
+      emitJobStatus(job, 'error');
     })
     .initialize(function(err){
       if (err) throw err;
       else console.log('Scheduler Initialized');
     });
+
+  function emitJobStatus(job, state){
+    io.sockets.emit('job_status', { _id: job._id, state: state } );
+  }
 }

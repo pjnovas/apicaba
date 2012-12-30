@@ -6,7 +6,8 @@ app = {
         secrets.mongodb.connectionString, 
         ['jobs', 'groups', 'resources']),
 
-  server: "http://localhost:3000/"
+  server: "http://localhost:3000/",
+  secrets: secrets
 };
 
 describe('API Server', function(){

@@ -8,6 +8,7 @@ var EventEmitter = require('events').EventEmitter
 
 var Job = module.exports = function (options) {
 
+  this._id = (options && options._id && options._id.toString()) || '';
   this.resource = (options && options.name) || '';
   this.group = (options && options.group) || '';
 

@@ -30,10 +30,16 @@ function create(jobConfig, runNow){
   var job = new Job(jobConfig);
   job
     .on('run', function(){
+      jobs.changeState(this._id, 'running');
       scheduler.emit('run', this);
     })
     .on('done', function(){
+      jobs.changeState(this._id, 'done');
       scheduler.emit('done', this);
+    })
+    .on('error', function(){
+      jobs.changeState(this._id, 'error');
+      scheduler.emit('error', this);
     });
 
   (function(job){

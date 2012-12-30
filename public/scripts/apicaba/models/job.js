@@ -109,11 +109,37 @@ apicaba.models.job = (function(){
     },
 
     getJobs: function(){
-      return cache;
+      var self = this;
+      return _.map(cache, function(item){
+        item.currentStatus = self.getStatus(item.state);
+        return item;
+      });
     },
 
     getRealJobs: function(){
       return jobs;
+    },
+
+    getStatus: function(state){
+      switch(state) {
+        case "running": return "warning";
+        case "done": return "success";
+        case "error": return "error";
+        case "pending": return "info";
+      }
+      return '';
+    },
+
+    changeStatus: function(data){
+      console.dir(data);
+      for(var i = 0; i < cache.length; i++){
+        if (cache[i]._id === data._id){
+          cache[i].state = data.state;
+          break;
+        }
+      }
+
+      apicaba.views.jobList.render();
     }
   };
 

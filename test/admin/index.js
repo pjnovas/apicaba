@@ -7,7 +7,8 @@ app = {
         secrets.mongodb.connectionString, 
         ['jobs', 'groups', 'resources']),
 
-  mockGBA: "http://localhost:3050/"
+  mockGBA: "http://localhost:3050/",
+  secrets: secrets
 };
 
 describe('API Admin', function(){

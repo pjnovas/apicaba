@@ -19,7 +19,8 @@
     "express": "~3.0.5",
     "less-middleware": "~0.1.9",
     "underscore": "1.4.3",
-    "jade": "0.27.x"
+    "jade": "0.27.x",
+    "socket.io": "0.9.13"
   },
   "devDependencies": {
     "mocha": "*",

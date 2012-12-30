@@ -36,7 +36,8 @@ exports.updateGroup = function(groupOld, groupNew, done){
 };
 
 exports.create = function(job, done){
-  
+  job.state = 'pending';
+
   db.jobs.insert(job, function(err, data){
     done(err, data[0]);
   });
@@ -50,6 +51,10 @@ exports.update = function(id, job, done){
       function(err, data){
     done(err, data);
   });
+};
+
+exports.changeState = function(id, state){
+  db.jobs.update({ "_id": ObjectId(id) }, { $set: {state: state } });
 };
 
 exports.remove = function(id, done){
