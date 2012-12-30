@@ -36,7 +36,7 @@ function fillGroup(req, res, next){
 }
 
 function getResourceList(req, res){
-  resources.getByGroupName(req.group.name, function(err, resourceList){
+  resources.getByGroupName(req.group.canonical, function(err, resourceList){
     if (err) return res.send(500);
 
     var _resources = _.map(resourceList, function (resource){

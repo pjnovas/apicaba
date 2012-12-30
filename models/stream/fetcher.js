@@ -18,35 +18,23 @@ Fetcher.prototype.fetch = function() {
   var self = this;
   var retries = 0;
 
-  try {
+  function reTry(){ 
+    retries++;
+    
+    request(self.url, function(res){
+      
+      if (res.ok) {
+        self.emit('data', res.text); 
+      }
 
-    function reTry(){ 
-      retries++;
-      console.log(self.url);
-      request(self.url, function(res){
-        
-        if (res.ok) {
-          self.emit('data', res.text); 
-        }
+    }).on('error', function(){
+      if (retries < maxRetries){
+        console.log('retring from response [%s / %s] ...', retries, maxRetries);
+        reTry(); //TODO: manage errors
+      }
+    });
 
-      }).on('error', function(){
-        if (retries < maxRetries){
-          console.log('retring from response [%s / %s] ...', retries, maxRetries);
-          reTry(); //TODO: manage errors
-        }
-      });
-
-    }
-
-    reTry();
-  }
-  catch(e){
-    console.log('ERROR %s', e);
-
-    if (retries < maxRetries) {
-      console.log('retring from error [%s / %s] ...', retries, maxRetries);
-      reTry();
-    } 
   }
 
+  reTry();
 };
