@@ -65,7 +65,7 @@ describe('#CSV', function(){
 
       var aBiciData = resource.data[5];
       expect(aBiciData).to.be.an('object');
-      expect(aBiciData).to.have.property('EtacionID');
+      expect(aBiciData).to.have.property('EstacionID');
       expect(aBiciData).to.have.property('EstacionNombre');
       expect(aBiciData).to.have.property('cLat');
       expect(aBiciData).to.have.property('cLong');

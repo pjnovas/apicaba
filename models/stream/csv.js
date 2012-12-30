@@ -5,7 +5,7 @@ module.exports = function(str) {
 
   var arr = [], props = [];
 
-  var lines = str.split('\n');
+  var lines = str.split('\r\n');
   
   var header = lines[0].split(',');
 
