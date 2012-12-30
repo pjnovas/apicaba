@@ -131,7 +131,7 @@ apicaba.models.job = (function(){
     },
 
     changeStatus: function(data){
-      console.dir(data);
+      
       for(var i = 0; i < cache.length; i++){
         if (cache[i]._id === data._id){
           cache[i].state = data.state;
