@@ -6,8 +6,8 @@
 var express = require('express')
   , http = require('http')
   , path = require('path')
-  , secrets = require('./secrets.json')
-  , mongoJS = require('mongojs');
+  , mongoJS = require('mongojs')
+  , secrets;
 
 app = express();
 
@@ -22,17 +22,27 @@ app.configure(function(){
   app.use(app.router);
   app.use(require('less-middleware')({ src: __dirname + '/public' }));
   app.use(express.static(path.join(__dirname, 'public')));
+});
 
+app.configure('development', function(){
+  app.use(express.errorHandler());
+  secrets = require('./secrets.json');
+  init();
+});
+
+app.configure('production', function(){
+  app.use(express.errorHandler());
+  secrets = require('./secrets_prod.json');
+  init();
+});
+
+function init(){
   app.db = mongoJS.connect(
           secrets.mongodb.connectionString, 
           ['jobs', 'groups', 'resources']);
 
   startScheduler();
-});
-
-app.configure('development', function(){
-  app.use(express.errorHandler());
-});
+}
 
 require('./routes/admin');
 

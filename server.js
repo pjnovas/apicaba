@@ -6,8 +6,8 @@
 var express = require('express')
   , http = require('http')
   , path = require('path')
-  , secrets = require('./secrets.json')
-  , mongoJS = require('mongojs');
+  , mongoJS = require('mongojs')
+  , secrets;
 
 app = express();
 
@@ -22,17 +22,27 @@ app.configure(function(){
   app.use(app.router);
   app.use(require('less-middleware')({ src: __dirname + '/public' }));
   app.use(express.static(path.join(__dirname, 'public')));
-
-  app.db = mongoJS.connect(
-          secrets.mongodb.connectionString, 
-          ['jobs', 'groups', 'resources']);
-  
-  app.host = 'http://localhost:' + app.get('port');
 });
 
 app.configure('development', function(){
   app.use(express.errorHandler());
+  secrets = require('./secrets.json');
+  connectToMongo();
 });
+
+app.configure('production', function(){
+  app.use(express.errorHandler());
+  secrets = require('./secrets_prod.json');
+  connectToMongo();
+});
+
+function connectToMongo(){
+  app.db = mongoJS.connect(
+          secrets.mongodb.connectionString, 
+          ['jobs', 'groups', 'resources']);
+
+  app.host = secrets.APIhost;
+}
 
 require('./routes');
 

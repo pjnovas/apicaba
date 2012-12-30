@@ -1,3 +1,4 @@
 node_modules
 coverage.html
+secrets_prod.json
 public/scripts/apicaba-*.js
