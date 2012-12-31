@@ -1,4 +1,4 @@
-<script id="search-tmpl" type="text/template">
+<script id="search-tmpl" type="text/x-handlebars-template">
 	<form class="form-search">
 	  <div class="input-prepend">
 	    <button class="btn">Search</button>
@@ -7,19 +7,19 @@
 	</form>
 </script>
 
-<script id="jobList-tmpl" type="text/template">
+<script id="jobList-tmpl" type="text/x-handlebars-template">
 	{{#items}}
 		<tr id="{{_id}}" class="{{currentStatus}}">
 			<td>{{name}}</td>
 			<td>{{group}}</td>
 			<td>{{cron}}</td>
-			<td>{{source.parser}}</td>
-			<td>{{source.url}}</td>
+			<td title="{{formatDate createdAt}}">{{timeAgo createdAt}}</td>
+			<td title="{{formatDate lastRun}}">{{timeAgo lastRun}}</td>
 		</tr>
 	{{/items}}
 </script>
 
-<script id="jobEdit-tmpl" type="text/template">
+<script id="jobEdit-tmpl" type="text/x-handlebars-template">
 	<span id="access" class="accessURL"></span>
 	<form class="form-horizontal">
 		<input id="jobId" type="hidden" {{#_id}}value="{{_id}}"{{/_id}}>

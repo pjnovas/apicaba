@@ -135,6 +135,8 @@ apicaba.models.job = (function(){
       for(var i = 0; i < cache.length; i++){
         if (cache[i]._id === data._id){
           cache[i].state = data.state;
+          if (data.state === 'running')
+            cache[i].lastRun = new Date();
           break;
         }
       }

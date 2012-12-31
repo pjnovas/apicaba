@@ -15,9 +15,9 @@ apicaba.utils.template = (function($){
   };
 
   function resolve(name, data) {
-    var id = Mustache.render(tmplId, {name: name});
+    var id = Handlebars.compile(tmplId)({name: name});
     var tmpl = $.trim($(id).html());
-    return Mustache.render(tmpl, data);
+    return Handlebars.compile(tmpl)(data);
   }
 
   var render = function(model, name, data, done){
@@ -27,7 +27,7 @@ apicaba.utils.template = (function($){
     }
     
     loaded[model] = {
-      file: Mustache.render(partials, {model: model})
+      file: Handlebars.compile(partials)({model: model})
     };
 
     insertTemplate(model, function(err){
@@ -40,6 +40,19 @@ apicaba.utils.template = (function($){
     });
   };
 
+  Handlebars.registerHelper('timeAgo', function(date) {
+    if (date && moment(date).isValid())
+      return moment(date).fromNow();
+    else 
+      return "-";
+  });
+
+  Handlebars.registerHelper('formatDate', function(date) {
+    if (date && moment(date).isValid())
+      return moment(date).format("YYYY-MM-DD HH:mm:ss");
+    else 
+      return "-";
+  });
 
   return {
     render: render

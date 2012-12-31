@@ -1,4 +1,4 @@
-<script id="groupCombo-tmpl" type="text/template">
+<script id="groupCombo-tmpl" type="text/x-handlebars-template">
   <select id="group">
     {{#items}}
       <option value="{{_id}}" data-canonical="{{canonical}}">{{name}}</option>
@@ -7,7 +7,7 @@
   <a href="#group-modal" role="button" class="btn" data-toggle="modal">Manage</a>
 </script>
 
-<script id="groupList-tmpl" type="text/template">
+<script id="groupList-tmpl" type="text/x-handlebars-template">
   {{#items}}
     <tr id="{{_id}}">
       <td>{{name}}</td>
@@ -16,7 +16,7 @@
   {{/items}}
 </script>
 
-<script id="groupEdit-tmpl" type="text/template">
+<script id="groupEdit-tmpl" type="text/x-handlebars-template">
   <form class="form-inline">
     <input id="groupId" type="hidden" {{#_id}}value="{{_id}}"{{/_id}}>
     <input id="name-group" type="text" value="{{name}}" placeholder="Name">
