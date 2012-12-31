@@ -6,6 +6,10 @@ apicaba.models.job = (function(){
   var jobs = [],
     cache = [];
 
+  setInterval(function(){
+    apicaba.views.jobList.render();
+  }, 60000);
+
   return {
     search: function(keywords){
       cache = [];
@@ -37,6 +41,11 @@ apicaba.models.job = (function(){
 
     add: function(job, runNow) {
       apicaba.api.job.new(job, runNow, function(err, newjob){
+        if (runNow) {
+          newjob.state = 'running';
+          newjob.lastRun = new Date();
+        }
+
         jobs.unshift(newjob);
         apicaba.views.jobList.render();
         apicaba.views.jobEdit.render(job);
@@ -44,6 +53,16 @@ apicaba.models.job = (function(){
     },
 
     update: function(job, runNow) {
+
+      apicaba.api.job.update(job, function(err){
+        //TODO: if something bad happened, update the job 
+        // back again and re-render
+      });
+
+      if (runNow) {
+        job.state = 'running';
+        job.lastRun = new Date();
+      }
 
       for(var i = 0; i < cache.length; i++){
         if (cache[i]._id === job._id){
@@ -58,11 +77,6 @@ apicaba.models.job = (function(){
           break;
         }
       }
-
-      apicaba.api.job.update(job, function(err){
-        //TODO: if something bad happened, update the job 
-        // back again and re-render
-      });
 
       apicaba.views.jobList.render();
       apicaba.views.jobEdit.render(job);
@@ -109,25 +123,11 @@ apicaba.models.job = (function(){
     },
 
     getJobs: function(){
-      var self = this;
-      return _.map(cache, function(item){
-        item.currentStatus = self.getStatus(item.state);
-        return item;
-      });
+      return cache;
     },
 
     getRealJobs: function(){
       return jobs;
-    },
-
-    getStatus: function(state){
-      switch(state) {
-        case "running": return "warning";
-        case "done": return "success";
-        case "error": return "error";
-        case "pending": return "info";
-      }
-      return '';
     },
 
     changeStatus: function(data){

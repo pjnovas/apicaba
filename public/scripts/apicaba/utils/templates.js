@@ -54,6 +54,16 @@ apicaba.utils.template = (function($){
       return "-";
   });
 
+  Handlebars.registerHelper('getStatus', function(state) {
+    switch(state) {
+      case "running": return "warning";
+      case "done": return "success";
+      case "error": return "error";
+      case "pending": return "info";
+    }
+    return '';
+  });
+  
   return {
     render: render
   };
