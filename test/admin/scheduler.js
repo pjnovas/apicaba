@@ -4,12 +4,14 @@ var expect = require('expect.js')
   , resources = require('../../collections/resources')
 
   , db = app.db
+  , ObjectId = require('mongojs').ObjectId
   , mockGBA = app.mockGBA
   , name = 'bicis_Create'
   , group = 'urbano';
 
 describe('Scheduler', function(){
   var jobInfo = {
+    "_id": ObjectId(),
     "name": name,
     "group": "urbano",
     "cron": "*/40 * * * * *", //every 40 seconds

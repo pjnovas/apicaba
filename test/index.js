@@ -47,7 +47,7 @@ function createData(){
   db.resources.insert({
     name: "Pauta Publicitaria 2012",
     canonical: "pauta-publicitaria-2012",
-    group: "Finanzas Públicas",
+    group: "finanzas-publicas",
     data: [{
       medio: "AM 1010 ( 8 am en el aire)",
       monto: 25338.60
@@ -63,7 +63,7 @@ function createData(){
   db.resources.insert({
     name: "Sueldos Funcionarios",
     canonical: "sueldos-funcionarios",
-    group: "Finanzas Públicas",
+    group: "finanzas-publicas",
     data: [{
       ano: 2012,
       mes: "Septiembre",
@@ -82,7 +82,7 @@ function createData(){
   db.resources.insert({
     name: "Obras Registradas",
     canonical: "obras-registradas",
-    group: "Desarrollo Urbano",
+    group: "desarrollo-urbano",
     data: [{
       expediente: "1.086.149/2009",
       direccion: "HUMBOLDT 1513",
@@ -104,7 +104,7 @@ function createData(){
   db.resources.insert({
     name: "Visitas a la web de GCBA 2011",
     canonical: "visitas-web-GCBA-2011",
-    group: "Información Digital",
+    group: "informacion-digital",
     data: [{
       pagina: "/areas/sitemap/",
       paginasVistas: 7234746,

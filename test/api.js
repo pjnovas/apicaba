@@ -47,7 +47,7 @@ describe('#Groups', function(){
       expect(res.body).to.be.an('object');
       
       expect(res.body.name).to.be.equal('Pauta Publicitaria 2012');
-      expect(res.body.group).to.be.equal('Finanzas Públicas');
+      expect(res.body.group).to.be.equal('finanzas-publicas');
       expect(res.body.parent).to.be.equal(host + "api/finanzas-publicas/");
 
       expect(res.body.data).to.be.an('array');
