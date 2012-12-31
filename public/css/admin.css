@@ -2,6 +2,9 @@
 .job-form .span6 {
   margin: 0;
 }
+.border-right {
+  border-right: solid 1px silver;
+}
 .current-jobs,
 .job-form,
 .current-groups,
@@ -64,8 +67,15 @@
   height: 250px;
   margin-left: 20px;
   margin-top: 10px;
-  border: solid 1px silver;
-  border-radius: 6px;
+  padding: 5px 10px;
+}
+#fields .add-on {
+  text-align: right;
+  border-radius: 0;
+}
+#fields .input-append,
+#fields .input-prepend {
+  margin-bottom: 0;
 }
 .button-set {
   margin-top: 15px;

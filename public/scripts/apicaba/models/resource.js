@@ -7,9 +7,12 @@ apicaba.models.resource = (function(){
 
   return {
     getPreview: function(source, done){
+      apicaba.views.jobFields.loading();
+
       if (preview){
         apicaba.views.resourcePreview.render(preview);
-        done();
+        apicaba.views.jobFields.render(preview.fields);
+        if (done) done();
         return;
       }
 
@@ -20,7 +23,7 @@ apicaba.models.resource = (function(){
         };
 
         apicaba.views.resourcePreview.render(preview);
-        //TODO: bind view fields jobs
+        apicaba.views.jobFields.render(preview.fields);
 
         if (done) done();
       });
@@ -28,7 +31,9 @@ apicaba.models.resource = (function(){
       function getFields(prev){
         var fieldsArr = [];
         for (var p in prev[0]){
-          fieldsArr.push(p);
+          fieldsArr.push({
+            name: p
+          });
         }
         return fieldsArr;
       }

@@ -25,7 +25,7 @@
 		<div class="span12">
 
 			<div class="span6" style="margin-top: 15px;">
-				<form class="form-horizontal">
+				<form class="form-horizontal border-right">
 					<input id="jobId" type="hidden" {{#_id}}value="{{_id}}"{{/_id}}>
 
 					<div class="control-group">
@@ -65,14 +65,12 @@
 				</form>
 			</div>
 			
-			<div class="span6 left-border">
+			<div class="span6">
 				<div class="row-fluid">
 					<a id="get-preview" class="span3 offset5 btn btn-success">Get Fields</a>
-					<a id="show-preview" href="#preview-modal" role="button" class="span2 offset2 btn" data-toggle="modal">Preview</a>
+					<a id="show-preview" href="#preview-modal" role="button" class="span2 offset2 btn" data-toggle="modal" style="display:none;">Preview</a>
 				</div>
-				<div id="fields" class="row-fluid">
-					<form class="form-horizontal"></form>
-				</div>
+				<div id="fields" class="row-fluid"></div>
 			</div>
 
 		</div>
@@ -87,5 +85,18 @@
 </script>
 
 <script id="jobFields-tmpl" type="text/x-handlebars-template">
-	
+	{{#items}}
+		<div class="row-fluid">
+			<div id="{{name}}" class="input-prepend input-append">
+			  <span class="span5 add-on">{{name}}</span>
+			  <input class="span5" type="text" value="{{newName}}" placeholder="{{name}}">
+			  <select class="span2">
+			    <option value="string" select="true">String</option>
+			    <option value="integer">Integer</option>
+			    <option value="float">Float</option>
+			    <option value="date">Date</option>
+			  </select>
+			</div>
+		</div>
+	{{/items}}
 </script>
