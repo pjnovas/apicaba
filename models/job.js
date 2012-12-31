@@ -33,6 +33,7 @@ Job.prototype.run = function() {
     .pipe(this.persist);
 
   this.persist.on('end', function(){
+    self.persist.removeAllListeners('end');
     self.emit('done');
   });
 
