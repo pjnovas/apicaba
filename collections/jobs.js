@@ -37,6 +37,7 @@ exports.updateGroup = function(groupOld, groupNew, done){
 
 exports.create = function(job, done){
   job.state = 'pending';
+  job.createdAt = new Date();
 
   db.jobs.insert(job, function(err, data){
     done(err, data[0]);
@@ -54,7 +55,12 @@ exports.update = function(id, job, done){
 };
 
 exports.changeState = function(id, state){
-  db.jobs.update({ "_id": ObjectId(id) }, { $set: {state: state } });
+  var upd = { state: state };
+
+  if (state === 'running')
+    upd.lastRun = new Date();
+  
+  db.jobs.update({ "_id": ObjectId(id) }, { $set: upd });
 };
 
 exports.remove = function(id, done){

@@ -2,6 +2,7 @@
 var expect = require('expect.js')
   , scheduler = require('../../models/scheduler')
   , resources = require('../../collections/resources')
+  , jobs = require('../../collections/jobs')
 
   , db = app.db
   , ObjectId = require('mongojs').ObjectId
@@ -11,7 +12,6 @@ var expect = require('expect.js')
 
 describe('Scheduler', function(){
   var jobInfo = {
-    "_id": ObjectId(),
     "name": name,
     "group": "urbano",
     "cron": "*/40 * * * * *", //every 40 seconds
@@ -46,11 +46,24 @@ describe('Scheduler', function(){
     function jobDone(job){
       expect(job.resource).to.be.equal(name);
       expect(job.group).to.be.equal(group);
-      
-      done();
+
+      jobs.getById(job._id, function(err, jobFound){
+        expect(err).to.not.be.ok();
+
+        expect(jobFound).to.have.property('createdAt');
+        expect(jobFound.createdAt).to.be.a(Date);
+        
+        expect(jobFound).to.have.property('lastRun');
+        expect(jobFound.lastRun).to.be.a(Date);
+        
+        done();
+      });
     }
 
-    scheduler.addJob(jobInfo, true);
+    jobs.create(jobInfo, function(err, job){
+      scheduler.addJob(jobInfo, true);
+    });
+
   });
 
 });

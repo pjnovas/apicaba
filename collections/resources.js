@@ -10,7 +10,7 @@ exports.getByCanonical = function(canonical, done){
 };
 
 exports.getByGroupName = function(name, done){
-  console.log(name);
+
   db.resources.find({ group: name }, 
     { _id: false, data: false },
     function(err, data){
