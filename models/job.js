@@ -13,7 +13,7 @@ var Job = module.exports = function (options) {
   this.group = (options && options.group) || '';
 
   if(options && options.source) {
-    this.fetcher = new Fetcher(options.source.url, options.source.extract);
+    this.fetcher = new Fetcher(options.source.url, false);
     this.formatter = new Formatter(options.source.parser);
     this.persist = new Persist(options.name, options.group);
   }

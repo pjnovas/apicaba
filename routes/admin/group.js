@@ -1,6 +1,6 @@
 
-var groups = require('../../collections/groups');
-  jobs = require('../../collections/jobs');
+var groups = require('../../collections/groups')
+  , jobs = require('../../collections/jobs');
 
 app.get('/grupos', getList);
 app.post('/grupos', create);
