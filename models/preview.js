@@ -2,10 +2,10 @@
 var Fetcher = require('./stream/fetcher')
   , Formatter = require('./stream/formatter');
 
-var Preview = module.exports = function (url, parser) {
+var Preview = module.exports = function (url, parser, delimiter) {
 
   this.fetcher = new Fetcher(url, true);
-  this.formatter = new Formatter(parser);
+  this.formatter = new Formatter(parser, delimiter);
 };
 
 Preview.prototype.run = function(done) {

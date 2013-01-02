@@ -6,12 +6,13 @@ var request = require('superagent')
   , xml_parser = new Xml.Parser()
   , csv_parser = require('./csv');
 
-var Formatter = module.exports = function(type) {
+var Formatter = module.exports = function(type, delimiter) {
 
   Stream.call(this);
   this.writable = true;
 
   this.type = type;
+  this.delimiter = delimiter || ',';
 };
 
 util.inherits(Formatter, Stream);
@@ -42,6 +43,6 @@ Formatter.prototype.formatXML = function(xml) {
 
 Formatter.prototype.formatCSV = function(csv) {
   
-  this.emit('data', csv_parser(csv));
+  this.emit('data', csv_parser(csv, this.delimiter));
 
 };

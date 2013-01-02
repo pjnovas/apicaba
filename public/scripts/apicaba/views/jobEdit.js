@@ -48,6 +48,7 @@ apicaba.views.jobEdit = (function($){
       cron: $('#cron', container).val(),
       source: {
         parser: $('#parser', container).val(),
+        delimiter: $('#delimiter', container).val(),
         url: $('#url', container).val()
       }
     };

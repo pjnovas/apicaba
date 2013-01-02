@@ -5,12 +5,10 @@ app.get('/resources/preview', getPreview);
 
 function getPreview(req, res){
   var url = req.query['url']
-    , parser = req.query['parser'];
-
-  console.log('url ' + url);
-  console.log('parser ' + parser);
+    , parser = req.query['parser']
+    , delimiter = req.query['delimiter'];
   
-  var prev = new Preview(url, parser);
+  var prev = new Preview(url, parser, delimiter);
 
   prev.run(function(err, prevData){
     if (err) return res.send(500);

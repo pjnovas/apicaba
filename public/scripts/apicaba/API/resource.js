@@ -13,7 +13,8 @@ apicaba.api.resource = (function(){
         dataType: "json",
         data: {
           url: data.url,
-          parser: data.parser
+          parser: data.parser,
+          delimiter: data.delimiter
         }
       }, done);
     }

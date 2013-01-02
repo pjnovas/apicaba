@@ -14,7 +14,7 @@ var Job = module.exports = function (options) {
 
   if(options && options.source) {
     this.fetcher = new Fetcher(options.source.url, false);
-    this.formatter = new Formatter(options.source.parser);
+    this.formatter = new Formatter(options.source.parser, options.source.delimiter);
     this.persist = new Persist(options.name, options.group);
   }
 
