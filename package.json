@@ -14,7 +14,6 @@
   "dependencies": {
     "cron": "1.0.x",
     "superagent": "0.10.x",
-    "xml2js": "0.2.x",
     "mongojs": "0.4.x",
     "express": "~3.0.5",
     "less-middleware": "~0.1.9",

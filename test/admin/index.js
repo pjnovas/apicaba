@@ -22,6 +22,7 @@ describe('API Admin', function(){
     db.groups.remove();
   });
 
+  require('./preview.js');
   require('./scheduler.js');
   require('./csv.js');
 

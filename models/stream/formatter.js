@@ -1,48 +1,50 @@
 
-var request = require('superagent')
-  , Stream = require('stream').Stream
+var Stream = require('stream').Stream
   , util = require('util')
-  , Xml = require('xml2js')
-  , xml_parser = new Xml.Parser()
-  , csv_parser = require('./csv');
+  , csvParser = require('./csv')
+  , _ = require('underscore');
 
-var Formatter = module.exports = function(type, delimiter) {
+var Formatter = module.exports = function(options) {
 
   Stream.call(this);
   this.writable = true;
 
-  this.type = type;
-  this.delimiter = delimiter || ',';
+  this.type = (options && options.type) || 'csv';
+  this.delimiter = (options && options.delimiter) || ',';
+  this.fields = options && options.fields;
+
+  this.firstRead = true;
 };
 
 util.inherits(Formatter, Stream);
 
 Formatter.prototype.write = function(str) {
+  var lines = getLines(str);
 
-  if(this.type === "xml") 
-    this.formatXML(str);
+  try {
 
-  else if(this.type === "csv") 
-    this.formatCSV(str);
+    if (this.firstRead){
+      if (!this.fields){
+        this.fields = csvParser.getFields(this.delimiter, lines[0]);
+      }
 
-  else 
-    this.emit('data', str);
+      lines.shift();
+      lines.pop();
+      
+      this.firstRead = false;
+    }
 
+    this.emit('data', csvParser.parse(this.fields, this.delimiter, lines));
+  }
+  catch(err){
+    this.emit('error', err);
+  }
 };
 
-Formatter.prototype.formatXML = function(xml) {
-
-  var self = this;
-  xml_parser.parseString(xml, function(err, res) {
-
-    self.emit('data', res);
-
-  });
-
+Formatter.prototype.end = function(str) {
+  this.emit('end');
 };
 
-Formatter.prototype.formatCSV = function(csv) {
-  
-  this.emit('data', csv_parser(csv, this.delimiter));
-
-};
+function getLines(str){
+  return str.split('\r\n');
+}

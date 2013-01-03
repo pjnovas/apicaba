@@ -26,34 +26,38 @@ Fetcher.prototype.fetch = function() {
     
     req.parse( function (res, fn) {
 
-      res.text = '';
-      res.setEncoding('utf8');
+      res.setEncoding('ascii');
 
       res.on('data', function(chunk){ 
-
-        res.text += chunk;
-
         if (self.preview) {
           res.destroy();
+          self.emit('data', chunk);
           fn(null, chunk);
+        }
+        else {
+          self.emit('data', chunk);
         }
       });
 
-      res.on('end', fn);
+      res.on('end', function(){
+        self.emit('end');
+        fn(null);
+      });
+
     });
 
-    req.end(function(err, res){
-      if (err){
-        if (retries < maxRetries){
-          console.log('retring [%s / %s] ...', retries, maxRetries);
-          return reTry(); //TODO: manage errors
-        }
+    req.on('error', function(err){
+      if (retries < maxRetries){
+        console.log('retring [%s / %s] ...', retries, maxRetries);
+        return reTry(); 
       }
-      
-      if (res.ok) {
-        self.emit('data', res.text); 
+      else {
+        self.emit('error', 
+          new Error('Server not responded after ' + retries + ' re-tries'));
       }
     });
+
+    req.end();
   }
 
   reTry();

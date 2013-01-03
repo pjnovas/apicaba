@@ -65,10 +65,10 @@ describe('#CSV', function(){
 
       var aBiciData = resource.data[5];
       expect(aBiciData).to.be.an('object');
-      expect(aBiciData).to.have.property('EstacionID');
-      expect(aBiciData).to.have.property('EstacionNombre');
-      expect(aBiciData).to.have.property('cLat');
-      expect(aBiciData).to.have.property('cLong');
+      expect(aBiciData).to.have.property('id');
+      expect(aBiciData).to.have.property('nombre');
+      expect(aBiciData).to.have.property('latitud');
+      expect(aBiciData).to.have.property('longitud');
 
       done();
     }
@@ -85,7 +85,20 @@ function createTestJobs(done){
     "cron": "* * * * * *",
     "source": {
       "url": mockGBA + "bicis.csv",
-      "parser": "csv"
+      "parser": "csv",
+      "fields": [{
+        "name": "id",
+        "type": "string"
+      },{
+        "name": "nombre",
+        "type": "string"
+      },{
+        "name": "latitud",
+        "type": "string"
+      },{
+        "name": "longitud",
+        "type": "string"
+      }]
     }
   });
 

@@ -17,26 +17,13 @@ apicaba.models.resource = (function(){
       }
 
       apicaba.api.resource.getPreview(source, function(err, previewData){
-        preview = {
-          fields: getFields(previewData),
-          items: previewData
-        };
+        preview = previewData;
 
-        apicaba.views.resourcePreview.render(preview);
-        apicaba.views.jobFields.render(preview.fields);
+        apicaba.views.resourcePreview.render(previewData);
+        apicaba.views.jobFields.render(previewData.fields);
 
         if (done) done();
       });
-
-      function getFields(prev){
-        var fieldsArr = [];
-        for (var p in prev[0]){
-          fieldsArr.push({
-            name: p
-          });
-        }
-        return fieldsArr;
-      }
     },
 
     clearPreview: function(){

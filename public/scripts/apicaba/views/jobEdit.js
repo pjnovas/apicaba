@@ -49,7 +49,8 @@ apicaba.views.jobEdit = (function($){
       source: {
         parser: $('#parser', container).val(),
         delimiter: $('#delimiter', container).val(),
-        url: $('#url', container).val()
+        url: $('#url', container).val(),
+        fields: apicaba.views.jobFields.getFields()
       }
     };
 

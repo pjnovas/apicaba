@@ -1,24 +1,28 @@
 
-// Parse a csv file with first line as header and return a js object
+var _ = require('underscore');
 
-module.exports = function(str, delimiter) {
-  var del = delimiter || ','
-    , arr = [], props = [];
+module.exports.getFields = function(delimiter, row){
+  var header = row.split(delimiter);
 
-  var lines = str.split('\r\n');
-  
-  var header = lines[0].split(del);
+  return _.map(header, function(field){
+    return {
+      "name": field,
+      "type": "string"      
+    };
+  });
 
-  lines.shift();
-  lines.pop();
+};
+
+module.exports.parse = function(fields, delimiter, lines){
+  var arr = [];
 
   for(var i = 0; i < lines.length; i++) {
-    var props = lines[i].split(del);
+    var props = lines[i].split(delimiter);
 
     var line = {};
 
     props.forEach(function(prop, index){
-      line[header[index]] = prop;
+      line[fields[index].name] = prop;
     });
 
     arr.push(line);
@@ -26,3 +30,5 @@ module.exports = function(str, delimiter) {
 
   return arr;
 };
+
+

@@ -17,7 +17,20 @@ describe('Scheduler', function(){
     "cron": "*/40 * * * * *", //every 40 seconds
     "source": {
       "url": mockGBA + "bicis.csv",
-      "parser": "csv"
+      "parser": "csv",
+      "fields": [{
+        "name": "id",
+        "type": "string"
+      },{
+        "name": "nombre",
+        "type": "string"
+      },{
+        "name": "latitud",
+        "type": "string"
+      },{
+        "name": "longitud",
+        "type": "string"
+      }]
     }
   };
 

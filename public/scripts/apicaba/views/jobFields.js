@@ -47,6 +47,18 @@ apicaba.views.jobFields = (function($){
       $('#show-preview').hide();
       var target = $(container)[0];
       spinner.spin(target);
+    },
+    getFields: function(){
+      var fields = [];
+
+      $('div div', container).each(function(){
+        fields.push({
+          name: $('input', this).val(),
+          type: $('select', this).val()
+        });
+      });
+
+      return fields;
     }
   };
 
