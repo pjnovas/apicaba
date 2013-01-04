@@ -1,7 +1,8 @@
 
 var Stream = require('stream').Stream
   , util = require('util')
-  , resources = require('../../collections/resources');
+  , resources = require('../../collections/resources')
+  , temp = require('../../collections/temp');
 
 var Persist = module.exports = function(name, group) {
 
@@ -18,24 +19,29 @@ var Persist = module.exports = function(name, group) {
 util.inherits(Persist, Stream);
 
 Persist.prototype.write = function(data) {
-  //TODO: move from memory to a TEMP collection
-  this.temp = this.temp.concat(data);
+  temp.pushData(this.name, data);
 };
 
 Persist.prototype.end = function() {
   var self = this;
   
-  resources.create({
-    name: this.name,
-    canonical: this.canonical,
-    group: this.group,
-    data: this.temp
-  }, function(err){
-    if (err) {
-      throw err;
-      self.emit('error', err);
-    }
+  temp.getData(this.name, function(err, tempRes){
 
-    self.emit('end');
+    resources.create({
+      name: self.name,
+      canonical: self.canonical,
+      group: self.group,
+      count: tempRes.data.length,
+      data: tempRes.data
+    }, function(err){
+      if (err) {
+        throw err;
+        self.emit('error', err);
+      }
+
+      self.emit('end');
+      temp.clean(self.name);
+
+    });
   });
 };

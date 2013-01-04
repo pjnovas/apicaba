@@ -19,5 +19,5 @@ exports.getByGroupName = function(name, done){
 };
 
 exports.create = function(resource, done){
-  db.resources.update({name: resource.name}, {$set: resource}, { upsert: true} , done);
+  db.resources.update({name: resource.name}, {$set: resource}, { upsert: true } , done);
 };

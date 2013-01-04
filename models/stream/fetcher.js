@@ -44,9 +44,13 @@ Fetcher.prototype.fetch = function() {
         fn(null);
       });
 
+      res.on('error', function(){
+        console.log('RES >>>>> ERROR ', err);  
+      });
     });
 
     req.on('error', function(err){
+      console.log('REQ >>>>> ERROR ', err);
       if (retries < maxRetries){
         console.log('retring [%s / %s] ...', retries, maxRetries);
         return reTry(); 

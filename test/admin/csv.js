@@ -2,6 +2,7 @@
 var expect = require('expect.js')
   , scheduler = require('../../models/scheduler')
   , resources = require('../../collections/resources')
+  , temp = require('../../collections/temp')
 
   , db = app.db
   , mockGBA = app.mockGBA
@@ -70,7 +71,12 @@ describe('#CSV', function(){
       expect(aBiciData).to.have.property('latitud');
       expect(aBiciData).to.have.property('longitud');
 
-      done();
+      temp.getData(resource.name, function(err, tempRes){
+        expect(err).to.not.be.ok();
+        expect(tempRes).to.not.be.ok();
+      
+        done();
+      });
     }
 
   });
