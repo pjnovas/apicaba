@@ -6,7 +6,7 @@ var collDir = '../collections'
 
 app.get('/api/grupos', getGroupList);
 app.get('/api/:group', fillGroup, getResourceList);
-app.get('/api/:group/:resource', fillGroup, getResource);
+app.get('/api/:group/:resource', fillGroup, getResource, getQuery);
 
 function getGroupList(req, res){
   groups.getAll(function(err, groupList){
@@ -47,21 +47,45 @@ function getResourceList(req, res){
   });
 }
 
-function getResource(req, res){
+function getResource(req, res, next){
   var resourceName = req.params.resource;
 
   resources.getByCanonical(resourceName, function(err, resource){
     if (err) return res.send(500);
 
     if (resource) {
-      res.send(buildResource(req.group, resource));
+      if (!_.isEmpty(req.query)) {
+        req.resource = resource;
+        next();
+      }
+      else
+        res.send(buildResource(req.group, resource)); 
     }
     else res.send(404);
   });
 }
 
 function buildResource(group, resource){
-  resource.url = host + '/api/' + group.canonical + '/' + resource.canonical;
+  resource.preview = host + '/api/' + group.canonical + '/' + resource.canonical + '?q=preview';
   resource.parent = host + '/api/' + group.canonical + '/';
   return resource;
+}
+
+function getQuery(req, res){
+  var query = req.query;
+  
+  function done(err, resourceList){
+    if (err) return res.send(500);
+    res.send(resourceList);
+  }
+
+  if (query.q && query.q === "preview"){
+    resources.getByQuery(req.resource.collection, {}, done);
+  }
+  else if (_.isObject(query)){
+    resources.getByQuery(req.resource.collection, query, done);
+  }
+  else {
+    res.send(400);
+  }
 }

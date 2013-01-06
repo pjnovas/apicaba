@@ -39,7 +39,7 @@ app.configure('production', function(){
 function init(){
   app.db = mongoJS.connect(
           app.secrets.mongodb.connectionString, 
-          ['jobs', 'groups', 'resources', 'temp']);
+          ['jobs', 'groups', 'resources']);
 
   startScheduler();
 }

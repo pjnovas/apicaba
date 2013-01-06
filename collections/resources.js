@@ -21,3 +21,21 @@ exports.getByGroupName = function(name, done){
 exports.create = function(resource, done){
   db.resources.update({name: resource.name}, {$set: resource}, { upsert: true } , done);
 };
+
+exports.pushTempData = function(name, data) {
+  db.collection(name).insert(data);
+};
+
+exports.renameResource = function(sourceName, targetName){
+  db.collection(targetName).drop(function(err){
+    db.collection(sourceName).rename(targetName);
+  });
+};
+
+exports.getByQuery = function(name, query, done) {
+  db.collection(name).find(query,
+    { _id: false },
+    function(err, data){
+      done(err, data || []);
+    }).limit(200);
+};

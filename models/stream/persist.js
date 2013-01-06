@@ -1,47 +1,50 @@
 
 var Stream = require('stream').Stream
   , util = require('util')
-  , resources = require('../../collections/resources')
-  , temp = require('../../collections/temp');
+  , resources = require('../../collections/resources');
 
-var Persist = module.exports = function(name, group) {
+var Persist = module.exports = function(name, group, fields) {
 
   Stream.call(this);
   this.writable = true;
 
   this.name = name;
-  this.canonical = name.toLowerCase().replace(/ /g, '-');
   this.group = group;
+  this.fields = fields;
 
-  this.temp = [];
+  //TODO: manage á é í ó ú & special chars
+
+  this.canonical = name.toLowerCase().replace(/ /g, '-');
+  this.resourceColl = name.toLowerCase().replace(/ /g, '_');
+  this.count = 0;
 };
 
 util.inherits(Persist, Stream);
 
 Persist.prototype.write = function(data) {
-  temp.pushData(this.name, data);
+  this.count += data.length;
+  resources.pushTempData(this.resourceColl + '_temp', data);
 };
 
 Persist.prototype.end = function() {
   var self = this;
-  
-  temp.getData(this.name, function(err, tempRes){
 
-    resources.create({
-      name: self.name,
-      canonical: self.canonical,
-      group: self.group,
-      count: tempRes.data.length,
-      data: tempRes.data
-    }, function(err){
-      if (err) {
-        throw err;
-        self.emit('error', err);
-      }
+  resources.renameResource(this.resourceColl + '_temp', this.resourceColl);
 
-      self.emit('end');
-      temp.clean(self.name);
+  resources.create({
+    name: self.name,
+    canonical: self.canonical,
+    group: self.group,
+    collection: this.resourceColl,
+    count: this.count,
+    fields: this.fields
+  }, function(err){
+    if (err) {
+      throw err;
+      self.emit('error', err);
+    }
 
-    });
-  });
+    self.count = 0;
+    self.emit('end');
+  });  
 };

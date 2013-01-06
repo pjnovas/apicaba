@@ -70,13 +70,8 @@ describe('#CSV', function(){
       expect(aBiciData).to.have.property('nombre');
       expect(aBiciData).to.have.property('latitud');
       expect(aBiciData).to.have.property('longitud');
-
-      temp.getData(resource.name, function(err, tempRes){
-        expect(err).to.not.be.ok();
-        expect(tempRes).to.not.be.ok();
       
-        done();
-      });
+      done();
     }
 
   });
