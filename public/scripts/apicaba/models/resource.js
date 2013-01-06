@@ -9,13 +9,6 @@ apicaba.models.resource = (function(){
     getPreview: function(source, done){
       apicaba.views.jobFields.loading();
 
-      if (preview){
-        apicaba.views.resourcePreview.render(preview);
-        apicaba.views.jobFields.render(preview.fields);
-        if (done) done();
-        return;
-      }
-
       apicaba.api.resource.getPreview(source, function(err, previewData){
         preview = previewData;
 

@@ -6,13 +6,14 @@ exports.getByName = function(name, done){
 };
 
 exports.getByCanonical = function(canonical, done){
-  db.resources.findOne({ canonical: canonical }, { _id: false }, done);
+  db.resources.findOne({ canonical: canonical }, 
+    { _id: false }, done);
 };
 
 exports.getByGroupName = function(name, done){
 
   db.resources.find({ group: name }, 
-    { _id: false, data: false },
+    { "_id": false, name: true, canonical: true },
     function(err, data){
       done(err, data || []);
     });

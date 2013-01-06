@@ -14,6 +14,7 @@ function getGroupList(req, res){
 
     var _groups = _.map(groupList, function (group){
       group.url = host + '/api/' + group.canonical;
+      delete group.canonical;
       return group;
     });
 
@@ -36,11 +37,15 @@ function fillGroup(req, res, next){
 }
 
 function getResourceList(req, res){
-  resources.getByGroupName(req.group.canonical, function(err, resourceList){
+  var group = req.group.canonical;
+
+  resources.getByGroupName(group, function(err, resourceList){
     if (err) return res.send(500);
 
     var _resources = _.map(resourceList, function (resource){
-      return buildResource(req.group, resource);
+      resource.url = host + '/api/' + group + '/' + resource.canonical;
+      delete resource.canonical;
+      return resource;
     });
 
     res.send(_resources);
@@ -54,21 +59,24 @@ function getResource(req, res, next){
     if (err) return res.send(500);
 
     if (resource) {
+      resource.group = req.group;
+
       if (!_.isEmpty(req.query)) {
         req.resource = resource;
         next();
       }
-      else
-        res.send(buildResource(req.group, resource)); 
+      else {
+        resource.group.url = host + '/api/' + resource.group.canonical + '/';
+        resource.preview = host + '/api/' + resource.group.canonical + '/' + resource.canonical + '?q=preview';
+        delete resource.group.canonical;
+        delete resource.canonical;
+        delete resource.collection;
+
+        res.send(resource);
+      }
     }
     else res.send(404);
   });
-}
-
-function buildResource(group, resource){
-  resource.preview = host + '/api/' + group.canonical + '/' + resource.canonical + '?q=preview';
-  resource.parent = host + '/api/' + group.canonical + '/';
-  return resource;
 }
 
 function getQuery(req, res){

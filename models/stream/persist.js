@@ -37,7 +37,7 @@ Persist.prototype.end = function() {
     group: self.group,
     collection: this.resourceColl,
     count: this.count,
-    fields: this.fields
+    columns: this.fields
   }, function(err){
     if (err) {
       throw err;
