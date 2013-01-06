@@ -54,7 +54,7 @@ apicaba.models.job = (function(){
 
     update: function(job, runNow) {
 
-      apicaba.api.job.update(job, function(err){
+      apicaba.api.job.update(job, runNow, function(err){
         //TODO: if something bad happened, update the job 
         // back again and re-render
       });
@@ -79,7 +79,7 @@ apicaba.models.job = (function(){
       }
 
       apicaba.views.jobList.render();
-      apicaba.views.jobEdit.render(job);
+      apicaba.views.jobEdit.render();
     },
 
     save: function(job, runNow){

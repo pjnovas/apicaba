@@ -26,12 +26,12 @@ apicaba.api.job = (function(){
         data: {job: job, runNow: runNow}
       }, done);
     },
-    update: function(job, done) {
+    update: function(job, runNow, done) {
       apicaba.utils.ajax.call({
         method: 'PUT',
         url: root + job._id,
         dataType: "json",
-        data: {job: job}
+        data: {job: job, runNow: runNow}
       }, done);
     },
     delete: function(id, done) {

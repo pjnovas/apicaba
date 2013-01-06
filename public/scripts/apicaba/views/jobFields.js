@@ -32,19 +32,42 @@ apicaba.views.jobFields = (function($){
 
   var spinner = new Spinner(opts);
 
+  function getField(){
+    var value = $('input', this).val(),
+      placeHolder = $('input', this).attr('placeholder');
+
+    var field = {
+      name: value || placeHolder,
+      type: $('select', this).val()
+    };
+
+    return field;
+  }
+
+  Handlebars.registerHelper('formatFieldName', function(name) {
+    var newName = name;
+
+    newName = newName.replace(/ /, '_');
+    newName = newName.toLowerCase();
+
+    return newName;
+  });
+
   return {
     render: function(fields, done) {
       apicaba.utils.template.render(model, 'jobFields', { items: fields }, 
         function(err, rendered){
           spinner.stop();
-          $('#show-preview').show();
-
-          $(container).empty().html(rendered);
+          if (fields && fields.length > 0) {
+            $('#show-preview').show();
+            $(container).empty().html(rendered);
+          }
           if (done) done();
       });
     },
     loading: function(){
       $('#show-preview').hide();
+      $(container).empty();
       var target = $(container)[0];
       spinner.spin(target);
     },
@@ -52,10 +75,7 @@ apicaba.views.jobFields = (function($){
       var fields = [];
 
       $('div div', container).each(function(){
-        fields.push({
-          name: $('input', this).val(),
-          type: $('select', this).val()
-        });
+        fields.push(getField.call(this));
       });
 
       return fields;

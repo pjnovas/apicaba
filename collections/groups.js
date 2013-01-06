@@ -4,7 +4,6 @@ var ObjectId = require('mongojs').ObjectId
 exports.getAll = function(done){
   db.groups
     .find({}
-    , {"_id": false}
     , function(err, data){
       done(err, data || []);
     });

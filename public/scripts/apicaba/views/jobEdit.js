@@ -70,6 +70,7 @@ apicaba.views.jobEdit = (function($){
         $('#name', container).focus();
 
         apicaba.views.groupEdit.render(null, function(){
+          apicaba.views.jobFields.render(job.source && job.source.fields);
           apicaba.models.group.bind(function(){
             if (done) done();
           });

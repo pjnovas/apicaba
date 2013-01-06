@@ -2,7 +2,8 @@
 var EventEmitter = require('events').EventEmitter
   , jobs = require('../collections/jobs')
   , Job = require('./job')
-  , CronJob = require('cron').CronJob;
+  , CronJob = require('cron').CronJob
+  , _ = require('underscore');
 
 var currentJobs = [];
 
@@ -24,6 +25,7 @@ scheduler.initialize = function (done){
 };
 
 scheduler.addJob = create;
+scheduler.updateJob = update;
 
 function create(jobConfig, runNow){
   
@@ -59,4 +61,19 @@ function create(jobConfig, runNow){
   })(job);
 
   currentJobs.push(job);
+}
+
+function update(jobConfig, runNow){
+  var pos = -1;
+  var job = _.find(currentJobs, function(job){
+    pos++;
+    return job._id === jobConfig._id;
+  });
+
+  if (job) {
+    job.destroy();
+    currentJobs.splice(pos, 1);
+
+    create(jobConfig, runNow);
+  }
 }

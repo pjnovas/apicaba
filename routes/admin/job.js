@@ -28,10 +28,15 @@ function create(req, res){
 }
 
 function update(req, res){
-  var jobId = req.params.jobId;
+  var jobId = req.params.jobId,
+    runNow = req.body.runNow,
+    updateJob = req.body.job;
 
   jobs.update(jobId, req.body.job, function(err){
     if (err) return res.send(500);
+
+    scheduler.updateJob(updateJob, runNow);
+
     res.send(204); //Ok with No Content
   });
 }

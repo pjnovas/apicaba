@@ -14,6 +14,7 @@ function getGroupList(req, res){
 
     var _groups = _.map(groupList, function (group){
       group.url = host + '/api/' + group.canonical;
+      delete group._id;
       delete group.canonical;
       return group;
     });

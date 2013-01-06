@@ -26,7 +26,7 @@
 
 			<div class="span6" style="margin-top: 15px;">
 				<form class="form-horizontal border-right">
-					<input id="jobId" type="hidden" {{#_id}}value="{{_id}}"{{/_id}}>
+					<input id="jobId" type="hidden" value="{{_id}}">
 
 					<div class="control-group">
 						<span class="control-label" for="name">Name</span>
@@ -90,7 +90,7 @@
 		<div class="row-fluid">
 			<div id="{{name}}" class="input-prepend input-append">
 			  <span class="span5 add-on">{{name}}</span>
-			  <input class="span5" type="text" value="{{newName}}" placeholder="{{name}}">
+			  <input class="span5" type="text" placeholder="{{formatFieldName name}}">
 			  <select class="span2">
 			    <option value="string" select="true">String</option>
 			    <option value="integer">Integer</option>

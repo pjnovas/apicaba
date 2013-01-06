@@ -45,3 +45,25 @@ Job.prototype.cronJob = function(cronJob) {
     return this.cronJob;
   else this.cronJob = cronJob;
 };
+
+Job.prototype.destroy = function() {
+
+  //TODO: checkout how to destroy streams
+  /*
+  this.fetcher.destroy();
+  this.formatter.destroy();
+  this.persist.destroy();
+  */
+
+  this.fetcher = null;
+  this.formatter = null;
+  this.persist = null;
+
+  this.cronJob.stop();
+  this.cronJob = null;
+  
+  this
+    .removeAllListeners('run')
+    .removeAllListeners('done')
+    .removeAllListeners('error');
+};
