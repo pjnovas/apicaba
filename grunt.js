@@ -19,7 +19,7 @@ module.exports = function(grunt) {
             ,'public/scripts/apicaba/API/*.js'
             ,'public/scripts/apicaba/utils/*.js'
             ,'public/scripts/apicaba/models/*.js'
-            ,'public/scripts/apicaba/views/*.js'
+            ,'public/scripts/apicaba/views/**/*.js'
             ,'public/scripts/apicaba/*.js'
         ],
         dest: 'public/scripts/<%= pkg.name %>-<%= pkg.version %>.js'

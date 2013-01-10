@@ -1,12 +1,13 @@
 body {
   padding-top: 20px;
   padding-bottom: 40px;
+  background: url('/images/back_site.png');
 }
 
 /* Custom container */
 .container-narrow {
   margin: 0 auto;
-  max-width: 700px;
+  max-width: 900px;
 }
 .container-narrow > hr {
   margin: 30px 0;
@@ -32,4 +33,82 @@ body {
 }
 .marketing p + h4 {
   margin-top: 28px;
+}
+
+/*
+ * SPLASH
+ */
+
+.splash {
+  width: 900px;
+  height: 500px;
+  margin: 50px auto;
+  position: relative; 
+
+  .object {
+    position: absolute;
+    width: 340px;
+    height: 250px;
+  }
+
+  .object.ready {
+    background: url('/images/objects.png') no-repeat;
+  }
+
+  .object.cloudBA {
+    top: -30px;
+    left: -30px;
+    background-position: -340px 0;
+    z-index: 2;
+  }
+
+  .object.machine,
+  .object.machine-cover {
+    bottom: 30px;
+    left: 300px;
+    background-position: 0 0;
+    z-index: 3;
+  }
+
+  .object.machine-cover {
+    z-index: 10;
+    background: none;
+    border: none;
+  }
+
+  .object.cloudAPI {
+    top: -30px;
+    right: -30px;
+    background-position: -680px 0;
+    z-index: 5;
+  }
+
+  #door,
+  #sucker,
+  #bazooka {
+    position: absolute;
+  }
+
+  #door {
+    bottom: 69px;
+    left: 346px;
+    z-index: 5;
+  }
+
+  #sucker {
+    bottom: 70px;
+    left: 180px;
+    z-index: 1;
+  }
+
+  #bazooka {
+    bottom: 142px;
+    left: 560px;
+    z-index: 4;
+  }
+}
+
+.splash.ready {
+  background: url('/images/bg.png') no-repeat;
+  background-position: 0 30px;
 }

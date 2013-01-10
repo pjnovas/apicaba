@@ -16,10 +16,14 @@ block content
       h3.muted APICABA
     hr
     .jumbotron
-      h1 Super awesome marketing speak!
-      p.lead
-        | Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-      a.btn.btn-large.btn-success(href='#') Sign up today
+      .splash
+        .object.cloudBA
+        canvas#sucker(width='170px', height='270px')
+        .object.machine
+        canvas#door(width='160px', height='120px')
+        a.object.machine-cover(border='0', title='Código Fuente', target='_blank', href='https://github.com/pjnovas/apicaba')
+        canvas#bazooka(width='170px', height='240px')
+        .object.cloudAPI
     hr
     .row-fluid.marketing
       .span6
@@ -43,3 +47,7 @@ block content
     hr
     .footer
       p © Company 2012
+
+block scripts
+  script(src='/scripts/apicaba-0.0.1.js')
+  script(src='/scripts/index.js')
