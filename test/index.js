@@ -4,7 +4,7 @@ var mongoJS = require('mongojs')
 app = {
   db: mongoJS.connect(
         secrets.mongodb.connectionString, 
-        ['jobs', 'groups', 'subgroups', 'resources']),
+        ['jobs', 'groups', 'resources']),
 
   server: "http://localhost:3000/",
   secrets: secrets
@@ -20,9 +20,9 @@ describe('API Server', function(){
 
   after(function(){
     db.groups.remove();
-    db.subgroups.remove();
     db.resources.remove();
     db.jobs.remove();
+    db.collection('pauta_publicitaria_2012').remove();
   });
 
   require('./api.js');
@@ -45,95 +45,47 @@ function createData(){
     canonical: "informacion-digital"
   });
 
-  db.subgroups.insert({ 
-    name: "Desarrollo Urbano",
-    canonical: "desarrollo-urbano"
+  db.resources.insert({
+    name: "Sueldos Funcionarios",
+    canonical: "sueldos-funcionarios",
+    group: "finanzas-publicas"
   });
-  db.subgroups.insert({ 
-    name: "Finanzas Públicas",
-    canonical: "finanzas-publicas"
+
+  db.resources.insert({
+    name: "Obras Registradas",
+    canonical: "obras-registradas",
+    group: "desarrollo-urbano"
   });
-  db.subgroups.insert({ 
-    name: "Información Digital",
-    canonical: "informacion-digital"
+
+  db.resources.insert({
+    name: "Visitas a la web de GCBA 2011",
+    canonical: "visitas-web-GCBA-2011",
+    group: "informacion-digital"
   });
 
   db.resources.insert({
     name: "Pauta Publicitaria 2012",
     canonical: "pauta-publicitaria-2012",
     group: "finanzas-publicas",
-    data: [{
-      medio: "AM 1010 ( 8 am en el aire)",
-      monto: 25338.60
+    collection: "pauta_publicitaria_2012",
+    count: 3,
+    columns: [{
+      "name": "medio",
+      "type": "string"
     },{
-      medio: "A MEDIO CAMINO",
-      monto: 25338.60
-    },{
-      medio: "ABC Almagro - Boedo - Caballito",
-      monto: 33784.80
+      "name": "monto",
+      "type": "string"
     }]
-  });
+  });  
 
-  db.resources.insert({
-    name: "Sueldos Funcionarios",
-    canonical: "sueldos-funcionarios",
-    group: "finanzas-publicas",
-    data: [{
-      ano: 2012,
-      mes: "Septiembre",
-      funcionario: "MACRI,MAURICIO"
-    },{
-      ano: 2012,
-      mes: "Septiembre",
-      funcionario: "VIDAL,MARIA EUGENIA"
-    },{
-      ano: 2012,
-      mes: "Septiembre",
-      funcionario: "RODRIGUEZ LARRETA,HORACIO ANTONIO"
-    }]
-  });
-
-  db.resources.insert({
-    name: "Obras Registradas",
-    canonical: "obras-registradas",
-    group: "desarrollo-urbano",
-    data: [{
-      expediente: "1.086.149/2009",
-      direccion: "HUMBOLDT 1513",
-      estado: "REGISTRADO",
-      tipo: "OBRA NUEVA"
-    },{
-      expediente: "1.097.330/2009",
-      direccion: "DRAGONES 1880",
-      estado: "REGISTRADO",
-      tipo: "DEMOLICION TOTAL Y OBRA"
-    },{
-      expediente: "1.097.157/2009",
-      direccion: "CONSTITUCION 2215",
-      estado: "REGISTRADO",
-      tipo: "DEMOLICION PARCIAL Y AMPLIACION DE OBRA"
-    }]
-  });
-
-  db.resources.insert({
-    name: "Visitas a la web de GCBA 2011",
-    canonical: "visitas-web-GCBA-2011",
-    group: "informacion-digital",
-    data: [{
-      pagina: "/areas/sitemap/",
-      paginasVistas: 7234746,
-      porcentajeRebote: 50.39,
-      porcentajeSalidas: 45.7
-    },{
-      expediente: "/areas/educacion/",
-      paginasVistas: 34746,
-      porcentajeRebote: 10.47,
-      porcentajeSalidas: 35.98
-    },{
-      expediente: "/areas/cultura/",
-      paginasVistas: 72746,
-      porcentajeRebote: 30.24,
-      porcentajeSalidas: 78.45
-    }]
-  });
+  db.collection('pauta_publicitaria_2012').insert([{
+    medio: "AM 1010",
+    monto: 25338.60
+  },{
+    medio: "A MEDIO CAMINO",
+    monto: 25338.60
+  },{
+    medio: "ABC Almagro - Boedo - Caballito",
+    monto: 33784.80
+  }]);
 }

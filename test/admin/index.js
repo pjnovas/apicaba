@@ -5,7 +5,7 @@ var mongoJS = require('mongojs')
 app = {
   db: mongoJS.connect(
         secrets.mongodb.connectionString, 
-        ['jobs', 'groups', 'subgroups', 'resources']),
+        ['jobs', 'groups', 'resources']),
 
   mockGBA: "http://localhost:3050/",
   secrets: secrets

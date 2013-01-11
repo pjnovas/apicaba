@@ -50,9 +50,24 @@ describe('#Groups', function(){
       expect(res.body.group).to.be.an('object');
       expect(res.body.group.name).to.be.equal('Finanzas Públicas');
       expect(res.body.group.url).to.be.equal(host + "api/finanzas-publicas/");
+      
+      expect(res.body.count).to.be.equal(3);
+      expect(res.body.columns.length).to.be.equal(2);
 
-      expect(res.body.data).to.be.an('array');
-      expect(res.body.data.length).to.be.equal(3);
+      done();
+    });
+  });
+
+  it("should retrieve a list of resources when is called with q=preview", function(done){
+    request(host + 'api/finanzas-publicas/pauta-publicitaria-2012?q=preview', function(res){
+
+      expect(res.ok).to.be.ok();
+      expect(res.body).to.be.an('array');
+      expect(res.body.length).to.be.equal(3);
+
+      var pauta = res.body[1];
+      expect(pauta.medio).to.be.equal("A MEDIO CAMINO");
+      expect(pauta.monto).to.be.equal(25338.60);
       
       done();
     });

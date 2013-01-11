@@ -5,7 +5,7 @@ var expect = require('expect.js')
 
   , db = app.db
   , mockGBA = app.mockGBA
-  , cannonical = 'bicis-locas'
+  , canonical = 'bicis-locas'
   , collection = 'bicis_locas'
   , jobTest = {
     "name": "bicis locas",
@@ -83,7 +83,7 @@ describe('#CSV', function(){
 
       expect(err).to.not.be.ok();
       expect(resource.name).to.be.equal(jobTest.name);
-      expect(resource.canonical).to.be.equal(cannonical);
+      expect(resource.canonical).to.be.equal(canonical);
       expect(resource.group).to.be.equal(jobTest.group);
       expect(resource.count).to.be.equal(28);
       expect(resource.collection).to.be.equal(collection);
@@ -94,21 +94,29 @@ describe('#CSV', function(){
         expect(resource.columns[i]).to.be.eql(jobTest.source.fields[i]);
       }
 
+      done();
+    }
 
-      /*
-      expect(resource.data).to.be.an('array');
-      expect(resource.data.length).to.be.equal(28);
+  });
 
-      var aBiciData = resource.data[5];
+  it("should create a resource collection by its canonical name with undersocre", function(done){
+    
+     resources.getByQuery(collection, {}, function(err, resourceList){
+
+      expect(err).to.not.be.ok();
+      expect(resourceList).to.be.an('array');
+      expect(resourceList.length).to.be.equal(28);
+
+      var aBiciData = resourceList[5];
       expect(aBiciData).to.be.an('object');
       expect(aBiciData).to.have.property('id');
       expect(aBiciData).to.have.property('nombre');
       expect(aBiciData).to.have.property('latitud');
       expect(aBiciData).to.have.property('longitud');
-      */
+      
       done();
-    }
-
+        
+    });
   });
 
 });
