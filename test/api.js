@@ -40,7 +40,10 @@ describe('#Groups', function(){
       done();
     });
   });
+});
 
+describe('#Resources', function(){
+  
   it("should retrieve a resource when api/finanzas-publicas/pauta-publicitaria-2012 is called", function(done){
     request(host + 'api/finanzas-publicas/pauta-publicitaria-2012', function(res){
       expect(res.ok).to.be.ok();
