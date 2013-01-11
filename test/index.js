@@ -79,8 +79,8 @@ function createData(){
   });  
 
   db.collection('pauta_publicitaria_2012').insert([{
-    medio: "AM 1010",
-    monto: 25338.60
+    medio: "AM1010",
+    monto: 6338.60
   },{
     medio: "A MEDIO CAMINO",
     monto: 25338.60

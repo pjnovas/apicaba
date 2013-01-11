@@ -72,4 +72,20 @@ describe('#Groups', function(){
       done();
     });
   });
+
+  it("should retrieve a list of resources found when is called with a query", function(done){
+    request(host + 'api/finanzas-publicas/pauta-publicitaria-2012?medio=AM1010', function(res){
+
+      expect(res.ok).to.be.ok();
+      expect(res.body).to.be.an('array');
+      expect(res.body.length).to.be.equal(1);
+
+      var pauta = res.body[0];
+      expect(pauta.medio).to.be.equal("AM1010");
+      expect(pauta.monto).to.be.equal(6338.60);
+      
+      done();
+    });
+  });
+
 });
