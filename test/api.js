@@ -31,11 +31,11 @@ describe('#Groups', function(){
       expect(res.body).to.be.an('array');
       expect(res.body.length).to.be.equal(2);
 
-      expect(res.body[0].name).to.be.equal("Pauta Publicitaria 2012");
       expect(res.body[1].name).to.be.equal("Sueldos Funcionarios");
+      expect(res.body[0].name).to.be.equal("Pauta Publicitaria 2012");
 
-      expect(res.body[0].url).to.be.equal(host + "api/finanzas-publicas/pauta-publicitaria-2012");
       expect(res.body[1].url).to.be.equal(host + "api/finanzas-publicas/sueldos-funcionarios");
+      expect(res.body[0].url).to.be.equal(host + "api/finanzas-publicas/pauta-publicitaria-2012");
 
       done();
     });
@@ -47,8 +47,9 @@ describe('#Groups', function(){
       expect(res.body).to.be.an('object');
       
       expect(res.body.name).to.be.equal('Pauta Publicitaria 2012');
-      expect(res.body.group).to.be.equal('finanzas-publicas');
-      expect(res.body.parent).to.be.equal(host + "api/finanzas-publicas/");
+      expect(res.body.group).to.be.an('object');
+      expect(res.body.group.name).to.be.equal('Finanzas Públicas');
+      expect(res.body.group.url).to.be.equal(host + "api/finanzas-publicas/");
 
       expect(res.body.data).to.be.an('array');
       expect(res.body.data.length).to.be.equal(3);

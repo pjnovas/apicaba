@@ -2,12 +2,33 @@
 var expect = require('expect.js')
   , scheduler = require('../../models/scheduler')
   , resources = require('../../collections/resources')
-  , temp = require('../../collections/temp')
 
   , db = app.db
   , mockGBA = app.mockGBA
-  , name = 'bicis'
-  , group = 'urbano';
+  , cannonical = 'bicis-locas'
+  , collection = 'bicis_locas'
+  , jobTest = {
+    "name": "bicis locas",
+    "group": "urbano",
+    "cron": "* * * * * *",
+    "source": {
+      "url": mockGBA + "bicis.csv",
+      "parser": "csv",
+      "fields": [{
+        "name": "id",
+        "type": "string"
+      },{
+        "name": "nombre",
+        "type": "string"
+      },{
+        "name": "latitud",
+        "type": "string"
+      },{
+        "name": "longitud",
+        "type": "string"
+      }]
+    }
+  };
 
 describe('#CSV', function(){
   
@@ -38,29 +59,43 @@ describe('#CSV', function(){
     setTimeout(function(){
       expect(hasRun).to.be.equal(true);
 
-      resources.getByGroupName(group, function(err, _resources){
+      resources.getByGroupName(jobTest.group, function(err, _resources){
         expect(err).to.not.be.ok();
         expect(_resources).to.be.an('array');
         expect(_resources.length).to.be.equal(1);
-        expect(_resources[0].name).to.be.equal(name);
+        expect(_resources[0].name).to.be.equal(jobTest.name);
 
-        resources.getByName(name, checkResource);  
+        resources.getByName(jobTest.name, checkResource);
       });
 
     }, 1500);
 
     function checkJob(job){
-      expect(job.resource).to.be.equal(name);
+      expect(job.resource).to.be.equal(jobTest.name);
       hasRun = true;
     }
 
     function jobDone(job){
-      expect(job.resource).to.be.equal(name);
+      expect(job.resource).to.be.equal(jobTest.name);
     }
 
     function checkResource(err, resource){
+
       expect(err).to.not.be.ok();
-      expect(resource.name).to.be.equal(name);
+      expect(resource.name).to.be.equal(jobTest.name);
+      expect(resource.canonical).to.be.equal(cannonical);
+      expect(resource.group).to.be.equal(jobTest.group);
+      expect(resource.count).to.be.equal(28);
+      expect(resource.collection).to.be.equal(collection);
+
+      expect(resource.columns).to.be.an('array');
+
+      for (var i = 0; i < resource.columns.length; i++){
+        expect(resource.columns[i]).to.be.eql(jobTest.source.fields[i]);
+      }
+
+
+      /*
       expect(resource.data).to.be.an('array');
       expect(resource.data.length).to.be.equal(28);
 
@@ -70,7 +105,7 @@ describe('#CSV', function(){
       expect(aBiciData).to.have.property('nombre');
       expect(aBiciData).to.have.property('latitud');
       expect(aBiciData).to.have.property('longitud');
-      
+      */
       done();
     }
 
@@ -80,28 +115,7 @@ describe('#CSV', function(){
 
 function createTestJobs(done){
 
-  db.jobs.insert({
-    "name": name,
-    "group": group,
-    "cron": "* * * * * *",
-    "source": {
-      "url": mockGBA + "bicis.csv",
-      "parser": "csv",
-      "fields": [{
-        "name": "id",
-        "type": "string"
-      },{
-        "name": "nombre",
-        "type": "string"
-      },{
-        "name": "latitud",
-        "type": "string"
-      },{
-        "name": "longitud",
-        "type": "string"
-      }]
-    }
-  });
+  db.jobs.insert(jobTest);
 
   done();
 }

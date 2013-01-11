@@ -4,7 +4,7 @@ var mongoJS = require('mongojs')
 app = {
   db: mongoJS.connect(
         secrets.mongodb.connectionString, 
-        ['jobs', 'groups', 'resources']),
+        ['jobs', 'groups', 'subgroups', 'resources']),
 
   server: "http://localhost:3000/",
   secrets: secrets
@@ -20,6 +20,7 @@ describe('API Server', function(){
 
   after(function(){
     db.groups.remove();
+    db.subgroups.remove();
     db.resources.remove();
     db.jobs.remove();
   });
@@ -40,6 +41,19 @@ function createData(){
     canonical: "finanzas-publicas"
   });
   db.groups.insert({ 
+    name: "Información Digital",
+    canonical: "informacion-digital"
+  });
+
+  db.subgroups.insert({ 
+    name: "Desarrollo Urbano",
+    canonical: "desarrollo-urbano"
+  });
+  db.subgroups.insert({ 
+    name: "Finanzas Públicas",
+    canonical: "finanzas-publicas"
+  });
+  db.subgroups.insert({ 
     name: "Información Digital",
     canonical: "informacion-digital"
   });
