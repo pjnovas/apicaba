@@ -4,7 +4,7 @@ var mongoJS = require('mongojs')
 app = {
   db: mongoJS.connect(
         secrets.mongodb.connectionString, 
-        ['jobs', 'groups', 'resources']),
+        ['jobs', 'categories', 'groups', 'resources']),
 
   server: "http://localhost:3000/",
   secrets: secrets
@@ -19,6 +19,7 @@ describe('API Server', function(){
   });
 
   after(function(){
+    db.categories.remove();
     db.groups.remove();
     db.resources.remove();
     db.jobs.remove();
@@ -32,41 +33,68 @@ describe('API Server', function(){
 function createData(){
   var db = app.db;
 
+  require('./createCategories.js')();
+
   db.groups.insert({ 
-    name: "Desarrollo Urbano",
-    canonical: "desarrollo-urbano"
-  });
-  db.groups.insert({ 
-    name: "Finanzas Públicas",
-    canonical: "finanzas-publicas"
-  });
-  db.groups.insert({ 
-    name: "Información Digital",
-    canonical: "informacion-digital"
+    name: "Áreas de Protección Histórica",
+    canonical: "areas-proteccion-historica",
+    description: "Información sobre las zonas de la Ciudad consultadas.",
+    category: "desarrollo-urbano"
   });
 
   db.resources.insert({
-    name: "Sueldos Funcionarios",
-    canonical: "sueldos-funcionarios",
-    group: "finanzas-publicas"
+    name: "Áreas de Protección Histórica ",
+    canonical: "areas-proteccion-historica",
+    description: "Información de las APH, dirección, estado de tramite, protección, imagen.",
+    group: "areas-proteccion-historica"
   });
 
-  db.resources.insert({
-    name: "Obras Registradas",
-    canonical: "obras-registradas",
-    group: "desarrollo-urbano"
-  });
+  /**************************************************************/
 
-  db.resources.insert({
+  db.groups.insert({ 
     name: "Visitas a la web de GCBA 2011",
     canonical: "visitas-web-GCBA-2011",
-    group: "informacion-digital"
+    description: "Información sobre el análisis del trafico de visitas de la web",
+    category: "informacion-digital"
+  });
+
+  db.resources.insert({
+    name: "Cantidad de Visitas 2011",
+    canonical: "cantidad-visitas-2011",
+    description: "Cantidad de visitas por día para el año 2011",
+    group: "visitas-web-GCBA-2011"
+  });
+
+  /**************************************************************/
+
+  db.groups.insert({ 
+    name: "Ejecución Presupuestaria 2012",
+    canonical: "ejecucion-presupuestaria-2012",
+    description: "Información acorde a la Ley 70 la cual establece que el Poder Ejecutivo",
+    category: "finanzas-publicas"
+  });
+
+  db.resources.insert({
+    name: "Presupuesto Devengado Primer Trimestre de 2012",
+    canonical: "presupuesto-devengado-primer-trimestre-2012",
+    description: "Información provisoria del detalle de la ejecución trimestral del presupuesto.",
+    group: "ejecucion-presupuestaria-2012"
+  });  
+
+  /**************************************************************/
+
+  db.groups.insert({ 
+    name: "Pauta Publicitaria",
+    canonical: "pauta-publicitaria",
+    description: "Montos (IVA incluído) destinados a las contrataciones de publicidad",
+    category: "finanzas-publicas"
   });
 
   db.resources.insert({
     name: "Pauta Publicitaria 2012",
     canonical: "pauta-publicitaria-2012",
-    group: "finanzas-publicas",
+    description: "Montos (IVA incluído) destinados a pauta publicitaria 2012 según medio proveedor.",
+    group: "pauta-publicitaria",
     collection: "pauta_publicitaria_2012",
     count: 3,
     columns: [{

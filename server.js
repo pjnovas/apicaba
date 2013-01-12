@@ -38,7 +38,7 @@ app.configure('production', function(){
 function connectToMongo(){
   app.db = mongoJS.connect(
           app.secrets.mongodb.connectionString, 
-          ['jobs', 'groups', 'resources']);
+          ['jobs', 'categories', 'groups', 'resources']);
 
   app.host = app.secrets.APIhost;
 }
