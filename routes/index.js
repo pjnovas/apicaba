@@ -1,3 +1,3 @@
 
 require('./home.js');
-require('./api.js');
+require('./api');

@@ -23,6 +23,12 @@ app.configure(function(){
   app.use(express.static(path.join(__dirname, 'public')));
 });
 
+app.configure('test', function(){
+  app.use(express.errorHandler());
+  app.secrets = require('./secrets_test.json');
+  connectToMongo();
+});
+
 app.configure('development', function(){
   app.use(express.errorHandler());
   app.secrets = require('./secrets.json');

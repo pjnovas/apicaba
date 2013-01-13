@@ -2,7 +2,7 @@ var ObjectId = require('mongojs').ObjectId
   , db = app.db;
 
 exports.getAll = function(done){
-  db.groups
+  db.categories
     .find({}
     , function(err, data){
       done(err, data || []);
@@ -10,13 +10,13 @@ exports.getAll = function(done){
 };
 
 exports.getByCanonical = function(canonical, done){
-  db.groups
+  db.categories
     .findOne({ canonical: canonical }, { "_id": false }
     , done);
 };
 
 exports.getById = function(id, done){
-  db.groups
+  db.categories
     .findOne({ "_id": ObjectId(id) }
     , done);
 };

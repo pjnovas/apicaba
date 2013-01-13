@@ -1,5 +1,5 @@
 var mongoJS = require('mongojs')
-  secrets = require('../secrets.json');
+  secrets = require('../secrets_test.json');
 
 app = {
   db: mongoJS.connect(
@@ -10,25 +10,36 @@ app = {
   secrets: secrets
 };
 
-describe('API Server', function(){
+describe('API', function(){
   var db = app.db;
   
   before(function(done){
+    clearData();
     createData();
     setTimeout(done, 200);
   });
 
   after(function(){
-    db.categories.remove();
-    db.groups.remove();
-    db.resources.remove();
-    db.jobs.remove();
-    db.collection('pauta_publicitaria_2012').remove();
+    clearData();
   });
 
   require('./api.js');
 
 });
+
+function clearData(){
+  var db = app.db;
+
+  db.groups.remove();
+  db.resources.remove();
+  db.jobs.remove();
+  
+  if (db.categories)
+    db.categories.remove();
+
+  if (db.collection('pauta_publicitaria_2012'))
+    db.collection('pauta_publicitaria_2012').remove();
+}
 
 function createData(){
   var db = app.db;
@@ -43,8 +54,8 @@ function createData(){
   });
 
   db.resources.insert({
-    name: "Áreas de Protección Histórica ",
-    canonical: "areas-proteccion-historica",
+    name: "Áreas de Protección Histórica 2012",
+    canonical: "areas-proteccion-historica-2012",
     description: "Información de las APH, dirección, estado de tramite, protección, imagen.",
     group: "areas-proteccion-historica"
   });

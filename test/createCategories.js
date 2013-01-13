@@ -35,12 +35,13 @@ var categories = [{
 }];
 
 module.exports = function(){
-  var db = app.db;
+  var db = app.db,
+    catColl = db.collection('categories');
 
   for(var i=0; i<categories.length; i++){
     var category = categories[i];
     
-    db.categories.update(
+    catColl.update(
       { canonical: category.canonical }, 
       { $set: category }, 
       { upsert: true }

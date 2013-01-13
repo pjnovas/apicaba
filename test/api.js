@@ -3,18 +3,26 @@ var expect = require('expect.js')
   , groups = require('../collections/groups')
   , resources = require('../collections/resources')
   , request = require('superagent')
+  , _ = require('underscore')
   , host = app.server;
 
 describe('#Categories', function(){
   
   it("should retrieve a list of categories when api/categorias/ is called", function(done){
-    request(host + 'api/categories', function(res){
+    request(host + 'api/categorias', function(res){
       expect(res.ok).to.be.ok();
-      expect(res.body).to.be.an('array');
-      expect(res.body.length).to.be.equal(11);
 
-      expect(res.body[3].name).to.be.equal("Finanzas Públicas");
-      expect(res.body[3].uri).to.be.equal(host + "api/categorias/finanzas-publicas");
+      var categories = res.body;
+      expect(categories).to.be.an('array');
+      expect(categories.length).to.be.equal(11);
+
+      var category = _.find(categories, function(c){
+        return c.name === 'Finanzas Públicas';
+      });
+
+      expect(category).to.be.an('object');
+      expect(category.name).to.be.equal("Finanzas Públicas");
+      expect(category.uri).to.be.equal(host + "api/categorias/finanzas-publicas");
       
       done();
     });
@@ -28,19 +36,22 @@ describe('#Categories', function(){
       expect(category).to.be.an('object');
       
       expect(category.name).to.be.equal("Finanzas Públicas");
-      //expect(res.body.uri).to.be.equal(hsot + "api/categorias/finanzas-publicas");
       
       expect(category.groups).to.be.an('array');
       expect(category.groups.length).to.be.equal(2);
 
-      expect(category.groups[0].name).to.be.equal("Ejecución Presupuestaria 2012");
-      expect(category.groups[1].name).to.be.equal("Pauta Publicitaria");
+      var groups = _.sortBy(category.groups, function(g){
+        return g.name;
+      });
 
-      expect(category.groups[0].uri).to.be.equal(host + "api/grupos/ejecucion-presupuestaria-2012");
-      expect(category.groups[1].uri).to.be.equal(host + "api/grupos/pauta-publicitaria");
+      expect(groups[0].name).to.be.equal("Ejecución Presupuestaria 2012");
+      expect(groups[1].name).to.be.equal("Pauta Publicitaria");
 
-      expect(category.groups[0].description).to.be.equal("Información acorde a la Ley 70 la cual establece que el Poder Ejecutivo");
-      expect(category.groups[1].description).to.be.equal("Montos (IVA incluído) destinados a las contrataciones de publicidad");
+      expect(groups[0].uri).to.be.equal(host + "api/grupos/ejecucion-presupuestaria-2012");
+      expect(groups[1].uri).to.be.equal(host + "api/grupos/pauta-publicitaria");
+
+      expect(groups[0].description).to.be.equal("Información acorde a la Ley 70 la cual establece que el Poder Ejecutivo");
+      expect(groups[1].description).to.be.equal("Montos (IVA incluído) destinados a las contrataciones de publicidad");
 
       done();
     });
@@ -57,25 +68,29 @@ describe('#Groups', function(){
       expect(groups).to.be.an('array');
       expect(groups.length).to.be.equal(4);
 
-      expect(groups[0].name).to.be.equal("Áreas de Protección Histórica");
-      expect(groups[1].name).to.be.equal("Visitas a la web de GCBA 2011");
-      expect(groups[2].name).to.be.equal("Ejecución Presupuestaria 2012");
-      expect(groups[3].name).to.be.equal("Pauta Publicitaria");
+      var _groups = _.sortBy(groups, function(g){
+        return g.uri;
+      });
 
-      expect(groups[0].uri).to.be.equal(host + "api/grupos/areas-proteccion-historica");
-      expect(groups[1].uri).to.be.equal(host + "api/grupos/visitas-web-GCBA-2011");
-      expect(groups[2].uri).to.be.equal(host + "api/grupos/ejecucion-presupuestaria-2012");
-      expect(groups[3].uri).to.be.equal(host + "api/grupos/pauta-publicitaria");
+      expect(_groups[0].name).to.be.equal("Áreas de Protección Histórica");
+      expect(_groups[1].name).to.be.equal("Ejecución Presupuestaria 2012");
+      expect(_groups[2].name).to.be.equal("Pauta Publicitaria");
+      expect(_groups[3].name).to.be.equal("Visitas a la web de GCBA 2011");
 
-      expect(groups[0].description).to.be.equal("Información sobre las zonas de la Ciudad consultadas.");
-      expect(groups[1].description).to.be.equal("Información sobre el análisis del trafico de visitas de la web");
-      expect(groups[2].description).to.be.equal("Información acorde a la Ley 70 la cual establece que el Poder Ejecutivo");
-      expect(groups[3].description).to.be.equal("Montos (IVA incluído) destinados a las contrataciones de publicidad");
+      expect(_groups[0].uri).to.be.equal(host + "api/grupos/areas-proteccion-historica");
+      expect(_groups[1].uri).to.be.equal(host + "api/grupos/ejecucion-presupuestaria-2012");
+      expect(_groups[2].uri).to.be.equal(host + "api/grupos/pauta-publicitaria");
+      expect(_groups[3].uri).to.be.equal(host + "api/grupos/visitas-web-GCBA-2011");
 
-      expect(groups[0].category).to.be.equal(host + "api/desarrollo-urbano");
-      expect(groups[1].category).to.be.equal(host + "api/informacion-digital");
-      expect(groups[2].category).to.be.equal(host + "api/finanzas-publicas");
-      expect(groups[3].category).to.be.equal(host + "api/finanzas-publicas");
+      expect(_groups[0].description).to.be.equal("Información sobre las zonas de la Ciudad consultadas.");
+      expect(_groups[1].description).to.be.equal("Información acorde a la Ley 70 la cual establece que el Poder Ejecutivo");
+      expect(_groups[2].description).to.be.equal("Montos (IVA incluído) destinados a las contrataciones de publicidad");
+      expect(_groups[3].description).to.be.equal("Información sobre el análisis del trafico de visitas de la web");
+
+      expect(_groups[0].category).to.be.equal(host + "api/categorias/desarrollo-urbano");
+      expect(_groups[1].category).to.be.equal(host + "api/categorias/finanzas-publicas");
+      expect(_groups[2].category).to.be.equal(host + "api/categorias/finanzas-publicas");
+      expect(_groups[3].category).to.be.equal(host + "api/categorias/informacion-digital");
 
       done();
     });
@@ -90,7 +105,10 @@ describe('#Groups', function(){
       expect(group).to.be.an('object');
       expect(group.name).to.be.equal("Pauta Publicitaria");
       expect(group.description).to.be.equal("Montos (IVA incluído) destinados a las contrataciones de publicidad");
-      expect(group.category).to.be.equal(host + "api/finanzas-publicas");
+      
+      expect(group.category).to.be.an("object");
+      expect(group.category.name).to.be.equal("Finanzas Públicas");
+      expect(group.category.uri).to.be.equal(host + "api/categorias/finanzas-publicas");
 
       expect(group.resources).to.be.an('array');
       expect(group.resources.length).to.be.equal(1);
@@ -105,13 +123,42 @@ describe('#Groups', function(){
 
 describe('#Resources', function(){
   
-  it("should return a Status Code 206 when api/recursos/ is called" /*, function(done){
-    request(host + 'api/recursos/', function(res){
+  it("should retrieve a list of resources when api/recursos/ is called", function(done){
+    request(host + 'api/recursos', function(res){
       expect(res.ok).to.be.ok();
-      //TODO: check res.code
+
+      var resources = res.body;
+      expect(resources).to.be.an('array');
+      expect(resources.length).to.be.equal(4);
+
+      var _resources = _.sortBy(resources, function(g){
+        return g.uri;
+      });
+
+      expect(_resources[0].name).to.be.equal("Áreas de Protección Histórica 2012");
+      expect(_resources[1].name).to.be.equal("Cantidad de Visitas 2011");
+      expect(_resources[2].name).to.be.equal("Pauta Publicitaria 2012");
+      expect(_resources[3].name).to.be.equal("Presupuesto Devengado Primer Trimestre de 2012");
+
+      expect(_resources[0].uri).to.be.equal(host + "api/recursos/areas-proteccion-historica-2012");
+      expect(_resources[1].uri).to.be.equal(host + "api/recursos/cantidad-visitas-2011");
+      expect(_resources[2].uri).to.be.equal(host + "api/recursos/pauta-publicitaria-2012");
+      expect(_resources[3].uri).to.be.equal(host + "api/recursos/presupuesto-devengado-primer-trimestre-2012");
+
+      expect(_resources[0].description).to.be.equal("Información de las APH, dirección, estado de tramite, protección, imagen.");
+      expect(_resources[1].description).to.be.equal("Cantidad de visitas por día para el año 2011");
+      expect(_resources[2].description).to.be.equal("Montos (IVA incluído) destinados a pauta publicitaria 2012 según medio proveedor.");
+      expect(_resources[3].description).to.be.equal("Información provisoria del detalle de la ejecución trimestral del presupuesto.");
+
+      expect(_resources[0].group).to.be.equal(host + "api/grupos/areas-proteccion-historica");
+      expect(_resources[1].group).to.be.equal(host + "api/grupos/visitas-web-GCBA-2011");
+      expect(_resources[2].group).to.be.equal(host + "api/grupos/pauta-publicitaria");
+      expect(_resources[3].group).to.be.equal(host + "api/grupos/ejecucion-presupuestaria-2012");
+
       done();
     });
-  }*/);
+  });
+
 
   it("should retrieve a resource when api/recursos/pauta-publicitaria-2012/ is called", function(done){
     request(host + 'api/recursos/pauta-publicitaria-2012', function(res){
@@ -121,8 +168,8 @@ describe('#Resources', function(){
       
       expect(resource.name).to.be.equal('Pauta Publicitaria 2012');
       expect(resource.group).to.be.an('object');
-      expect(resource.group.name).to.be.equal('Finanzas Públicas');
-      expect(resource.group.uri).to.be.equal(host + "api/finanzas-publicas/");
+      expect(resource.group.name).to.be.equal('Pauta Publicitaria');
+      expect(resource.group.uri).to.be.equal(host + "api/grupos/pauta-publicitaria");
       expect(resource.count).to.be.equal(3);
       expect(resource.columns.length).to.be.equal(2);
 
@@ -146,17 +193,17 @@ describe('#Resources', function(){
       
       expect(resource.name).to.be.equal('Pauta Publicitaria 2012');
       expect(resource.group).to.be.an('object');
-      expect(resource.group.name).to.be.equal('Finanzas Públicas');
-      expect(resource.group.uri).to.be.equal(host + "api/finanzas-publicas/");
+      expect(resource.group.name).to.be.equal('Pauta Publicitaria');
+      expect(resource.group.uri).to.be.equal(host + "api/grupos/pauta-publicitaria");
       expect(resource.count).to.be.equal(3);
       expect(resource.columns.length).to.be.equal(2);
 
       expect(resource.data).to.be.an('array');
-      expect(resource.data.length).to.be.equal(3);
+      expect(resource.data.length).to.be.equal(1);
 
-      var pauta = resource.data[1];
-      expect(pauta.medio).to.be.equal("A MEDIO CAMINO");
-      expect(pauta.monto).to.be.equal(25338.60);
+      var pauta = resource.data[0];
+      expect(pauta.medio).to.be.equal("AM1010");
+      expect(pauta.monto).to.be.equal(6338.60);
       
       done();
     });

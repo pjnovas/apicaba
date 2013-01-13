@@ -15,6 +15,12 @@ exports.getByCanonical = function(canonical, done){
     , done);
 };
 
+exports.getByCategory = function(category, done){
+  db.groups
+    .find({ category: category }, { "_id": false }
+    , done);
+};
+
 exports.getById = function(id, done){
   db.groups
     .findOne({ "_id": ObjectId(id) }

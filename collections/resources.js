@@ -1,6 +1,14 @@
 
 var db = app.db;
 
+exports.getAll = function(done){
+  db.resources
+    .find({}
+    , function(err, data){
+      done(err, data || []);
+    });
+};
+
 exports.getByName = function(name, done){
   db.resources.findOne({ name: name }, done);
 };
@@ -13,7 +21,7 @@ exports.getByCanonical = function(canonical, done){
 exports.getByGroupName = function(name, done){
 
   db.resources.find({ group: name }, 
-    { "_id": false, name: true, canonical: true },
+    { "_id": false, name: true, canonical: true, description: true },
     function(err, data){
       done(err, data || []);
     });
