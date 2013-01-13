@@ -36,7 +36,12 @@ exports.create = function(group, done){
 exports.update = function(id, group, done){
   db.groups.update(
       { "_id": ObjectId(id) },
-      { $set: {name: group.name, canonical: group.canonical } }, 
+      { $set: {
+        name: group.name, 
+        canonical: group.canonical, 
+        description: group.description, 
+        category: group.category 
+      } }, 
       function(err, data){
     done(err, data);
   });

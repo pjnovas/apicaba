@@ -16,7 +16,7 @@ apicaba.models.group = (function(){
         apicaba.views.groupCombo.render(function(){
           apicaba.views.groupList.render(function(){
             if (done) done();
-          });  
+          });
         });
       });
     },
@@ -96,7 +96,10 @@ apicaba.models.group = (function(){
     selectGroup: function(id){
       for(var i = 0; i < groups.length; i++){
         if (groups[i]._id === id){
-          apicaba.views.groupEdit.render(groups[i]);
+          apicaba.views.groupEdit.render(groups[i], function(){
+            var category = apicaba.models.category.getByCanonical(groups[i].category);
+            apicaba.models.category.selectCategory(category._id);
+          });
           apicaba.views.groupCombo.select(groups[i]);
           apicaba.views.jobEdit.updateCanonical();
           return;

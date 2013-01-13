@@ -28,6 +28,8 @@ apicaba.views.groupEdit = (function($){
       _id: $('#groupId', container).val(),
       name: $('#name-group', container).val(),
       canonical: $('#canonical-group', container).val(),
+      description: $('#description-group', container).val(),
+      category: $('#category option:selected', container).attr('data-canonical')
     };
 
     if (!g._id) delete g._id;
@@ -51,7 +53,9 @@ apicaba.views.groupEdit = (function($){
       function(err, rendered){
         //$('*', container).remove();
         $(container).html(rendered);
-        if (done) done();
+        apicaba.models.category.bind(function(){
+          if (done) done();  
+        });
     });
   }
 

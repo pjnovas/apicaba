@@ -64,10 +64,14 @@
   left: 37%;
   width: 1050px;
 }
+#group-modal {
+  left: 37%;
+  width: 1050px;
+}
 #fields {
   overflow-x: hidden;
   overflow-y: auto;
-  height: 250px;
+  height: 325px;
   margin-left: 20px;
   margin-top: 10px;
   padding: 5px 10px;
