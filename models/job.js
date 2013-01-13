@@ -15,7 +15,7 @@ var Job = module.exports = function (options) {
   if(options && options.source) {
     this.fetcher = new Fetcher(options.source.url);
     this.formatter = new Formatter(options.source);
-    this.persist = new Persist(options.name, options.group, options.source.fields);
+    this.persist = new Persist(options.name, options.description, options.group, options.source.fields);
   }
 
   this.cronJob;

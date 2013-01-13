@@ -9,6 +9,7 @@ var expect = require('expect.js')
   , collection = 'bicis_locas'
   , jobTest = {
     "name": "bicis locas",
+    "description": "Bicicletas locas y magicas",
     "group": "urbano",
     "cron": "* * * * * *",
     "source": {
@@ -64,6 +65,7 @@ describe('#CSV', function(){
         expect(_resources).to.be.an('array');
         expect(_resources.length).to.be.equal(1);
         expect(_resources[0].name).to.be.equal(jobTest.name);
+        expect(_resources[0].description).to.be.equal(jobTest.description);
 
         resources.getByName(jobTest.name, checkResource);
       });
@@ -83,6 +85,7 @@ describe('#CSV', function(){
 
       expect(err).to.not.be.ok();
       expect(resource.name).to.be.equal(jobTest.name);
+      expect(resource.description).to.be.equal(jobTest.description);
       expect(resource.canonical).to.be.equal(canonical);
       expect(resource.group).to.be.equal(jobTest.group);
       expect(resource.count).to.be.equal(28);

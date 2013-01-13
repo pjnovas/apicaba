@@ -3,12 +3,13 @@ var Stream = require('stream').Stream
   , util = require('util')
   , resources = require('../../collections/resources');
 
-var Persist = module.exports = function(name, group, fields) {
+var Persist = module.exports = function(name, desc, group, fields) {
 
   Stream.call(this);
   this.writable = true;
 
   this.name = name;
+  this.description = desc;
   this.group = group;
   this.fields = fields;
 
@@ -33,6 +34,7 @@ Persist.prototype.end = function() {
 
   resources.create({
     name: self.name,
+    description: self.description,
     canonical: self.canonical,
     group: self.group,
     collection: this.resourceColl,
