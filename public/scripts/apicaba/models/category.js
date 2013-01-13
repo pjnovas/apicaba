@@ -4,46 +4,57 @@ apicaba.models = apicaba.models || {};
 
 apicaba.models.category = (function(){
   var categories = [],
-    cache = [];
+    exports = new EventEmitter(),
+    load = false,
+    selected = null;
 
-  return {
-
-    bind: function(done){
+  exports.bind = function(){
+    if (!load){
       apicaba.api.category.getAll(function(err, _categories){
         categories = _categories;
-        cache = _categories;
-        
-        apicaba.views.categoryCombo.render(function(){
-          if (done) done();  
-        });
+        load = true;
+
+        exports.emit('bind', categories);
+
+        if (selected) {
+          exports.selectCategory(selected);
+        }
       });
-    },
-
-    selectCategory: function(id){
-      for(var i = 0; i < categories.length; i++){
-        if (categories[i]._id === id){
-          apicaba.views.categoryCombo.select(categories[i]);
-          return;
-        }
-      }
-    },
-
-    getCategories: function(){
-      return cache;
-    },
-
-    getByCanonical: function(canonical){
-      for(var i = 0; i < categories.length; i++){
-        if (categories[i].canonical === canonical){
-          return categories[i];
-        }
-      }
-    },
-
-    getRealCategories: function(){
-      return categories;
     }
+    else {
+      exports.emit('bind', categories);
+      if (selected) {
+        exports.selectCategory(selected);
+      }
+    }
+
+    return this;
   };
 
+  exports.selectCategory = function(canonical){
+    if (!load){
+      selected = canonical;
+    }
+    else {
+      for(var i = 0; i < categories.length; i++){
+        if (categories[i].canonical === canonical){
+          exports.emit('select', categories[i]);
+          break;
+        }
+      }
+    }
+
+    return this;
+  };
+/*
+  exports.getByCanonical = function(canonical){
+    for(var i = 0; i < categories.length; i++){
+      if (categories[i].canonical === canonical){
+        return categories[i];
+      }
+    }
+  };
+*/
+  return exports;
 })();
 

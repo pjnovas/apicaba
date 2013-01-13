@@ -4,45 +4,23 @@ apicaba.models = apicaba.models || {};
 
 apicaba.models.group = (function(){
   var groups = [],
-    cache = [];
+    exports = new EventEmitter();
 
-  return {
+  function add(group) {
+    apicaba.api.group.new(group, function(err, newgroup){
+      if(err) return;
 
-    bind: function(done){
-      apicaba.api.group.getAll(function(err, _groups){
-        groups = _groups;
-        cache = _groups;
-        
-        apicaba.views.groupCombo.render(function(){
-          apicaba.views.groupList.render(function(){
-            if (done) done();
-          });
-        });
-      });
-    },
+      groups.unshift(group);
 
-    add: function(group) {
-      apicaba.api.group.new(group, function(err, newgroup){
-        if (!err) {
-          groups.unshift(group);
+      exports.emit('add', newgroup);
+      exports.emit('change', groups);
+    });
+  }
 
-          apicaba.views.groupList.render();
-          apicaba.views.groupCombo.render(function(){
-            apicaba.views.groupCombo.select(group);
-            apicaba.views.jobEdit.updateCanonical();
-          });          
-        }
-      });
-    },
+  function update(group) {
 
-    update: function(group) {
-
-      for(var i = 0; i < cache.length; i++){
-        if (cache[i]._id === group._id){
-          cache[i] = _.clone(group);
-          break;
-        }
-      }
+    apicaba.api.group.update(group, function(err){
+      if(err) return;
 
       for(var i = 0; i < groups.length; i++){
         if (groups[i]._id === group._id){
@@ -51,78 +29,72 @@ apicaba.models.group = (function(){
         }
       }
 
-      apicaba.api.group.update(group, function(err){
-        //TODO: if something bad happened, update the group 
-        // back again and re-render
-      });
+      exports.emit('update', group);
+      exports.emit('change', groups);
+    });
+  }
 
-      apicaba.views.groupList.render();
-      apicaba.views.groupCombo.render(function(){
-        apicaba.views.groupCombo.select(group);
-        apicaba.views.jobEdit.updateCanonical();
-        apicaba.models.job.bind();
-      });
-    },
+  exports.bind = function(){
+    apicaba.api.group.getAll(function(err, _groups){
+      groups = _groups;
+      
+      exports.emit('bind', groups);
+      exports.emit('change', groups);
+    });
 
-    save: function(group){
-      if (group._id) this.update(group);
-      else this.add(group);
-    },
+    return this;
+  };
 
-    remove: function(id) {
-      for(var i = 0; i < cache.length; i++){
-        if (cache[i]._id === id){
-          cache.splice(i, 1);
-          break;
-        }
+  exports.save = function(group){
+    if (group._id) update(group);
+    else add(group);
+
+    return this;
+  };
+
+  exports.remove = function(id) {
+   
+    for(var i = 0; i < groups.length; i++){
+      if (groups[i]._id === id){
+        groups.slice(i, i);
+        break;
       }
+    }
 
-      for(var i = 0; i < groups.length; i++){
-        if (groups[i]._id === id){
-          groups.slice(i, i);
-          break;
-        }
+    apicaba.api.group.delete(id, function(err){
+      //TODO: if something bad happened, put the group 
+      // back again and re-render
+    });
+
+    return this;
+  };
+
+  exports.selectGroup = function(id){
+    for(var i = 0; i < groups.length; i++){
+      if (groups[i]._id === id){
+
+        exports.emit('select', groups[i]);
+
+        /*
+        var category = apicaba.models.category.getByCanonical(groups[i].category);
+        apicaba.models.category.selectCategory(category._id);
+        */
+        break;
       }
+    }
 
-      apicaba.api.group.delete(id, function(err){
-        //TODO: if something bad happened, put the group 
-        // back again and re-render
-      });
+    return this;
+  };
 
-      apicaba.views.groupList.render();
-      apicaba.views.groupCombo.render();
-    },
-
-    selectGroup: function(id){
-      for(var i = 0; i < groups.length; i++){
-        if (groups[i]._id === id){
-          apicaba.views.groupEdit.render(groups[i], function(){
-            var category = apicaba.models.category.getByCanonical(groups[i].category);
-            apicaba.models.category.selectCategory(category._id);
-          });
-          apicaba.views.groupCombo.select(groups[i]);
-          apicaba.views.jobEdit.updateCanonical();
-          return;
-        }
+  exports.getByCanonical = function(canonical){
+    for(var i = 0; i < groups.length; i++){
+      if (groups[i].canonical === canonical){
+        return groups[i];
       }
-    },
-
-    getGroups: function(){
-      return cache;
-    },
-
-    getByCanonical: function(canonical){
-      for(var i = 0; i < groups.length; i++){
-        if (groups[i].canonical === canonical){
-          return groups[i];
-        }
-      }
-    },
-
-    getRealGroups: function(){
-      return groups;
     }
   };
+
+  return exports;
 
 })();
 

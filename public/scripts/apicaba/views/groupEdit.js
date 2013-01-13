@@ -13,10 +13,7 @@ apicaba.views.groupEdit = (function($){
   };
 
   function save() {
-    var group = buildGroup();
-    apicaba.models.group.save(group);
-
-    render();
+    apicaba.models.group.save(buildGroup());
   }
 
   function cancel() {
@@ -46,21 +43,23 @@ apicaba.views.groupEdit = (function($){
     canonical.val(name);
   }
 
-  function render(aGroup, done) {
-    var group = aGroup || {};
-    
-    apicaba.utils.template.render(model, 'groupEdit', group, 
+  function render(group) {
+
+    apicaba.utils.template.render(model, 'groupEdit', group || {}, 
       function(err, rendered){
         //$('*', container).remove();
         $(container).html(rendered);
-        apicaba.models.category.bind(function(){
-          if (done) done();  
-        });
+
+        if (group && group.category) {
+          apicaba.models.category.selectCategory(group.category);
+        }
+
+        apicaba.models.category.bind();
     });
   }
 
-  return {
-    render: render
-  };
+  render();
+
+  apicaba.models.group.on('select', render);
 
 })(jQuery);

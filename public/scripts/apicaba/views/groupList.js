@@ -17,18 +17,15 @@ apicaba.views.groupList = (function($){
 
   apicaba.utils.events.build(container, events);
 
-  return {
-    render: function(done) {
-      var groups = apicaba.models.group.getGroups();
+  function render(groups){
+    apicaba.utils.template.render(model, 'groupList', { items: groups }, 
+      function(err, rendered){
+        $('tr', container).remove();
+        $(container).html(rendered);
+    });
+  }
 
-      apicaba.utils.template.render(model, 'groupList', { items: groups }, 
-        function(err, rendered){
-          $('tr', container).remove();
-          $(container).html(rendered);
-          if (done) done();
-      });
-    }
-  };
+  apicaba.models.group.on('change', render);
 
 })(jQuery);
 

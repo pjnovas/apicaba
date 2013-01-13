@@ -16,20 +16,19 @@ apicaba.views.groupCombo = (function($){
     apicaba.models.group.selectGroup($(this).val());
   }
 
-  return {
-    render: function(done) {
-      var groups = apicaba.models.group.getGroups();
-      
-      apicaba.utils.template.render(model, 'groupCombo', { items: groups }, 
-        function(err, rendered){
-          $('select, a', container).remove();
-          $(container).html(rendered);
-          if (done) done();
-      });
-    },
-    select: function(group){
-      $('select', container).val(group._id);      
-    }
-  };
+  function render(groups){
+    apicaba.utils.template.render(model, 'groupCombo', { items: groups }, 
+      function(err, rendered){
+        $('select, a', container).remove();
+        $(container).html(rendered);
+    });
+  }
+
+  apicaba.models.group.on('bind', render);
+  apicaba.models.group.on('change', render);
+
+  apicaba.models.group.on('select', function(group){
+    $('select', container).val(group._id);
+  });
 
 })(jQuery);

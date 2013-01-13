@@ -59,10 +59,9 @@ apicaba.views.jobEdit = (function($){
     return j;
   }
 
-  function render(aJob, done) {
-    var job = aJob || {};
-    
-    apicaba.utils.template.render(model, 'jobEdit', job, 
+  function render(job) {
+
+    apicaba.utils.template.render(model, 'jobEdit', job || {}, 
       function(err, rendered){
         $('form', container).remove();
         $(container).html(rendered);
@@ -70,19 +69,13 @@ apicaba.views.jobEdit = (function($){
         $('body').scrollTop(0);
         $('#name', container).focus();
 
-        apicaba.views.groupEdit.render(null, function(){
-          apicaba.views.jobFields.render(job.source && job.source.fields);
-          apicaba.models.group.bind(function(){
-            if (done) done();
-          });
-        });        
+        apicaba.models.group.bind();
     });
   }
 
-  return {
-    render: render,
-    updateCanonical: showCanonical
-  };
+  render();
+
+  apicaba.models.job.on('select', render);
 
 })(jQuery);
 

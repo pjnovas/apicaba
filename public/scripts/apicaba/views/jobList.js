@@ -16,18 +16,24 @@ apicaba.views.jobList = (function($){
 
   apicaba.utils.events.build(container, events);
 
-  return {
-    render: function(done) {
-      var jobs = apicaba.models.job.getJobs();
+  var timer;
+
+  function render(jobs){
+    clearInterval(timer);
+
+    timer = setInterval(function(){
 
       apicaba.utils.template.render(model, 'jobList', { items: jobs }, 
         function(err, rendered){
           $('tr', container).remove();
           $(container).html(rendered);
-          if (done) done();
       });
-    }
-  };
+
+    }, 60000);
+  }
+
+  apicaba.models.job.on('change', render);
+  apicaba.models.job.on('search', render);
 
 })(jQuery);
 

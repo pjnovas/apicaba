@@ -4,71 +4,32 @@ apicaba.models = apicaba.models || {};
 
 apicaba.models.job = (function(){
   var jobs = [],
-    cache = [];
+    exports = new EventEmitter();
 
-  setInterval(function(){
-    apicaba.views.jobList.render();
-  }, 60000);
+  function add(job, runNow) {
+    apicaba.api.job.new(job, runNow, function(err, newjob){
+      if(err) return;
 
-  return {
-    search: function(keywords){
-      cache = [];
-
-      if(keywords === ''){
-        cache = jobs;
-      }
-      else {
-        for(var i=0; i < jobs.length; i++){
-          for(var prop in jobs[i]){
-            if( (new RegExp(keywords, 'ig').test(jobs[i][prop]) )){
-              cache.push(jobs[i]);
-              break;
-            }
-          }
-        }
+      if (runNow) {
+        newjob.state = 'running';
+        newjob.lastRun = new Date();
       }
 
-      apicaba.views.jobList.render();
-    },
+      jobs.unshift(newjob);
 
-    bind: function(done){
-      apicaba.api.job.getAll(function(err, _jobs){
-        jobs = _jobs;
-        cache = _jobs;
-        apicaba.views.jobList.render(done);
-      });
-    },
+      exports.emit('add', newjob);
+      exports.emit('change', jobs);
+    });
+  }
 
-    add: function(job, runNow) {
-      apicaba.api.job.new(job, runNow, function(err, newjob){
-        if (runNow) {
-          newjob.state = 'running';
-          newjob.lastRun = new Date();
-        }
+  function update(job, runNow) {
 
-        jobs.unshift(newjob);
-        apicaba.views.jobList.render();
-        apicaba.views.jobEdit.render(job);
-      });
-    },
-
-    update: function(job, runNow) {
-
-      apicaba.api.job.update(job, runNow, function(err){
-        //TODO: if something bad happened, update the job 
-        // back again and re-render
-      });
+    apicaba.api.job.update(job, runNow, function(err){
+      if(err) return;
 
       if (runNow) {
         job.state = 'running';
         job.lastRun = new Date();
-      }
-
-      for(var i = 0; i < cache.length; i++){
-        if (cache[i]._id === job._id){
-          cache[i] = _.clone(job);
-          break;
-        }
       }
 
       for(var i = 0; i < jobs.length; i++){
@@ -78,72 +39,103 @@ apicaba.models.job = (function(){
         }
       }
 
-      apicaba.views.jobList.render();
-      apicaba.views.jobEdit.render();
-    },
+      exports.emit('update', job);
+      exports.emit('change', jobs);
+    });
+  }
 
-    save: function(job, runNow){
-      if (job._id) this.update(job, runNow);
-      else this.add(job, runNow);
-    },
+  exports.search = function(keywords){
+    var cache = [];
 
-    remove: function(id) {
-      for(var i = 0; i < cache.length; i++){
-        if (cache[i]._id === id){
-          cache.splice(i, 1);
-          break;
-        }
-      }
-
-      for(var i = 0; i < jobs.length; i++){
-        if (jobs[i]._id === id){
-          jobs.slice(i, i);
-          break;
-        }
-      }
-
-      apicaba.api.job.delete(id, function(err){
-        //TODO: if something bad happened, put the job 
-        // back again and re-render
-      });
-
-      apicaba.views.job.render();
-    },
-
-    selectJob: function(id){
-      for(var i = 0; i < jobs.length; i++){
-        if (jobs[i]._id === id){
-          apicaba.views.jobEdit.render(jobs[i], function(){
-            var group = apicaba.models.group.getByCanonical(jobs[i].group);
-            apicaba.models.group.selectGroup(group._id);
-          });
-          return;
-        }
-      }
-    },
-
-    getJobs: function(){
-      return cache;
-    },
-
-    getRealJobs: function(){
-      return jobs;
-    },
-
-    changeStatus: function(data){
-      
-      for(var i = 0; i < cache.length; i++){
-        if (cache[i]._id === data._id){
-          cache[i].state = data.state;
-          if (data.state === 'running')
-            cache[i].lastRun = new Date();
-          break;
-        }
-      }
-
-      apicaba.views.jobList.render();
+    if(keywords === ''){
+      cache = jobs;
     }
+    else {
+      for(var i=0; i < jobs.length; i++){
+        for(var prop in jobs[i]){
+          if( (new RegExp(keywords, 'ig').test(jobs[i][prop]) )){
+            cache.push(jobs[i]);
+            break;
+          }
+        }
+      }
+    }
+
+    exports.emit('search', cache);
+
+    return this;
   };
 
+  exports.bind = function(){
+
+    apicaba.api.job.getAll(function(err, _jobs){
+      jobs = _jobs;
+      
+      exports.emit('bind', jobs);
+      exports.emit('change', jobs);
+    });
+
+    return this;
+  };
+
+  exports.save = function(job, runNow){
+    if (job._id) update(job, runNow);
+    else add(job, runNow);
+
+    return this;
+  };
+
+  exports.remove = function(id) {
+
+    for(var i = 0; i < jobs.length; i++){
+      if (jobs[i]._id === id){
+        jobs.slice(i, i);
+        break;
+      }
+    }
+
+    apicaba.api.job.delete(id, function(err){
+      //TODO: if something bad happened, put the job 
+      // back again and re-render
+    });
+
+    //apicaba.views.job.render();
+    return this;
+  };
+
+  exports.selectJob = function(id){
+    for(var i = 0; i < jobs.length; i++){
+      if (jobs[i]._id === id){
+
+        exports.emit('select', jobs[i]);
+        
+        /*
+        var group = apicaba.models.group.getByCanonical(jobs[i].group);
+        apicaba.models.group.selectGroup(group._id);
+        */
+        break;
+      }
+    }
+
+    return this;
+  };
+
+  exports.changeStatus = function(data){
+    
+    for(var i = 0; i < jobs.length; i++){
+      if (jobs[i]._id === data._id){
+        jobs[i].state = data.state;
+        if (data.state === 'running')
+          jobs[i].lastRun = new Date();
+        break;
+      }
+    }
+
+    exports.emit('change', jobs);
+
+    return this;
+  };
+
+  return exports;
 })();
 

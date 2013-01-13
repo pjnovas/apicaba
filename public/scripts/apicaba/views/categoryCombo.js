@@ -16,20 +16,19 @@ apicaba.views.categoryCombo = (function($){
     apicaba.models.category.selectCategory($(this).val());
   }
 
-  return {
-    render: function(done) {
-      var categories = apicaba.models.category.getCategories();
-      
-      apicaba.utils.template.render(model, 'categoryCombo', { items: categories }, 
-        function(err, rendered){
-          $('select, a', container).remove();
-          $(container).html(rendered);
-          if (done) done();
-      });
-    },
-    select: function(category){
-      $('select', container).val(category._id);      
-    }
-  };
+  function render(categories){
+    apicaba.utils.template.render(model, 'categoryCombo', { items: categories }, 
+      function(err, rendered){
+        $('select, a', container).remove();
+        $(container).html(rendered);
+    });
+  }
+
+  apicaba.models.category.on('bind', render);
+
+  apicaba.models.category.on('select', function(category){
+    $('select option:selected', container).attr('data-canonical');
+    //$('select', container).val(category._id);
+  });
 
 })(jQuery);
