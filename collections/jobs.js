@@ -48,7 +48,13 @@ exports.update = function(id, job, done){
 
   db.jobs.update(
       { "_id": ObjectId(id) },
-      { $set: {name: job.name, group: job.group, cron: job.cron, source: job.source } }, 
+      { $set: {
+        name: job.name, 
+        description: job.description, 
+        group: job.group, 
+        cron: job.cron, 
+        source: job.source 
+      } }, 
       function(err, data){
     done(err, data);
   });
