@@ -22,7 +22,7 @@ apicaba.views.jobEdit = (function($){
 
   function save(e, runNow) {
     var job = buildJob();
-    apicaba.models.job.save(job, runNow);
+    apicaba.models.job.save(job, { runNow: runNow });
     render();
   }
 
@@ -61,13 +61,24 @@ apicaba.views.jobEdit = (function($){
 
   function render(job) {
 
+    function selectGroup(){
+      apicaba.models.group.removeListener('bind', selectGroup);
+      apicaba.models.group.select(job.group, 'canonical');
+    }
+
     apicaba.utils.template.render(model, 'jobEdit', job || {}, 
       function(err, rendered){
+
         $('form', container).remove();
         $(container).html(rendered);
 
         $('body').scrollTop(0);
         $('#name', container).focus();
+
+        if (job && job.group) {
+          apicaba.models.group.on('bind', selectGroup);
+          setTimeout(showCanonical,100);
+        }
 
         apicaba.models.group.bind();
     });

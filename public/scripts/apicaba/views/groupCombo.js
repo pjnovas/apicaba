@@ -13,7 +13,7 @@ apicaba.views.groupCombo = (function($){
   apicaba.utils.events.build(container, events);
 
   function selectGroup(){
-    apicaba.models.group.selectGroup($(this).val());
+    apicaba.models.group.select($(this).val());
   }
 
   function render(groups){
@@ -24,8 +24,13 @@ apicaba.views.groupCombo = (function($){
     });
   }
 
-  apicaba.models.group.on('bind', render);
-  apicaba.models.group.on('change', render);
+  apicaba.models.group.on('bind', function(g){
+    render(g);
+  });
+
+  apicaba.models.group.on('change', function(g){
+    render(g);
+  });
 
   apicaba.models.group.on('select', function(group){
     $('select', container).val(group._id);

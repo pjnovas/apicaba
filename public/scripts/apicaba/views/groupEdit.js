@@ -45,13 +45,22 @@ apicaba.views.groupEdit = (function($){
 
   function render(group) {
 
+    function selectCategory(){
+      apicaba.models.category.removeListener('bind', selectCategory);
+      apicaba.models.category.select(group.category, 'canonical');
+    }
+
     apicaba.utils.template.render(model, 'groupEdit', group || {}, 
       function(err, rendered){
         //$('*', container).remove();
         $(container).html(rendered);
 
         if (group && group.category) {
-          apicaba.models.category.selectCategory(group.category);
+          apicaba.models.category.select(group.category);
+        }
+
+        if (group && group.category) {
+          apicaba.models.category.on('bind', selectCategory);
         }
 
         apicaba.models.category.bind();

@@ -11,7 +11,7 @@ apicaba.views.groupList = (function($){
   };
 
   function selectGroup(e){
-    apicaba.models.group.selectGroup(this.id);
+    apicaba.models.group.select(this.id);
     $('.modal-body').scrollTop(0);
   }
 

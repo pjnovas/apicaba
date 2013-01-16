@@ -18,6 +18,7 @@ module.exports = function(grunt) {
             ,'public/scripts/libs/**/*.js'
             ,'public/scripts/apicaba/API/*.js'
             ,'public/scripts/apicaba/utils/*.js'
+            ,'public/scripts/apicaba/models/Model.js'
             ,'public/scripts/apicaba/models/*.js'
             ,'public/scripts/apicaba/views/**/*.js'
             ,'public/scripts/apicaba/*.js'

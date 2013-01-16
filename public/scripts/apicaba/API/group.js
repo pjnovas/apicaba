@@ -18,7 +18,7 @@ apicaba.api.group = (function(){
         url: root + id
       }, done);
     },
-    new: function(group, done) {
+    new: function(group, options, done) {
       apicaba.utils.ajax.call({
         method: 'POST',
         url: root,
@@ -26,7 +26,7 @@ apicaba.api.group = (function(){
         data: {group: group}
       }, done);
     },
-    update: function(group, done) {
+    update: function(group, options, done) {
       apicaba.utils.ajax.call({
         method: 'PUT',
         url: root + group._id,

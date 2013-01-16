@@ -18,20 +18,30 @@ apicaba.api.job = (function(){
         url: root + id
       }, done);
     },
-    new: function(job, runNow, done) {
+    new: function(job, options, done) {
+      var params = {
+        job: job
+      };
+      _.extend(params, options);
+
       apicaba.utils.ajax.call({
         method: 'POST',
         url: root,
         dataType: "json",
-        data: {job: job, runNow: runNow}
+        data: params
       }, done);
     },
-    update: function(job, runNow, done) {
+    update: function(job, options, done) {
+      var params = {
+        job: job
+      };
+      _.extend(params, options);
+
       apicaba.utils.ajax.call({
         method: 'PUT',
         url: root + job._id,
         dataType: "json",
-        data: {job: job, runNow: runNow}
+        data: params
       }, done);
     },
     delete: function(id, done) {

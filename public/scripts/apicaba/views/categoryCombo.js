@@ -13,7 +13,7 @@ apicaba.views.categoryCombo = (function($){
   apicaba.utils.events.build(container, events);
 
   function selectCategory(){
-    apicaba.models.category.selectCategory($(this).val());
+    apicaba.models.category.select($(this).val());
   }
 
   function render(categories){
@@ -27,8 +27,7 @@ apicaba.views.categoryCombo = (function($){
   apicaba.models.category.on('bind', render);
 
   apicaba.models.category.on('select', function(category){
-    $('select option:selected', container).attr('data-canonical');
-    //$('select', container).val(category._id);
+    $('select', container).val(category._id);
   });
 
 })(jQuery);

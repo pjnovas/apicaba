@@ -53,18 +53,27 @@ apicaba.views.jobFields = (function($){
     return newName;
   });
 
+  function render(fields) {
+    apicaba.utils.template.render(model, 'jobFields', { items: fields }, 
+      function(err, rendered){
+        spinner.stop();
+        if (fields && fields.length > 0) {
+          $('#show-preview').show();
+          $(container).empty().html(rendered);
+        }
+    });
+  }
+
+  apicaba.models.job.on('select', function(job){
+    setTimeout(function(){
+      if (job && job.source && job.source.fields){
+        render(job.source.fields);
+      }
+    }, 1000);
+  });
+
   return {
-    render: function(fields, done) {
-      apicaba.utils.template.render(model, 'jobFields', { items: fields }, 
-        function(err, rendered){
-          spinner.stop();
-          if (fields && fields.length > 0) {
-            $('#show-preview').show();
-            $(container).empty().html(rendered);
-          }
-          if (done) done();
-      });
-    },
+    render: render,
     loading: function(){
       $('#show-preview').hide();
       $(container).empty();
