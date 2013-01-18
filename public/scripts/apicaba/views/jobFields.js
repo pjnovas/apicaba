@@ -54,14 +54,12 @@ apicaba.views.jobFields = (function($){
   });
 
   function render(fields) {
-    apicaba.utils.template.render(model, 'jobFields', { items: fields }, 
-      function(err, rendered){
-        spinner.stop();
-        if (fields && fields.length > 0) {
-          $('#show-preview').show();
-          $(container).empty().html(rendered);
-        }
-    });
+    var rendered = apicaba.templates.jobFields({ items: fields });
+    spinner.stop();
+    if (fields && fields.length > 0) {
+      $('#show-preview').show();
+      $(container).empty().html(rendered);
+    }
   }
 
   apicaba.models.job.on('select', function(job){

@@ -18,10 +18,8 @@ apicaba.views.jobSearch = (function($){
 
   return {
     render: function() {
-      apicaba.utils.template.render(model, 'search', {}, 
-        function(err, rendered){
-          $(container).html(rendered);
-      });
+      var rendered = apicaba.templates.jobSearch({});
+      $(container).html(rendered);
     }
   }
 

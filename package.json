@@ -27,7 +27,8 @@
     "blanket": "1.0.x",
     "sinon": "1.5.x",
     "superagent": "0.10.x",
-    "grunt": "0.3.x"
+    "grunt": "0.3.x",
+    "grunt-contrib-handlebars": "0.3.3"
   },
   "engines": {
     "node": "0.8.x"

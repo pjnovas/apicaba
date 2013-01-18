@@ -1,0 +1,9 @@
+{{#items}}
+  <tr id="{{_id}}" class="{{getStatus state}}">
+    <td>{{name}}</td>
+    <td>{{group}}</td>
+    <td>{{cron}}</td>
+    <td title="{{formatDate createdAt}}">{{timeAgo createdAt}}</td>
+    <td title="{{formatDate lastRun}}">{{timeAgo lastRun}}</td>
+  </tr>
+{{/items}}

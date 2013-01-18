@@ -18,11 +18,9 @@ apicaba.views.groupList = (function($){
   apicaba.utils.events.build(container, events);
 
   function render(groups){
-    apicaba.utils.template.render(model, 'groupList', { items: groups }, 
-      function(err, rendered){
-        $('tr', container).remove();
-        $(container).html(rendered);
-    });
+    var rendered = apicaba.templates.groupList({ items: groups });
+    $('tr', container).remove();
+    $(container).html(rendered);
   }
 
   apicaba.models.group.on('change', render);

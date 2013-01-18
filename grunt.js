@@ -1,3 +1,5 @@
+var _ = require('underscore');
+
 /*global module:false*/
 module.exports = function(grunt) {
 
@@ -11,11 +13,26 @@ module.exports = function(grunt) {
         '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;' +
         ' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */'
     },
+    handlebars: {
+      compile: {
+        options: {
+          namespace: 'apicaba.templates',
+          wrapped: true,
+          processName: function(filename) {
+            return _.last(filename.split('/')).replace('.hbs', '');
+          }
+        },
+        files: {
+          "public/scripts/apicaba/templates.js": "public/scripts/apicaba/views/templates/**/*.hbs"
+        }
+      }
+    },
     concat: {
       dist: {
         src: [
             '<banner:meta.banner>'
             ,'public/scripts/libs/**/*.js'
+            ,'public/scripts/apicaba/templates.js'
             ,'public/scripts/apicaba/API/*.js'
             ,'public/scripts/apicaba/utils/*.js'
             ,'public/scripts/apicaba/models/Model.js'
@@ -38,7 +55,9 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask('default', 'concat');
-  grunt.registerTask('package', 'concat min');
+  grunt.loadNpmTasks('grunt-contrib-handlebars');
+
+  grunt.registerTask('default', 'handlebars concat');
+  grunt.registerTask('package', 'handlebars concat min');
 
 };

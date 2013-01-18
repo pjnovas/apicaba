@@ -1,0 +1,14 @@
+{{#items}}
+  <div class="row-fluid">
+    <div id="{{name}}" class="input-prepend input-append">
+      <span class="span5 add-on">{{name}}</span>
+      <input class="span5" type="text" placeholder="{{formatFieldName name}}">
+      <select class="span2">
+        <option value="string" select="true">String</option>
+        <option value="integer">Integer</option>
+        <option value="float">Float</option>
+        <option value="date">Date</option>
+      </select>
+    </div>
+  </div>
+{{/items}}

@@ -17,11 +17,9 @@ apicaba.views.groupCombo = (function($){
   }
 
   function render(groups){
-    apicaba.utils.template.render(model, 'groupCombo', { items: groups }, 
-      function(err, rendered){
-        $('select, a', container).remove();
-        $(container).html(rendered);
-    });
+    var rendered = apicaba.templates.groupCombo({ items: groups });
+    $('select, a', container).remove();
+    $(container).html(rendered);
   }
 
   apicaba.models.group.on('bind', function(g){

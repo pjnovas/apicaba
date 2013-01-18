@@ -1,0 +1,6 @@
+<select id="group">
+  {{#items}}
+    <option value="{{_id}}" data-canonical="{{canonical}}">{{name}}</option>
+  {{/items}}
+</select>
+<a href="#group-modal" role="button" class="btn" data-toggle="modal">Manage</a>

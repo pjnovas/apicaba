@@ -66,22 +66,20 @@ apicaba.views.jobEdit = (function($){
       apicaba.models.group.select(job.group, 'canonical');
     }
 
-    apicaba.utils.template.render(model, 'jobEdit', job || {}, 
-      function(err, rendered){
+    var rendered = apicaba.templates.jobEdit(job || {});
 
-        $('form', container).remove();
-        $(container).html(rendered);
+    $('form', container).remove();
+    $(container).html(rendered);
 
-        $('body').scrollTop(0);
-        $('#name', container).focus();
+    $('body').scrollTop(0);
+    $('#name', container).focus();
 
-        if (job && job.group) {
-          apicaba.models.group.on('bind', selectGroup);
-          setTimeout(showCanonical,100);
-        }
+    if (job && job.group) {
+      apicaba.models.group.on('bind', selectGroup);
+      setTimeout(showCanonical,100);
+    }
 
-        apicaba.models.group.bind();
-    });
+    apicaba.models.group.bind();
   }
 
   render();

@@ -1,0 +1,70 @@
+<span id="access" class="accessURL"></span>
+<div class="row">
+  <div class="span12">
+
+    <div class="span6" style="margin-top: 15px;">
+      <form class="form-horizontal border-right">
+        <input id="jobId" type="hidden" value="{{_id}}">
+
+        <div class="control-group">
+          <span class="control-label" for="name">Name</span>
+          <div class="controls">
+            <input id="name" type="text" placeholder="" value="{{name}}">
+          </div>
+        </div>
+
+        <div class="control-group">
+          <span class="control-label" for="description">Description</span>
+          <div class="controls">
+            <textarea id="description" class="input-xlarge" rows="2">{{description}}</textarea>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <span class="control-label" for="group">Group</span>
+          <div id="group-combo" class="controls"></div>
+        </div>
+
+        <div class="control-group">
+          <span class="control-label" for="cron">Cron Expression</span>
+          <div class="controls">
+            <input id="cron" type="text" placeholder="* * * * * *" value="{{cron}}">
+          </div>
+        </div>
+
+        <div class="control-group">
+          <span class="control-label" for="parser">Parser</span>
+          <div class="controls">
+            <select id="parser" class="input-small">
+              <option selected="true" value="csv">CSV</option>
+            </select>
+            <input id="delimiter" class="input-tiny" type="text" value="{{source.delimiter}}" placeholder="," maxlength="1">
+          </div>
+        </div>
+
+        <div class="control-group">
+          <span class="control-label" for="url">URL to Fetch</span>
+          <div class="controls">
+            <textarea id="url" class="input-xlarge" placeholder="paste a url" rows="3">{{source.url}}</textarea>
+          </div>
+        </div>
+      </form>
+    </div>
+    
+    <div class="span6">
+      <div class="row-fluid">
+        <a id="get-preview" class="span3 offset5 btn btn-success">Get Fields</a>
+        <a id="show-preview" href="#preview-modal" role="button" class="span2 offset2 btn" data-toggle="modal" style="display:none;">Preview</a>
+      </div>
+      <div id="fields" class="row-fluid"></div>
+    </div>
+
+  </div>
+</div>
+<div class="row-fluid button-set">
+  <div class="span4 offset4">
+    <input id="save" type="button" value="Save" class="span4 btn btn-primary">
+    <input id="save-run" type="button" value="Save & Run" class="span4 btn btn-success">
+    <input id="cancel" type="button" value="Cancel" class="span4 btn">
+  </div>
+</div>

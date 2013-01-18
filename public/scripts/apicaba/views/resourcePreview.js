@@ -25,12 +25,9 @@ apicaba.views.resourcePreview = (function($){
 
   return {
     render: function(prevData, done) {
-
-      apicaba.utils.template.render(model, 'resourcePreview', prevData, 
-        function(err, rendered){
-          $(container).empty().html(rendered);
-          if (done) done();
-      });
+      var rendered = apicaba.templates.resourcePreview(prevData);
+      $(container).empty().html(rendered);
+      if (done) done();
     }
   };
 

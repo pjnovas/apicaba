@@ -17,11 +17,9 @@ apicaba.views.categoryCombo = (function($){
   }
 
   function render(categories){
-    apicaba.utils.template.render(model, 'categoryCombo', { items: categories }, 
-      function(err, rendered){
-        $('select, a', container).remove();
-        $(container).html(rendered);
-    });
+    var rendered = apicaba.templates.categoryCombo({ items: categories });
+    $('select, a', container).remove();
+    $(container).html(rendered);
   }
 
   apicaba.models.category.on('bind', render);
