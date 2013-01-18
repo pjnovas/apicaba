@@ -23,22 +23,28 @@ module.exports = function(grunt) {
           }
         },
         files: {
-          "public/scripts/apicaba/templates.js": "public/scripts/apicaba/views/templates/**/*.hbs"
+          "client/apicaba/templates.js": "client/apicaba/views/templates/**/*.hbs"
         }
       }
     },
     concat: {
+      vendor: {
+        src: [ 
+          'client/vendor/jquery-1.9.0.min.js' 
+          , 'client/vendor/**/*.js' 
+        ],
+        dest: 'public/scripts/vendor.js'
+      },
       dist: {
         src: [
             '<banner:meta.banner>'
-            ,'public/scripts/libs/**/*.js'
-            ,'public/scripts/apicaba/templates.js'
-            ,'public/scripts/apicaba/API/*.js'
-            ,'public/scripts/apicaba/utils/*.js'
-            ,'public/scripts/apicaba/models/Model.js'
-            ,'public/scripts/apicaba/models/*.js'
-            ,'public/scripts/apicaba/views/**/*.js'
-            ,'public/scripts/apicaba/*.js'
+            ,'client/apicaba/templates.js'
+            ,'client/apicaba/API/*.js'
+            ,'client/apicaba/utils/*.js'
+            ,'client/apicaba/models/Model.js'
+            ,'client/apicaba/models/*.js'
+            ,'client/apicaba/views/**/*.js'
+            ,'client/apicaba/*.js'
         ],
         dest: 'public/scripts/<%= pkg.name %>-<%= pkg.version %>.js'
       }
