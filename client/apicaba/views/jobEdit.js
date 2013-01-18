@@ -64,6 +64,7 @@ apicaba.views.jobEdit = (function($){
     function selectGroup(){
       apicaba.models.group.removeListener('bind', selectGroup);
       apicaba.models.group.select(job.group, 'canonical');
+      showCanonical();
     }
 
     var rendered = apicaba.templates.jobEdit(job || {});
@@ -76,7 +77,6 @@ apicaba.views.jobEdit = (function($){
 
     if (job && job.group) {
       apicaba.models.group.on('bind', selectGroup);
-      setTimeout(showCanonical,100);
     }
 
     apicaba.models.group.bind();

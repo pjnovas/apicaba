@@ -63,11 +63,9 @@ apicaba.views.jobFields = (function($){
   }
 
   apicaba.models.job.on('select', function(job){
-    setTimeout(function(){
-      if (job && job.source && job.source.fields){
-        render(job.source.fields);
-      }
-    }, 1000);
+    if (job && job.source && job.source.fields){
+      render(job.source.fields);
+    }
   });
 
   return {
