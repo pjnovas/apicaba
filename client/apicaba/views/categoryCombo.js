@@ -23,6 +23,7 @@ apicaba.views.categoryCombo = (function($){
   }
 
   apicaba.models.category.on('bind', render);
+  apicaba.models.category.on('change', render);
 
   apicaba.models.category.on('select', function(category){
     $('select', container).val(category._id);

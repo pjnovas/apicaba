@@ -54,7 +54,7 @@ apicaba.views.jobFields = (function($){
   });
 
   function render(fields) {
-    var rendered = apicaba.templates.jobFields({ items: fields });
+    var rendered = apicaba.templates.jobField({ items: fields });
     spinner.stop();
     if (fields && fields.length > 0) {
       $('#show-preview').show();
