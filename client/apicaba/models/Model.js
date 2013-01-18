@@ -53,7 +53,7 @@ Model.prototype.bind = function(){
 };
 
 Model.prototype.save = function(entity, options){
-  if (entity._id) update.call(this, job, options);
+  if (entity._id) update.call(this, entity, options);
   else add.call(this, entity, options);
 
   return this;
@@ -100,12 +100,7 @@ function add(entity, options) {
 
   this.api.new(entity, options, function(err, newEntity){
     if(err) return;
-/*
-    if (options) {
-      newEntity.state = 'running';
-      newEntity.lastRun = new Date();
-    }
-*/
+
     self.collection.unshift(newEntity);
 
     self.emit('add', newEntity);
@@ -118,12 +113,7 @@ function update(entity, options) {
 
   this.api.update(entity, options, function(err){
     if(err) return;
-/*
-    if (options) {
-      entity.state = 'running';
-      entity.lastRun = new Date();
-    }
-*/
+
     for(var i = 0; i < self.collection.length; i++){
       if (self.collection[i]._id === entity._id){
         self.collection[i] = _.clone(entity);

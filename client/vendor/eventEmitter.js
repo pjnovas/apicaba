@@ -113,6 +113,8 @@
       self.removeListener(type, g);
       listener.apply(this, arguments);
     });
+
+    return this;
   };
 
   EventEmitter.prototype.removeListener = function(type, listener) {

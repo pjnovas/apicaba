@@ -17,13 +17,22 @@ apicaba.views.jobEdit = (function($){
 
   function getPreview(){
     var job = buildJob();
-    apicaba.models.resource.getPreview(job.source);
+    
+    if ($.trim(job.source.url).length === 0)
+      alert('URL is required');
+    else 
+      apicaba.models.resource.getPreview(job.source);
   }
 
   function save(e, runNow) {
     var job = buildJob();
-    apicaba.models.job.save(job, { runNow: runNow });
-    render();
+    
+    if ($.trim(job.name).length === 0 || $.trim(job.source.url).length === 0)
+      alert('name & URL are required');
+    else {
+      apicaba.models.job.save(job, { runNow: runNow });
+      render();
+    }
   }
 
   function cancel() {

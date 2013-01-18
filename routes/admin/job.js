@@ -21,9 +21,8 @@ function create(req, res){
   jobs.create(newJob, function(err, job){
     if (err) return res.send(500);
 
-    scheduler.addJob(newJob, runNow);
-
     res.send(201, job); //OK Resource created
+    scheduler.addJob(newJob, runNow);
   });
 }
 
@@ -35,9 +34,8 @@ function update(req, res){
   jobs.update(jobId, req.body.job, function(err){
     if (err) return res.send(500);
 
-    scheduler.updateJob(updateJob, runNow);
-
     res.send(204); //Ok with No Content
+    scheduler.updateJob(updateJob, runNow);
   });
 }
 
