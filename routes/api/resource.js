@@ -30,6 +30,7 @@ function getResource(req, res){
 
   resources.getByCanonical(resourceCanonical, function(err, resource){
     if (err) return res.send(500);
+    if(!resource) return res.send(404);
 
     groups.getByCanonical(resource.group, function(err, group){
 

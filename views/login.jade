@@ -5,11 +5,8 @@ block header
 
 block content
   .container
-    form.form-signin
+    form.form-signin(action="/login", method="post")
       h2.form-signin-heading Please sign in
-      input.input-block-level(type='text', placeholder='Email address')
-      input.input-block-level(type='password', placeholder='Password')
-      label.checkbox
-        input(type='checkbox', value='remember-me')
-        | Remember me
+      input.input-block-level(type='text', name="username", placeholder='Username')
+      input.input-block-level(type='password', name="password", placeholder='Password')
       button.btn.btn-large.btn-primary(type='submit') Sign in

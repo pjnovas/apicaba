@@ -7,6 +7,7 @@ var express = require('express')
   , http = require('http')
   , path = require('path')
   , socketIO = require('socket.io')
+  , passport = require('passport')
   , mongoJS = require('mongojs');
 
 app = express();
@@ -15,11 +16,13 @@ app.configure(function(){
   app.set('port', process.env.PORT || 3050);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
+
   app.use(express.favicon());
   app.use(express.logger('dev'));
+  app.use(express.cookieParser());
   app.use(express.bodyParser());
   app.use(express.methodOverride());
-  app.use(app.router);
+
   app.use(require('less-middleware')({ src: __dirname + '/public' }));
   app.use(express.static(path.join(__dirname, 'public')));
 });
@@ -43,9 +46,14 @@ app.configure('production', function(){
 });
 
 function init(){
+  app.use(express.session({ secret: app.secrets.session })); 
+  app.use(passport.initialize());
+  app.use(passport.session());
+  app.use(app.router);
+
   app.db = mongoJS.connect(
           app.secrets.mongodb.connectionString, 
-          ['jobs', 'categories', 'groups', 'resources']);
+          ['jobs', 'categories', 'groups', 'resources', 'admins']);
 
   startScheduler();
 }
