@@ -78,18 +78,17 @@ Model.prototype.select = function(value, key){
 };
 
 Model.prototype.remove = function(id) {
-  return alert('NOT IMPLEMENTED!');
+  var self = this;
 
-  for(var i = 0; i < groups.length; i++){
-    if (groups[i]._id === id){
-      groups.slice(i, i);
-      break;
+  this.api.delete(id, function(err){
+    for(var i = 0; i < self.collection.length; i++){
+      if (self.collection[i]._id === id){
+        self.collection.splice(i, 1);
+        break;
+      }
     }
-  }
 
-  apicaba.api.group.delete(id, function(err){
-    //TODO: if something bad happened, put the group 
-    // back again and re-render
+    self.emit('change', self.collection);
   });
 
   return this;

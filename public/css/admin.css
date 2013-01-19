@@ -21,6 +21,12 @@
   -moz-border-radius: 4px;
   border-radius: 4px;
 }
+.current-jobs a.remove,
+.job-form a.remove,
+.current-groups a.remove,
+.group-form a.remove {
+  color: red;
+}
 .current-jobs::after,
 .job-form::after,
 .current-groups::after,

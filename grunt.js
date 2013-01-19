@@ -56,8 +56,8 @@ module.exports = function(grunt) {
       }
     },
     watch: {
-      files: [ 'public/scripts/**/*.js', 'client/apicaba/**/*.js'],
-      tasks: 'concat'
+      files: [ 'public/scripts/**/*.js', 'client/apicaba/**/*'],
+      tasks: 'default'
     }
   });
 

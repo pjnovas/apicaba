@@ -8,11 +8,22 @@ apicaba.views.jobList = (function($){
     timer;
  
   var events = {
-    "click::tr": selectJob
+    "click::tr": selectJob,
+    "click::td a.remove": removeJob
   };
 
   function selectJob(e){
     apicaba.models.job.select(this.id);
+  }
+
+  function removeJob(e){
+    var doit = confirm("The job and its resources is going to be deleted, sure?");
+    if (doit) {
+      var jobId = $(this).parents('tr').attr('id');
+      apicaba.models.job.remove(jobId);
+    }
+
+    e.stopPropagation();
   }
 
   apicaba.utils.events.build(container, events);

@@ -42,14 +42,9 @@ exports.update = function(id, group, done){
         description: group.description, 
         category: group.category 
       } }, 
-      function(err, data){
-    done(err, data);
-  });
+      done);
 };
 
 exports.remove = function(id, done){
-  db.groups.remove({ "_id": ObjectId(id)},
-    function(err, data){
-      done(err, data);
-  });
+  db.groups.remove({ "_id": ObjectId(id)}, done);
 };

@@ -16,11 +16,12 @@ apicaba.views.jobSearch = (function($){
     apicaba.models.job.search($('input', container).val());
   }
 
-  return {
-    render: function() {
-      var rendered = apicaba.templates.jobSearch({});
-      $(container).html(rendered);
-    }
+  function render() {
+    var rendered = apicaba.templates.jobSearch();
+    $(container).html(rendered);
   }
+
+  apicaba.models.job.on('bind', render);
+  apicaba.models.job.on('change', render);
 
 })(jQuery);

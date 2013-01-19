@@ -1,5 +1,5 @@
-
-var db = app.db;
+var ObjectId = require('mongojs').ObjectId
+  , db = app.db;
 
 exports.getAll = function(done){
   db.resources
@@ -14,8 +14,7 @@ exports.getByName = function(name, done){
 };
 
 exports.getByCanonical = function(canonical, done){
-  db.resources.findOne({ canonical: canonical }, 
-    { _id: false }, done);
+  db.resources.findOne({ canonical: canonical }, { _id: false }, done);
 };
 
 exports.getByGroupName = function(name, done){
@@ -47,4 +46,16 @@ exports.getByQuery = function(name, query, done) {
     function(err, data){
       done(err, data || []);
     }).limit(200);
+};
+
+exports.remove = function(resId, done){
+  var resId = ObjectId(resId);
+
+  db.resources.findOne({ "_id": resId }, function(err, res){
+    if (err) done(err);
+    else if(res) {
+      db.collection(res.collection).drop();
+      db.resources.remove({ "_id": resId }, done);
+    }
+  });
 };

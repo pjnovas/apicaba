@@ -12,16 +12,12 @@ exports.getAll = function(done){
 
 exports.getByName = function(name, done){
   
-  db.jobs
-    .findOne({ name: name }
-    , done);
+  db.jobs.findOne({ name: name }, done);
 };
 
 exports.getById = function(id, done){
 
-  db.jobs
-    .findOne({ "_id": ObjectId(id) }
-    , done);
+  db.jobs.findOne({ "_id": ObjectId(id) }, done);
 };
 
 exports.updateGroup = function(groupOld, groupNew, done){
@@ -30,9 +26,7 @@ exports.updateGroup = function(groupOld, groupNew, done){
       { group: groupOld },
       { $set: {group: groupNew } }, 
       { multi: true },
-      function(err, data){
-    done(err, data);
-  });
+      done);
 };
 
 exports.create = function(job, done){
@@ -55,9 +49,7 @@ exports.update = function(id, job, done){
         cron: job.cron, 
         source: job.source 
       } }, 
-      function(err, data){
-    done(err, data);
-  });
+      done);
 };
 
 exports.changeState = function(id, state){
@@ -70,9 +62,5 @@ exports.changeState = function(id, state){
 };
 
 exports.remove = function(id, done){
-  
-  db.jobs.remove({ "_id": ObjectId(id)},
-    function(err, data){
-      done(err, data);
-  });
+  db.jobs.remove({ "_id": ObjectId(id)}, done);
 };

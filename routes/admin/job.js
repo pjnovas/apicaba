@@ -1,5 +1,6 @@
 
 var jobs = require('../../collections/jobs')
+  , resources = require('../../collections/resources')
   , scheduler = require('../../models/scheduler');
 
 app.get('/jobs', getList);
@@ -45,5 +46,8 @@ function remove(req, res){
   jobs.remove(jobId, function(err){
     if (err) return res.send(500);
     res.send(204); //OK with No Content
+
+    scheduler.removeJob(jobId);
+    resources.remove(jobId);
   });
 }

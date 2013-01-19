@@ -26,6 +26,7 @@ scheduler.initialize = function (done){
 
 scheduler.addJob = create;
 scheduler.updateJob = update;
+scheduler.removeJob = remove;
 
 function create(jobConfig, runNow){
   
@@ -64,16 +65,19 @@ function create(jobConfig, runNow){
 }
 
 function update(jobConfig, runNow){
+  remove(jobConfig._id);
+  create(jobConfig, runNow);
+}
+
+function remove(jobId){
   var pos = -1;
   var job = _.find(currentJobs, function(job){
     pos++;
-    return job._id === jobConfig._id;
+    return job._id === jobId;
   });
 
   if (job) {
     job.destroy();
     currentJobs.splice(pos, 1);
-
-    create(jobConfig, runNow);
   }
 }
