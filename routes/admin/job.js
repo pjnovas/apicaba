@@ -3,10 +3,10 @@ var jobs = require('../../collections/jobs')
   , resources = require('../../collections/resources')
   , scheduler = require('../../models/scheduler');
 
-app.get('/jobs', getList);
-app.post('/jobs', create);
-app.put('/jobs/:jobId', update);
-app.del('/jobs/:jobId', remove);
+app.get('/jobs', app.isAuth, getList);
+app.post('/jobs', app.isAuth, create);
+app.put('/jobs/:jobId', app.isAuth, update);
+app.del('/jobs/:jobId', app.isAuth, remove);
 
 function getList(req, res){
   jobs.getAll(function(err, jobList){

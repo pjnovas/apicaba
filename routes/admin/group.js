@@ -2,10 +2,10 @@
 var groups = require('../../collections/groups')
   , jobs = require('../../collections/jobs');
 
-app.get('/grupos', getList);
-app.post('/grupos', create);
-app.put('/grupos/:group', update);
-app.del('/grupos/:group', remove);
+app.get('/grupos', app.isAuth, getList);
+app.post('/grupos', app.isAuth, create);
+app.put('/grupos/:group', app.isAuth, update);
+app.del('/grupos/:group', app.isAuth, remove);
 
 function getList(req, res){
   groups.getAll(function(err, groupList){

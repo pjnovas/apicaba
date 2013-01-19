@@ -43,4 +43,4 @@ function isAuthenticated(req, res, next){
   else res.redirect('/login');
 };
 
-app.isAuthenticated = isAuthenticated;
+app.isAuth = isAuthenticated;

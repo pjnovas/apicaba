@@ -115,7 +115,7 @@ function update(entity, options) {
 
     for(var i = 0; i < self.collection.length; i++){
       if (self.collection[i]._id === entity._id){
-        self.collection[i] = _.clone(entity);
+        _.extend(self.collection[i], entity);
         break;
       }
     }

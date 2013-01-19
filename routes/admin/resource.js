@@ -1,7 +1,7 @@
 
 var Preview = require('../../models/preview');
 
-app.get('/resources/preview', getPreview);
+app.get('/resources/preview', app.isAuth, getPreview);
 
 function getPreview(req, res){
   var url = req.query['url']

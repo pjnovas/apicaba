@@ -1,7 +1,7 @@
 
 require('./auth.js');
 
-app.get('/', app.isAuthenticated, index);
+app.get('/', app.isAuth, index);
 
 function index(req, res){
   res.render('admin');
