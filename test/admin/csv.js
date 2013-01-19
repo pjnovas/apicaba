@@ -135,6 +135,7 @@ function clearData(done){
 
   db.jobs.remove();
   db.resources.remove();
+  db.collection('bicis_locas').remove();
 
   done();
 }

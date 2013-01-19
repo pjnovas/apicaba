@@ -23,6 +23,7 @@ describe('API Admin', function(){
   });
 
   require('./preview.js');
+  require('./preview_inspec.js');
   require('./scheduler.js');
   require('./csv.js');
 

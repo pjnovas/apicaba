@@ -46,5 +46,5 @@ Formatter.prototype.end = function(str) {
 };
 
 function getLines(str){
-  return str.split('\r\n');
+  return str.split(/\r?\n/);
 }

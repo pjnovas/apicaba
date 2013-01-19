@@ -22,7 +22,8 @@ module.exports.parse = function(fields, delimiter, lines){
     var line = {};
 
     props.forEach(function(prop, index){
-      line[fields[index].name] = prop;
+      if (fields[index])
+        line[fields[index].name] = prop;
     });
 
     arr.push(line);
