@@ -49,5 +49,6 @@ function getResource(req, res){
 function cleanData(entity){
   delete entity._id;
   delete entity.canonical;
+  delete entity.collection;
   return entity;
 }
