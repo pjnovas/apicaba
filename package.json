@@ -2,13 +2,13 @@
   "name": "apicaba",
   "description": "",
   "main" : "app.js",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "private": false,
   "scripts": {
     "start": "node server",
     "test": "make test",
     "blanket": {
-      "pattern": ["/models/"]
+      "pattern": ["/models/", "/collections/"]
     }
   },
   "dependencies": {

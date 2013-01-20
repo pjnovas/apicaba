@@ -1,0 +1,288 @@
+extends layout
+
+block header
+  link(rel='stylesheet', href='/css/docs.css')
+  link(rel='stylesheet', href='/css/highlight.css')
+
+block content
+  .container
+    .row
+      .span3.bs-docs-sidebar
+        ul#nav-bar.nav.nav-list.bs-docs-sidenav.affix
+          li.nav-header Rutas
+          li
+            a(href='#rutas-categoria') Categorías
+          li
+            a(href='#rutas-grupos') Grupos
+          li
+            a(href='#rutas-recursos') Recursos
+          li
+            a(href='#rutas-query') Query
+          li.nav-header Tipos de Respuesta
+          li
+            a(href='#respuestas-parcial') Parcial
+          li.nav-header Entidades
+          li
+            a(href='#entidades-categoria') Categoría
+          li
+            a(href='#entidades-grupo') Grupo
+          li
+            a(href='#entidades-recurso') Recurso
+      
+      .span9
+        section#introduccion
+          p La organización de las rutas es horizontal, no sigue una estructura 
+            | de directorios ya que la misión de la API es acceder a los datos 
+            | de los recursos de forma simple. Es por eso que las rutas 
+            | Categorías y Grupos fueron ideadas para navegar la API hasta encontrar
+            | el recurso necesario, para luego utilizar sólo la ruta Recursos al obtener
+            | la información deseada.
+          p Toda consulta tiene un 
+            code máximo de 200 registros
+            | . Esto es provisorio, ya que 
+            | no tiene otras restricciones (como claves de acceso o API Keys para manejar
+            | la cantidad de pedidos periodicos por usuario) y desconozco 
+            | la cantidad de accesos y/o utilización que le pueden dar.
+          code El estado de la API es ALPHA (experimental), no garantizo la totalidad 
+            | ni la integridad de los datos.
+
+        section#rutas-categoria
+          h3 Categorías 
+          code.lead.text-success GET
+          | 
+          code.lead.text-info /api/categorias
+          a(href='#respuestas-parcial') 
+            span.text-warning  [Respuesta Parcial]
+          blockquote
+            p Devuelve un array con todas las categorías disponibles.
+          code.lead.text-success GET
+          | 
+          code.lead.text-info /api/categorias/[nombre]
+          blockquote
+            p Devuelve una entidad Categoria con sus Grupos.
+            p El parámetro 
+              code.muted nombre
+              |  debe tener sus espacios separados por 
+              code.muted -
+            p Ejemplo:  
+              code.muted /api/categorias/transporte-y-movilidad
+
+        section#rutas-grupos
+          h3 Grupos
+          code.lead.text-success GET
+          | 
+          code.lead.text-info /api/grupos
+          a(href='#respuestas-parcial') 
+            span.text-warning  [Respuesta Parcial]
+          blockquote
+            p Devuelve un array con todos los grupos disponibles.
+          code.lead.text-success GET
+          | 
+          code.lead.text-info /api/grupos/[nombre]
+          blockquote
+            p Devuelve una entidad Grupo con sus Recursos.
+            p El parámetro 
+              code.muted nombre
+              |  debe tener sus espacios separados por 
+              code.muted -
+            p Ejemplo:  
+              code.muted /api/grupos/bicicletas-publicas
+
+        section#rutas-recursos
+          h3 Recursos
+          code.lead.text-success GET
+          | 
+          code.lead.text-info /api/recursos
+          a(href='#respuestas-parcial') 
+            span.text-warning  [Respuesta Parcial]
+          blockquote
+            p Devuelve un array con todos los recursos disponibles.
+          code.lead.text-success GET
+          | 
+          code.lead.text-info /api/recursos/[nombre]
+          blockquote
+            p Devuelve una entidad Recurso con sus registros. 
+            p El parámetro 
+              code.muted nombre
+              |  debe tener sus espacios separados por 
+              code.muted -
+            p Ejemplo:  
+              code.muted /api/recursos/recorridos-realizados-en-bicicleta  
+
+        section#rutas-query
+          h3 Query 
+            code.warning 
+              | (experimental)
+          code.lead.text-success GET
+          | 
+          code.lead.text-info /api/recursos/[nombre]?[campo]=[valor]
+          blockquote
+            p Devuelve una entidad Recurso con los registros encontrados por el query. 
+            p El parámetro 
+              code.muted nombre
+              |  debe tener sus espacios separados por 
+              code.muted -
+            p Los parámetros  
+              code.muted campo
+              |  y 
+              code.muted valor
+              |  varian dependiendo de los campos del recurso y se utilizan para 
+              | realizar consultas sobre sus registros
+            p Ejemplo:  
+              code.muted /api/recursos/recorridos-realizados-en-bicicleta?origen=catedral&usuario=user1234  
+
+        section#respuestas-parcial
+          h3 Respuestas Parciales 
+          p Las respuestas Parciales  
+            b SÓLO 
+            | devuelven la información de la entidad necesaria para su navegación.
+          p Ejemplo de una respuesta parcial de un Grupo: 
+          .docs-example
+            pre
+              code.json { 
+                |   "name": "Bicicleterías en la Ciudad",
+                |   "description": "Listado de bicicleterías de la Ciudad de Buenos Aires.",
+                |   "category": "http://apicaba.com/api/categorias/transporte-y-movilidad",
+                |   "uri": "http://apicaba.com/api/grupos/bicicleterías-en-la-ciudad"
+                |}
+
+        section#entidades-categoria
+          h3 Categoría 
+          p Conjunto de Grupos.
+          p Posee la información necesaria para obtener el detalle de sus grupos.
+          .docs-fields
+            dl.dl-horizontal
+              dt name
+              dd Nombre de la Categoría
+              dt groups
+              dd Array de entidades Grupo (parciales)
+          .docs-example
+            pre
+              code.json {
+                |   "name": "Transporte y Movilidad",
+                |   "groups": [
+                |     {
+                |       "name": "Bicicletas Públicas",
+                |       "description": "Información del sistema de transporte público de bicicletas desde sus inicios a la actualidad.",
+                |       "category": "transporte-y-movilidad",
+                |       "uri": "http://apicaba.com/api/grupos/bicicletas-públicas"
+                |     },
+                |     {
+                |       "name": "Bicicleterías en la Ciudad",
+                |       "description": "Listado de bicicleterías de la Ciudad de Buenos Aires.",
+                |       "category": "transporte-y-movilidad",
+                |       "uri": "http://apicaba.com/api/grupos/bicicleterías-en-la-ciudad"
+                |     }
+                |   ]
+                |}
+
+        section#entidades-grupo
+          h3 Grupo 
+          p Conjunto de Recursos.
+          p Posee la información necesaria para obtener el detalle de sus recursos, como así también su categoría.
+          .docs-fields
+            dl.dl-horizontal
+              dt name
+              dd Nombre del Grupo
+              dt description
+              dd Breve descripción del Grupo
+              dt category
+              dd Entidad Categoria a la que pertenece el Grupo
+              dt resources
+              dd Array de entidades Recurso (parciales)
+          .docs-example
+            pre
+              code.json {
+                |   "name": "Bicicleterías en la Ciudad",
+                |   "description": "Listado de bicicleterías de la Ciudad de Buenos Aires.",
+                |   "category": {
+                |     "name": "Transporte y Movilidad",
+                |     "uri": "http://apicaba.com/api/categorias/transporte-y-movilidad"
+                |   },
+                |   "resources": [{
+                |       "name": "Estaciones de Bicicletas",
+                |       "description": "Nombre, ID, referencia geográfica, dirección, latitud y longitud.",
+                |       "uri": "http://apicaba.com/api/recursos/estaciones-de-bicicletas"
+                |   }]
+                |}
+
+        section#entidades-recurso
+          h3 Recurso 
+          p Un recurso es equivalente a un DataSet en BA Open Data.
+          p Posee la información del DataSet y una pre-visualización de sus valores.
+          .docs-fields
+            dl.dl-horizontal
+              dt name
+              dd Nombre del Recurso/ DataSet
+              dt description
+              dd Breve descripción del Recurso/ DataSet
+              dt group
+              dd Entidad Grupo a la que pertenece el Recurso/ DataSet
+              dt count
+              dd Cantidad de datos disponibles en su totalidad
+              dt columns
+              dd Array de Propiedades que posee cada JSON en el DataSet, siendo:
+                dl.dl-horizontal
+                  dt name
+                  dd Nombre del campo
+                  dt type
+                  dd Tipo de Dato de su valor (actualmente son todos String)
+              dt data
+              dd Array de JSON (registros). Máximo 200 registros.
+          .docs-example
+            pre
+              code.json {
+                |   "name": "Estaciones de Bicicletas",
+                |   "description": "Nombre, ID, referencia geográfica, dirección, latitud y longitud ...",
+                |   "group": {
+                |     "name": "Bicicletas Públicas",
+                |     "description": "Información del sistema de transporte público de bicicletas.",
+                |     "category": "transporte-y-movilidad",
+                |     "uri": "http://apicaba.com/api/grupos/bicicletas-públicas"
+                |   },
+                |   "count": 28,
+                |   "columns": [{
+                |       "name": "estacionId",
+                |       "type": "string"
+                |     }, {
+                |       "name": "estacionNombre",
+                |       "type": "string"
+                |     }, {
+                |       "name": "latitud",
+                |       "type": "string"
+                |     }, {
+                |       "name": "longitud",
+                |       "type": "string"
+                |     }],
+                |   "data": [{
+                |       "estacionId": "3",
+                |       "estacionNombre": "RETIRO",
+                |       "latitud": "-34.592308",
+                |       "longitud": "-58.37501"
+                |     }, {
+                |       "estacionId": "5",
+                |       "estacionNombre": "ADUANA",
+                |       "latitud": "-34.611365",
+                |       "longitud": "-58.369077"
+                |     }, {
+                |       "estacionId": "6",
+                |       "estacionNombre": "DERECHO",
+                |       "latitud": "-34.583669",
+                |       "longitud": "-58.391243"
+                |     }]
+                | }
+        
+    hr
+    footer
+      p © Company 2012
+
+block scripts
+  script(src='/scripts/vendor.js')
+  script(type='text/javascript')
+    hljs.tabReplace = '  '; 
+    hljs.initHighlightingOnLoad();
+    $(function(){
+      $('[data-spy="scroll"]').each(function () {
+        var $spy = $(this).scrollspy('refresh')
+      });
+    });

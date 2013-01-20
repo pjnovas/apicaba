@@ -3,4 +3,4 @@ coverage.html
 secrets_prod.json
 public/scripts/apicaba-*.js
 public/scripts/vendor.js
-client/apicaba/templates.js
+client/apicaba/tmpls-*.js

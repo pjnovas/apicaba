@@ -1,9 +1,15 @@
 var _ = require('underscore');
 
-/*global module:false*/
 module.exports = function(grunt) {
 
-  // Project configuration.
+  var hbsOpts = {
+    namespace: 'apicaba.templates',
+    wrapped: true,
+    processName: function(filename) {
+      return _.last(filename.split('/')).replace('.hbs', '');
+    }
+  };
+
   grunt.initConfig({
     pkg: '<json:package.json>',
     meta: {
@@ -14,49 +20,67 @@ module.exports = function(grunt) {
         ' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */'
     },
     handlebars: {
-      compile: {
-        options: {
-          namespace: 'apicaba.templates',
-          wrapped: true,
-          processName: function(filename) {
-            return _.last(filename.split('/')).replace('.hbs', '');
-          }
-        },
+      admin: {
+        options: hbsOpts,
         files: {
-          "client/apicaba/templates.js": "client/apicaba/views/templates/**/*.hbs"
+          "client/apicaba/tmpls-admin.js": "client/apicaba/views/admin/templates/**/*.hbs"
+        }
+      },
+      brand: {
+        options: hbsOpts,
+        files: {
+          "client/apicaba/tmpls-brand.js": "client/apicaba/views/brand/templates/**/*.hbs"
         }
       }
     },
     concat: {
       vendor: {
         src: [ 
-          'client/vendor/jquery-1.9.0.min.js' 
+            'client/vendor/jquery-1.9.0.min.js' 
           , 'client/vendor/**/*.js' 
         ],
         dest: 'public/scripts/vendor.js'
       },
-      dist: {
+      admin: {
         src: [
             '<banner:meta.banner>'
-            ,'client/apicaba/templates.js'
+            ,'client/apicaba/tmpls-admin.js'
             ,'client/apicaba/API/*.js'
             ,'client/apicaba/utils/*.js'
             ,'client/apicaba/models/Model.js'
             ,'client/apicaba/models/*.js'
-            ,'client/apicaba/views/**/*.js'
-            ,'client/apicaba/*.js'
+            ,'client/apicaba/views/admin/*.js'
+            ,'client/apicaba/admin.js'
         ],
-        dest: 'public/scripts/<%= pkg.name %>-<%= pkg.version %>.js'
+        dest: 'public/scripts/<%= pkg.name %>-<%= pkg.version %>-admin.js'
+      },
+      brand: {
+        src: [
+            '<banner:meta.banner>'
+            ,'client/apicaba/tmpls-brand.js'
+            ,'client/apicaba/API/*.js'
+            ,'client/apicaba/utils/*.js'
+            ,'client/apicaba/models/Model.js'
+            ,'client/apicaba/models/*.js'
+            ,'client/apicaba/views/splash/*.js'
+            ,'client/apicaba/views/brand/*.js'
+            ,'client/apicaba/brand.js'
+        ],
+        dest: 'public/scripts/<%= pkg.name %>-<%= pkg.version %>-brand.js'
       }
     },
     min: {
-      dist: {
-        src: ['<banner:meta.banner>', '<config:concat.dist.dest>'],
-        dest: 'public/scripts/<%= pkg.name %>-<%= pkg.version %>.min.js'
+      admin: {
+        src: ['<banner:meta.banner>', '<config:concat.admin.dest>'],
+        dest: 'public/scripts/<%= pkg.name %>-<%= pkg.version %>-admin.js'
+      },
+      brand: {
+        src: ['<banner:meta.banner>', '<config:concat.brand.dest>'],
+        dest: 'public/scripts/<%= pkg.name %>-<%= pkg.version %>-brand.js'
       }
     },
     watch: {
-      files: [ 'public/scripts/**/*.js', 'client/apicaba/**/*'],
+      files: [ 'public/css/*.less', 'client/apicaba/**/*'],
       tasks: 'default'
     }
   });
@@ -64,6 +88,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-handlebars');
 
   grunt.registerTask('default', 'handlebars concat');
-  grunt.registerTask('package', 'handlebars concat min');
+  grunt.registerTask('admin', 'handlebars:admin concat:vendor concat:admin min:admin');
+  grunt.registerTask('brand', 'handlebars:brand concat:vendor concat:brand min:brand');
 
 };
