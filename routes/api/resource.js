@@ -1,11 +1,11 @@
 var groups = require('../../collections/groups')
+  , categories = require('../../collections/categories')
   , resources = require('../../collections/resources')
   , _ = require('underscore')
   , host = app.host;
 
 app.get('/api/recursos', getResourceList);
 app.get('/api/recursos/:resource', getResource);
-
 
 function getResourceList(req, res){
 
@@ -20,9 +20,7 @@ function getResourceList(req, res){
 
     res.send(_resources);
   });
-
 }
-
 
 function getResource(req, res){
   var resourceCanonical = req.params.resource,
@@ -36,12 +34,19 @@ function getResource(req, res){
 
       group.uri = host + '/api/grupos/' + resource.group;
       resource.group = cleanData(group);
-      
-      resources.getByQuery(resource.collection, query, function(err, data){
-        cleanData(resource);
-        resource.data = data;
-        res.send(resource);
+
+      categories.getByCanonical(group.category, function(err, category){
+        resource.group.category = category;
+        resource.group.category.uri = host + '/api/categorias/' + category.canonical;
+        cleanData(resource.group.category);
+
+        resources.getByQuery(resource.collection, query, function(err, data){
+          cleanData(resource);
+          resource.data = data;
+          res.send(resource);
+        });
       });
+      
 
     });
   });

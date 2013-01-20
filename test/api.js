@@ -167,9 +167,15 @@ describe('#Resources', function(){
       expect(resource).to.be.an('object');
       
       expect(resource.name).to.be.equal('Pauta Publicitaria 2012');
+      
       expect(resource.group).to.be.an('object');
       expect(resource.group.name).to.be.equal('Pauta Publicitaria');
       expect(resource.group.uri).to.be.equal(host + "api/grupos/pauta-publicitaria");
+
+      expect(resource.group.category).to.be.an('object');
+      expect(resource.group.category.name).to.be.equal('Finanzas Públicas');
+      expect(resource.group.category.uri).to.be.equal(host + "api/categorias/finanzas-publicas");
+
       expect(resource.count).to.be.equal(3);
       expect(resource.columns.length).to.be.equal(2);
 
