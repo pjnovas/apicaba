@@ -1,5 +1,5 @@
 
-var Resource = require('../../models/resource')
+var Resource = require('../../models/api/resource')
   , resource = new Resource();
 
 app.get('/api/recursos', getResourceList);

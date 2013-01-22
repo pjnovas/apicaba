@@ -1,5 +1,5 @@
 
-var Group = require('../../models/group')
+var Group = require('../../models/api/group')
   , group = new Group();
 
 app.get('/api/grupos', getGroupList);

@@ -6,7 +6,7 @@ var Entity = require('./entity')
 var Group = module.exports = function() {
   Entity.call(this);
 
-  this.collection = require('../collections/groups');
+  this.collection = require('../../collections/groups');
   this.parent = 'category';
   this.child = 'resource';
 };

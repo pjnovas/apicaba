@@ -1,6 +1,6 @@
 
 var Entity = require('./entity')
-  , resources = require('../collections/resources')
+  , resources = require('../../collections/resources')
   , util = require('util')
   , _ = require('underscore');
 
