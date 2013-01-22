@@ -7,13 +7,8 @@ var Group = module.exports = function() {
   Entity.call(this);
 
   this.collection = require('../collections/groups');
-
   this.parent = 'category';
-  this.parentName = 'category';
   this.child = 'resource';
-  this.childName = 'resources';
-
-  this.host = app.host;
 };
 
 util.inherits(Group, Entity);
@@ -27,5 +22,5 @@ Group.prototype.map = function(entity){
   delete entity._id;
   delete entity.canonical;
   return entity;
-}
+};
 

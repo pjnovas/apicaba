@@ -7,11 +7,7 @@ var Category = module.exports = function() {
   Entity.call(this);
 
   this.collection = require('../collections/categories');
-
   this.child = 'group';
-  this.childName = 'groups';
-
-  this.host = app.host;  
 };
 
 util.inherits(Category, Entity);
@@ -22,5 +18,5 @@ Category.prototype.map = function(entity){
   delete entity._id;
   delete entity.canonical;
   return entity;
-}
+};
 

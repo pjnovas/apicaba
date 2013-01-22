@@ -7,12 +7,8 @@ var Entity = require('./entity')
 var Resource = module.exports = function() {
   Entity.call(this);
 
-  this.collection = require('../collections/resources');
-
+  this.collection = resources;
   this.parent = 'group';
-  this.parentName = 'group';
-
-  this.host = app.host;
 };
 
 util.inherits(Resource, Entity);

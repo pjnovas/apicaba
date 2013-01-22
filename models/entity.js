@@ -1,15 +1,13 @@
 
-var _ = require('underscore')
-  , host = app.host;
+var _ = require('underscore');
 
 var Entity = module.exports = function(options){
 
   this.collection = null;
-
   this.parent = null;
   this.child = null;
-  this.childName = '';
-  this.parentName = '';
+
+  this.host = app.host;
 };
 
 Entity.prototype.getAll = function(done){
@@ -31,49 +29,16 @@ Entity.prototype.getByParent = function(canonical, done){
 Entity.prototype.get = function(canonical, done, partial){
   var self = this;
 
-  function manage(err, entity){
+  function resolve(err, entity){
     if (err) return done(err);
 
-    if(partial) {
+    if(partial) 
       done(null, self.build(entity));
-    }
-    else {
-      if(self.child && self.parent){
-
-        var Child = require('./' + self.child);
-        var child = new Child();
-        child.getByParent(canonical, function(err, children){
-
-          var Parent = require('./' + self.parent);
-          var parent = new Parent();
-          parent.get(entity[self.parentName], function(err, parent){
-
-            done(null, self.build(entity, children, parent));
-          }, true);
-        });
-      }
-      else if(self.child){
-
-        var Child = require('./' + self.child);
-        var child = new Child();
-        child.getByParent(canonical, function(err, list){
-
-          done(null, self.build(entity, list));
-        });
-      }
-      else if(self.parent){
-
-        var Parent = require('./' + self.parent);
-        var parent = new Parent();
-        parent.get(entity[self.parentName], function(err, parent){
-
-          done(null, self.build(entity, null, parent));
-        });
-      }
-    }
+    else 
+      resolveFamily.call(self, canonical, entity, done);
   }
 
-  this.collection.getByCanonical(canonical, manage);
+  this.collection.getByCanonical(canonical, resolve);
 };
 
 Entity.prototype.buildList = function(err, list, done){
@@ -87,10 +52,10 @@ Entity.prototype.buildList = function(err, list, done){
 
 Entity.prototype.build = function(entity, childs, parent){
   if (childs && _.isArray(childs))
-    entity[this.childName] = childs;
+    entity[this.child + 's'] = childs;
 
   if (parent && _.isObject(parent))
-    entity[this.parentName] = parent;
+    entity[this.parent] = parent;
 
   return this.map(entity);
 };
@@ -99,4 +64,41 @@ Entity.prototype.map = function(entity){
   delete entity._id;
   delete entity.canonical;
   return entity;
+};
+
+function resolveFamily(canonical, entity, done){
+  var self = this;
+
+  function getChilds(ready){
+    var child = new (require('./' + self.child))();
+    child.getByParent(canonical, ready);
+  }
+
+  function getParent(ready, partial){
+    var parent = new (require('./' + self.parent))();
+    parent.get(entity[self.parent], ready, partial);
+  }
+
+  if(self.child && self.parent){
+
+    getChilds(function(err, children){
+      getParent(function(err, parent){
+        done(null, self.build(entity, children, parent));
+      }, true);
+    });
+  }
+  else if(self.child){
+
+    getChilds(function(err, children){
+      done(null, self.build(entity, children));
+    });
+  }
+  else if(self.parent){
+
+    getParent(function(err, parent){
+      done(null, self.build(entity, null, parent));
+    });
+  }
+  else 
+    done(null, self.build(entity));
 }
