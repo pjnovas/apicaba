@@ -1,5 +1,6 @@
 
-var category = require('../../models/category');
+var Category = require('../../models/category')
+  category = new Category();
 
 app.get('/api/categorias', getCategoryList);
 app.get('/api/categorias/:category', getCategory);

@@ -1,7 +1,6 @@
 
-var group = require('../../models/group')
-  , _ = require('underscore')
-  , host = app.host;
+var Group = require('../../models/group')
+  , group = new Group();
 
 app.get('/api/grupos', getGroupList);
 app.get('/api/grupos/:group', getGroup);

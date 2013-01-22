@@ -1,74 +1,46 @@
 
-var resources = require('../collections/resources')
-  , group = require('../models/group')
-  , _ = require('underscore')
-  , host = app.host;
+var Entity = require('./entity')
+  , resources = require('../collections/resources')
+  , util = require('util')
+  , _ = require('underscore');
 
-exports.getAll = function(done){
+var Resource = module.exports = function() {
+  Entity.call(this);
 
-  function buildResources(err, resourceList){
-    if (err) return done(err);
-    var result = _.map(resourceList, function(resource){
-      return build(resource);
-    });
-    done(null, result);
-  }
+  this.collection = require('../collections/resources');
 
-  resources.getAll(buildResources);
+  this.parent = 'group';
+  this.parentName = 'group';
+
+  this.host = app.host;
 };
 
-exports.get = function(canonical, query, done){
+util.inherits(Resource, Entity);
+
+Resource.prototype.getByQuery = function(canonical, query, done){
 
   function getData(res, group){
     resources.getByQuery(res.collection, query, function(err, data){
-      res = build(res, group);
+      delete res.group.resources;
       res.data = data;
       done(null, res);
     });
   }
 
-  function manageResource(err, resource){
+  this.get(canonical, function(err, resource){
     if (err) return done(err);
-    
-    group.get(resource.group, function(err, group){
-      if (err) return done(err);
-
-      delete group.resources;
-      getData(resource, group);
-    });
-  }
-
-  resources.getByCanonical(canonical, manageResource);
+    getData(resource);
+  });  
 };
 
-exports.getByGroup = function(group, done){
-
-  function buildResources(err, resourceList){
-    if (err) return done(err);
-    var result = _.map(resourceList, function(resource){
-      return build(resource);
-    });
-    done(null, result);
-  }
-
-  resources.getByGroupName(group, buildResources);
-};
-
-function build(resource, group){
-  if (group && _.isObject(group))
-    resource.group = group;
-
-  return map(resource);
-}
-
-function map(entity){
-  entity.uri = host + '/api/recursos/' + entity.canonical;
+Resource.prototype.map = function(entity){
+  entity.uri = this.host + '/api/recursos/' + entity.canonical;
 
   if(_.isString(entity.group))
-    entity.group = host + '/api/grupos/' + entity.group;
+    entity.group = this.host + '/api/grupos/' + entity.group;
 
   delete entity._id;
   delete entity.canonical;
-  delete entity.collection;
   return entity;
-}
+};
+

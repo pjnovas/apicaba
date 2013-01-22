@@ -17,7 +17,7 @@ exports.getByCanonical = function(canonical, done){
   db.resources.findOne({ canonical: canonical }, { _id: false }, done);
 };
 
-exports.getByGroupName = function(name, done){
+exports.getByParent = exports.getByGroupName = function(name, done){
 
   db.resources.find({ group: name }, 
     { "_id": false, name: true, canonical: true, description: true },

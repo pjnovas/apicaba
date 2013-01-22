@@ -1,50 +1,26 @@
 
-var categories = require('../collections/categories')
-  , group = require('./group')
-  , _ = require('underscore')
-  , host = app.host;
+var Entity = require('./entity')
+  , util = require('util')
+  , _ = require('underscore');
 
-exports.getAll = function(done){
+var Category = module.exports = function() {
+  Entity.call(this);
 
-  function buildCategories(err, categoryList){
-    if (err) return done(err);
-    done(null, _.map(categoryList, function(category){
-      return build(category);
-    }));
-  }
+  this.collection = require('../collections/categories');
 
-  categories.getAll(buildCategories);
+  this.child = 'group';
+  this.childName = 'groups';
+
+  this.host = app.host;  
 };
 
-exports.get = function(canonical, done, partial){
+util.inherits(Category, Entity);
 
-  function manageCategory(err, category){
-    if (err) return done(err);
-
-    if(partial) {
-      done(null, build(category));
-    }
-    else 
-      group.getByCategory(canonical, function(err, groupList){
-        if (err) return done(err);
-        done(null, build(category, groupList));
-      }, true);
-  }
-
-  categories.getByCanonical(canonical, manageCategory);
-};
-
-function build(category, groups){
-  if (groups && _.isArray(groups))
-    category.groups = groups;
-
-  return map(category);
-}
-
-function map(entity){
-  entity.uri = host + '/api/categorias/' + entity.canonical;
+Category.prototype.map = function(entity){
+  entity.uri = this.host + '/api/categorias/' + entity.canonical;
   
   delete entity._id;
   delete entity.canonical;
   return entity;
 }
+
