@@ -2,7 +2,8 @@
 var Entity = require('./entity')
   , resources = require('../../collections/resources')
   , util = require('util')
-  , _ = require('underscore');
+  , _ = require('underscore'),
+  translate = require('./translate');
 
 var Resource = module.exports = function() {
   Entity.call(this);
@@ -18,7 +19,8 @@ Resource.prototype.getByQuery = function(canonical, query, done){
   function getData(res, group){
     resources.getByQuery(res.collection, query, function(err, data){
       delete res.group.resources;
-      res.data = data;
+      res = translate(res);
+      res.datos = data;
       done(null, res);
     });
   }

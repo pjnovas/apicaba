@@ -19,4 +19,3 @@ Category.prototype.map = function(entity){
   delete entity.canonical;
   return entity;
 };
-
