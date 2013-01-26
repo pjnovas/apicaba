@@ -41,5 +41,6 @@ var mapper = {
   "name": "nombre",
   "description": "descripcion",
   "columns": "propiedades",
-  "count": "cantidad"
+  "count": "cantidad",
+  "type": "tipo"
 };

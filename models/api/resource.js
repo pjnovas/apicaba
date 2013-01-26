@@ -19,6 +19,7 @@ Resource.prototype.getByQuery = function(canonical, query, done){
   function getData(res, group){
     resources.getByQuery(res.collection, query, function(err, data){
       delete res.group.resources;
+      delete res.collection;
       res = translate(res);
       res.datos = data;
       done(null, res);
