@@ -140,9 +140,9 @@ block content
           .docs-example
             pre
               code.json { 
-                |   "name": "Bicicleterías en la Ciudad",
-                |   "description": "Listado de bicicleterías de la Ciudad de Buenos Aires.",
-                |   "category": "http://apicaba.com/api/categorias/transporte-y-movilidad",
+                |   "nombre": "Bicicleterías en la Ciudad",
+                |   "descripcion": "Listado de bicicleterías de la Ciudad de Buenos Aires.",
+                |   "categoria": "http://apicaba.com/api/categorias/transporte-y-movilidad",
                 |   "uri": "http://apicaba.com/api/grupos/bicicleterías-en-la-ciudad"
                 |}
 
@@ -152,25 +152,25 @@ block content
           p Posee la información necesaria para obtener el detalle de sus grupos.
           .docs-fields
             dl.dl-horizontal
-              dt name
+              dt nombre
               dd Nombre de la Categoría
-              dt groups
+              dt grupos
               dd Array de entidades Grupo (parciales)
           .docs-example
             pre
               code.json {
-                |   "name": "Transporte y Movilidad",
-                |   "groups": [
+                |   "nombre": "Transporte y Movilidad",
+                |   "grupos": [
                 |     {
-                |       "name": "Bicicletas Públicas",
-                |       "description": "Información del sistema de transporte público de bicicletas desde sus inicios a la actualidad.",
-                |       "category": "transporte-y-movilidad",
+                |       "nombre": "Bicicletas Públicas",
+                |       "descripcion": "Información del sistema de transporte público de bicicletas.",
+                |       "categoria": "transporte-y-movilidad",
                 |       "uri": "http://apicaba.com/api/grupos/bicicletas-públicas"
                 |     },
                 |     {
-                |       "name": "Bicicleterías en la Ciudad",
-                |       "description": "Listado de bicicleterías de la Ciudad de Buenos Aires.",
-                |       "category": "transporte-y-movilidad",
+                |       "nombre": "Bicicleterías en la Ciudad",
+                |       "descripcion": "Listado de bicicleterías de la Ciudad de Buenos Aires.",
+                |       "categoria": "transporte-y-movilidad",
                 |       "uri": "http://apicaba.com/api/grupos/bicicleterías-en-la-ciudad"
                 |     }
                 |   ]
@@ -182,26 +182,26 @@ block content
           p Posee la información necesaria para obtener el detalle de sus recursos, como así también su categoría.
           .docs-fields
             dl.dl-horizontal
-              dt name
+              dt nombre
               dd Nombre del Grupo
-              dt description
+              dt descripcion
               dd Breve descripción del Grupo
-              dt category
+              dt categoria
               dd Entidad Categoria a la que pertenece el Grupo
-              dt resources
+              dt recursos
               dd Array de entidades Recurso (parciales)
           .docs-example
             pre
               code.json {
-                |   "name": "Bicicleterías en la Ciudad",
-                |   "description": "Listado de bicicleterías de la Ciudad de Buenos Aires.",
-                |   "category": {
-                |     "name": "Transporte y Movilidad",
+                |   "nombre": "Bicicleterías en la Ciudad",
+                |   "descripcion": "Listado de bicicleterías de la Ciudad de Buenos Aires.",
+                |   "categoria": {
+                |     "nombre": "Transporte y Movilidad",
                 |     "uri": "http://apicaba.com/api/categorias/transporte-y-movilidad"
                 |   },
-                |   "resources": [{
-                |       "name": "Estaciones de Bicicletas",
-                |       "description": "Nombre, ID, referencia geográfica, dirección, latitud y longitud.",
+                |   "recursos": [{
+                |       "nombre": "Estaciones de Bicicletas",
+                |       "descripcion": "Nombre, ID, referencia geográfica, dirección, latitud y longitud.",
                 |       "uri": "http://apicaba.com/api/recursos/estaciones-de-bicicletas"
                 |   }]
                 |}
@@ -212,49 +212,49 @@ block content
           p Posee la información del DataSet y una pre-visualización de sus valores.
           .docs-fields
             dl.dl-horizontal
-              dt name
+              dt nombre
               dd Nombre del Recurso/ DataSet
-              dt description
+              dt descripcion
               dd Breve descripción del Recurso/ DataSet
-              dt group
+              dt grupo
               dd Entidad Grupo a la que pertenece el Recurso/ DataSet
-              dt count
+              dt cantidad
               dd Cantidad de datos disponibles en su totalidad
-              dt columns
+              dt propiedades
               dd Array de Propiedades que posee cada JSON en el DataSet, siendo:
                 dl.dl-horizontal
-                  dt name
+                  dt nombre
                   dd Nombre del campo
-                  dt type
+                  dt tipo
                   dd Tipo de Dato de su valor (actualmente son todos String)
-              dt data
+              dt datos
               dd Array de JSON (registros). Máximo 200 registros.
           .docs-example
             pre
               code.json {
-                |   "name": "Estaciones de Bicicletas",
-                |   "description": "Nombre, ID, referencia geográfica, dirección, latitud y longitud ...",
-                |   "group": {
-                |     "name": "Bicicletas Públicas",
-                |     "description": "Información del sistema de transporte público de bicicletas.",
-                |     "category": "transporte-y-movilidad",
+                |   "nombre": "Estaciones de Bicicletas",
+                |   "descripcion": "Nombre, ID, referencia geográfica, dirección, latitud y longitud ...",
+                |   "grupo": {
+                |     "nombre": "Bicicletas Públicas",
+                |     "descripcion": "Información del sistema de transporte público de bicicletas.",
+                |     "categoria": "transporte-y-movilidad",
                 |     "uri": "http://apicaba.com/api/grupos/bicicletas-públicas"
                 |   },
-                |   "count": 28,
-                |   "columns": [{
-                |       "name": "estacionId",
-                |       "type": "string"
+                |   "cantidad": 28,
+                |   "propiedades": [{
+                |       "nombre": "estacionId",
+                |       "tipo": "string"
                 |     }, {
-                |       "name": "estacionNombre",
-                |       "type": "string"
+                |       "nombre": "estacionNombre",
+                |       "tipo": "string"
                 |     }, {
-                |       "name": "latitud",
-                |       "type": "string"
+                |       "nombre": "latitud",
+                |       "tipo": "string"
                 |     }, {
-                |       "name": "longitud",
-                |       "type": "string"
+                |       "nombre": "longitud",
+                |       "tipo": "string"
                 |     }],
-                |   "data": [{
+                |   "datos": [{
                 |       "estacionId": "3",
                 |       "estacionNombre": "RETIRO",
                 |       "latitud": "-34.592308",
@@ -274,7 +274,7 @@ block content
         
     hr
     footer
-      p © Company 2012
+      p © Pablo Novas 2013
 
 block scripts
   script(src='/scripts/vendor.js')
