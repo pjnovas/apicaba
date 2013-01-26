@@ -14,16 +14,27 @@ module.exports.getFields = function(delimiter, row){
 };
 
 module.exports.parse = function(fields, delimiter, lines){
-  var arr = [];
+  var arr = [],
+    quotesRegEx = new RegExp(delimiter + '(?=([^\"]*\"[^\"]*\")*[^\"]*$)', 'g'),
+    delimiterRegEx = new RegExp(delimiter, 'g');
+
+  function normalize(line){
+    if (line.indexOf(/"/)){
+      var noDelimiter = line.replace(quotesRegEx, '-o-');
+      var normalized = noDelimiter.replace(delimiterRegEx, '-x-');
+      return normalized.replace(/-o-/g, delimiter).replace(/"/g, '');
+    }
+    else return line;
+  }
 
   for(var i = 0; i < lines.length; i++) {
-    var props = lines[i].split(delimiter);
+    var props = normalize(lines[i]).split(delimiter);
 
     var line = {};
 
     props.forEach(function(prop, index){
       if (fields[index])
-        line[fields[index].name] = prop;
+        line[fields[index].name] = prop.replace(/-x-/g, delimiter);
     });
 
     arr.push(line);
@@ -31,5 +42,3 @@ module.exports.parse = function(fields, delimiter, lines){
 
   return arr;
 };
-
-
