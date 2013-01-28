@@ -10,8 +10,9 @@ apicaba.views.jobEdit = (function($){
     "click::#save": function(e){ save(e, false); },
     "click::#save-run": function(e){ save(e, true); },
     "click::#cancel": cancel,
-    "keyup::#name": showCanonical,
-    "change::#group": showCanonical,
+    "keyup::#name": updateCanonical,
+    "keyup::#canonical": updateUrl,
+    "change::#group": updateUrl,
     "click::#get-preview": getPreview
   };
 
@@ -41,11 +42,18 @@ apicaba.views.jobEdit = (function($){
 
   apicaba.utils.events.build(container, events);
 
-  function showCanonical(){
-    var name = $('#name', container).val(),
-      group = $('#group option:selected', container).attr('data-canonical');
+  function updateCanonical(){
+    var name = $('#name', container).val();
 
     name = name.toLowerCase().replace(/ /g, '-');
+    $('#canonical').val(name);
+    updateUrl();
+  }
+
+  function updateUrl(){
+    var name = $('#canonical').val(),
+      group = $('#group option:selected', container).attr('data-canonical');
+
     $('#access', container).text('/' + group + '/' + name);
   }
 
@@ -53,6 +61,7 @@ apicaba.views.jobEdit = (function($){
     var j = {
       _id: $('#jobId', container).val(),
       name: $('#name', container).val(),
+      canonical: $('#canonical', container).val(),
       description: $('#description', container).val(),
       group: $('#group option:selected', container).attr('data-canonical'),
       cron: $('#cron', container).val(),
@@ -73,7 +82,7 @@ apicaba.views.jobEdit = (function($){
     function selectGroup(){
       apicaba.models.group.removeListener('bind', selectGroup);
       apicaba.models.group.select(job.group, 'canonical');
-      showCanonical();
+      updateUrl();
     }
 
     var rendered = apicaba.templates.jobEdit(job || {});

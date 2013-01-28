@@ -2,20 +2,19 @@
 var EventEmitter = require('events').EventEmitter
   , Fetcher = require('./stream/fetcher')
   , Formatter = require('./stream/formatter')
-//  , Sanitizer = require('./stream/sanitizer')
   , Persist = require('./stream/persist')
   , util = require('util');
 
-var Job = module.exports = function (options) {
+var Job = module.exports = function (job) {
 
-  this._id = (options && options._id && options._id.toString()) || '';
-  this.resource = (options && options.name) || '';
-  this.group = (options && options.group) || '';
+  this._id = (job && job._id && job._id.toString()) || '';
+  this.resource = (job && job.name) || '';
+  this.group = (job && job.group) || '';
 
-  if(options && options.source) {
-    this.fetcher = new Fetcher(options.source.url);
-    this.formatter = new Formatter(options.source);
-    this.persist = new Persist(options.name, options.description, options.group, options.source.fields);
+  if(job && job.source) {
+    this.fetcher = new Fetcher(job.source.url);
+    this.formatter = new Formatter(job.source);
+    this.persist = new Persist(job);
   }
 
   this.cronJob;
@@ -47,13 +46,6 @@ Job.prototype.cronJob = function(cronJob) {
 };
 
 Job.prototype.destroy = function() {
-
-  //TODO: checkout how to destroy streams
-  /*
-  this.fetcher.destroy();
-  this.formatter.destroy();
-  this.persist.destroy();
-  */
 
   this.fetcher = null;
   this.formatter = null;

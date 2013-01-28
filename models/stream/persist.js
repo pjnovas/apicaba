@@ -3,20 +3,18 @@ var Stream = require('stream').Stream
   , util = require('util')
   , resources = require('../../collections/resources');
 
-var Persist = module.exports = function(name, desc, group, fields) {
+var Persist = module.exports = function(job) {
 
   Stream.call(this);
   this.writable = true;
 
-  this.name = name;
-  this.description = desc;
-  this.group = group;
-  this.fields = fields;
+  this.name = job.name;
+  this.canonical = job.canonical;
+  this.description = job.description;
+  this.group = job.group;
+  this.fields = job.source.fields;
 
-  //TODO: manage á é í ó ú & special chars
-
-  this.canonical = name.toLowerCase().replace(/ /g, '-');
-  this.resourceColl = name.toLowerCase().replace(/ /g, '_');
+  this.resourceColl = this.canonical.replace(/-/g, '_');
   this.count = 0;
 };
 
@@ -33,10 +31,10 @@ Persist.prototype.end = function() {
   resources.renameResource(this.resourceColl + '_temp', this.resourceColl);
 
   resources.create({
-    name: self.name,
-    description: self.description,
-    canonical: self.canonical,
-    group: self.group,
+    name: this.name,
+    description: this.description,
+    canonical: this.canonical,
+    group: this.group,
     collection: this.resourceColl,
     count: this.count,
     columns: this.fields

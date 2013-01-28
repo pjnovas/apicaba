@@ -3,7 +3,7 @@ var ObjectId = require('mongojs').ObjectId
 
 exports.getAll = function(done){
   db.resources
-    .find({}
+    .find({}, { collection: false }
     , function(err, data){
       done(err, data || []);
     });

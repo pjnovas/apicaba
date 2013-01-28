@@ -5,10 +5,10 @@ var expect = require('expect.js')
 
   , db = app.db
   , mockGBA = app.mockGBA
-  , canonical = 'bicis-locas'
   , collection = 'bicis_locas'
   , jobTest = {
     "name": "bicis locas",
+    "canonical": "bicis-locas",
     "description": "Bicicletas locas y magicas",
     "group": "urbano",
     "cron": "* * * * * *",
@@ -86,7 +86,7 @@ describe('#CSV', function(){
       expect(err).to.not.be.ok();
       expect(resource.name).to.be.equal(jobTest.name);
       expect(resource.description).to.be.equal(jobTest.description);
-      expect(resource.canonical).to.be.equal(canonical);
+      expect(resource.canonical).to.be.equal(jobTest.canonical);
       expect(resource.group).to.be.equal(jobTest.group);
       expect(resource.count).to.be.equal(28);
       expect(resource.collection).to.be.equal(collection);

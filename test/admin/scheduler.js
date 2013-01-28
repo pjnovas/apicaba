@@ -13,6 +13,7 @@ var expect = require('expect.js')
 describe('Scheduler', function(){
   var jobInfo = {
     "name": name,
+    "canonical": 'bicis_Create',
     "group": "urbano",
     "cron": "*/40 * * * * *", //every 40 seconds
     "source": {

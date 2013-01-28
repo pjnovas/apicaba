@@ -44,6 +44,7 @@ exports.update = function(id, job, done){
       { "_id": ObjectId(id) },
       { $set: {
         name: job.name, 
+        canonical: job.canonical,
         description: job.description, 
         group: job.group, 
         cron: job.cron, 
