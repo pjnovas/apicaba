@@ -1,6 +1,7 @@
 body {
   padding-top: 20px;
   padding-bottom: 40px;
+  background: url('/images/white_texture.png');
 }
 section {
   margin: 20px 0;
@@ -14,20 +15,20 @@ section blockquote {
   margin-left: 20px;
 }
 section pre {
-  background-color: white;
+  background-color: #fcfcfc;
   border: none;
 }
 section pre code {
   margin: 0;
   padding: 0;
-  background-color: white;
+  background-color: #fcfcfc;
 }
 section .docs-example,
 section .docs-fields {
   position: relative;
   margin: 15px 0;
   padding: 39px 19px 14px;
-  background-color: #fff;
+  background-color: #fcfcfc;
   border: 1px solid #ddd;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
@@ -47,7 +48,7 @@ section .docs-fields::after {
   padding: 3px 7px;
   font-size: 12px;
   font-weight: bold;
-  background-color: #f5f5f5;
+  background-color: #fcfcfc;
   border: 1px solid #ddd;
   color: #9da0a4;
   -webkit-border-radius: 4px 0 4px 0;
@@ -62,14 +63,18 @@ section .dl-horizontal dd {
 }
 /* Sidenav for Docs
 -------------------------------------------------- */
+#nav-bar {
+  box-shadow: 2px 2px 2px silver;
+}
 .nav-list .nav-header {
-  text-align: center;
+  text-align: left;
+  padding-left: 25px;
 }
 .bs-docs-sidenav {
   width: 228px;
   margin: 30px 0 0;
   padding: 0;
-  background-color: #fff;
+  background-color: #fcfcfc;
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
   border-radius: 6px;
@@ -82,7 +87,7 @@ section .dl-horizontal dd {
   width: 190px \9;
   margin: 0 0 -1px;
   padding: 8px 14px;
-  border: 1px solid #e5e5e5;
+  border-top: 1px solid #e5e5e5;
 }
 .bs-docs-sidenav > li:first-child > a {
   -webkit-border-radius: 6px 6px 0 0;
