@@ -112,3 +112,74 @@ body {
   background: url('/images/bg.png') no-repeat;
   background-position: 0 30px;
 }
+
+.api-tree-holder {
+  position: relative;
+  overflow: hidden;
+  height: 1250px;
+  width: 100%;
+
+  .col {
+    position: absolute;
+    top: 0;
+    z-index: 2;
+    height: 1250px;
+
+    h3 {
+      font-size: 16px;
+      width: 100%;
+      text-align: center;
+      margin: 0;
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    &.categories {
+      left: 140px;
+      width: 260px;
+
+      h3 {
+        border-radius: 10px 0 0 10px;
+      }
+    }
+    &.groups {
+      left: 400px;
+      width: 238px;
+      border-left: dashed 1px rgb(213, 213, 213);
+      border-right: dashed 1px rgb(213, 213, 213);
+    }
+    &.resources {
+      left: 640px;
+      width: 260px;
+
+      h3 {
+        border-radius: 0 10px 10px 0;
+      }
+    }
+  }
+
+  #api-tree {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    z-index: 3;
+  }
+}
+
+.node {
+  circle {
+    cursor: pointer;
+    fill: #fff;
+    stroke: steelblue;
+    stroke-width: 2px;
+  }
+
+  text {
+    font-size: 12px;
+  }
+}
+
+path.link {
+  fill: none;
+  stroke: rgb(224, 224, 224);
+  stroke-width: 2px;
+}

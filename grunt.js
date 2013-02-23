@@ -64,6 +64,7 @@ module.exports = function(grunt) {
             ,'client/apicaba/models/*.js'
             ,'client/apicaba/views/splash/*.js'
             ,'client/apicaba/views/brand/*.js'
+            ,'client/apicaba/views/explore/*.js'
             ,'client/apicaba/brand.js'
         ],
         dest: 'public/scripts/<%= pkg.name %>-<%= pkg.version %>-brand.js'

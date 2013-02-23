@@ -1,7 +1,7 @@
 
 var Resource = require('../../models/api/resource')
-  , resource = new Resource(),
-  translate = require('../../models/api/translate');
+  , resource = new Resource()
+  , translate = require('../../models/api/translate');
 
 app.get('/api/recursos', getResourceList);
 app.get('/api/recursos/:resource', getResource);

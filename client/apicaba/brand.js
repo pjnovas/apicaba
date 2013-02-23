@@ -29,6 +29,8 @@ $(function(){
       apicaba.views.splash.door.close();
     });
 
+    apicaba.views.treeNodes.build();
+
   }).load();
 
 });
