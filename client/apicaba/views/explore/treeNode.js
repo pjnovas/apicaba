@@ -58,13 +58,25 @@ apicaba.views.treeNodes = (function(){
     var nodeEnter = node.enter().append("svg:g")
         .attr("class", "node")
         .attr("transform", function(d) { return "translate(" + source.y0 + "," + source.x0 + ")"; })
-        .on("click", function(d) { toggle(d); update(d); });
+        .on("click", function(d) { 
+          toggle(d); 
+          update(d); 
+
+          if (d.depth === 3){
+            var rendered = apicaba.templates.resourceInfo({ item: d });
+            $('#resource-info')
+              .empty()
+              .html(rendered)
+              .css({ top: d.x, left: d.y - 350})
+              .show();
+          }
+        });
 
     nodeEnter.append("svg:circle")
         .attr("r", 1e-6)
         .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
 
-    nodeEnter.append("svg:text")
+    var n = nodeEnter.append("svg:text")
         .attr("x", function(d) { return d.depth ? 10 : -10; })
         .attr("dy", ".35em")
         .attr("text-anchor", function(d) { return d.depth ? "start": "end"; })
@@ -142,6 +154,17 @@ apicaba.views.treeNodes = (function(){
       d._children = null;
     }
   }
+
+  $("body").on('click', function(e){
+    if(e.target.tagName === "text")
+      return;
+
+    $('#resource-info').hide();
+  });
+
+  $('#resource-info').on('click', function(e){
+    e.stopPropagation();
+  });
 
   return {
     build: build

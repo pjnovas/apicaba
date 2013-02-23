@@ -80,7 +80,11 @@ function apiTree(req, res){
           _.each(resources, function(r){
             if (r.grupo === g.uri) {
               gru.children.push({
-                name: r.nombre
+                name: r.nombre,
+                descripcion: r.descripcion,
+                uri: r.uri,
+                propiedades: r.propiedades,
+                cantidad: r.cantidad
               });
             }
           });

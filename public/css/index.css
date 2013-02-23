@@ -161,6 +161,65 @@ p.moreinfo {
 .api-tree-holder .col.resources h3 {
   border-radius: 0 10px 10px 0;
 }
+.api-tree-holder #resource-info {
+  position: absolute;
+  background-color: #f7f7f7;
+  width: 420px;
+  height: 200px;
+  padding: 10px;
+  z-index: 4;
+  border: solid 2px steelblue;
+  border-radius: 6px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
+.api-tree-holder #resource-info span.count {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  line-height: 14px;
+  border-radius: 6px;
+  border: solid 2px steelblue;
+  padding: 5px;
+  background-color: #ffffff;
+  font-size: 14px;
+  font-weight: bold;
+  color: steelblue;
+}
+.api-tree-holder #resource-info label {
+  display: inline;
+  padding: 4px;
+  background-color: #edffe8;
+  border: solid 2px #c3e9c7;
+  border-radius: 6px;
+  margin: 2px;
+  color: #4d4d4d;
+  font-size: 12px;
+  line-height: 30px;
+}
+.api-tree-holder #resource-info a {
+  display: block;
+  margin-top: 15px;
+}
+.api-tree-holder #resource-info .tail {
+  border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #4682b4;
+  border-style: solid;
+  border-width: 20px;
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  right: -40px;
+  top: 48px;
+}
+.api-tree-holder #resource-info .tail2 {
+  border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #f7f7f7;
+  border-style: solid;
+  border-width: 17px;
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  right: -34px;
+  top: 51px;
+}
 .api-tree-holder #api-tree {
   position: absolute;
   top: 50px;

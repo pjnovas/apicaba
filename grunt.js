@@ -29,7 +29,7 @@ module.exports = function(grunt) {
       brand: {
         options: hbsOpts,
         files: {
-          "client/apicaba/tmpls-brand.js": "client/apicaba/views/brand/templates/**/*.hbs"
+          "client/apicaba/tmpls-explore.js": "client/apicaba/views/explore/templates/**/*.hbs"
         }
       }
     },
@@ -57,13 +57,12 @@ module.exports = function(grunt) {
       brand: {
         src: [
             '<banner:meta.banner>'
-            ,'client/apicaba/tmpls-brand.js'
+            ,'client/apicaba/tmpls-explore.js'
             ,'client/apicaba/API/*.js'
             ,'client/apicaba/utils/*.js'
             ,'client/apicaba/models/Model.js'
             ,'client/apicaba/models/*.js'
             ,'client/apicaba/views/splash/*.js'
-            ,'client/apicaba/views/brand/*.js'
             ,'client/apicaba/views/explore/*.js'
             ,'client/apicaba/brand.js'
         ],

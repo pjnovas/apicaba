@@ -190,6 +190,71 @@ p.moreinfo {
     }
   }
 
+  #resource-info {
+    position: absolute;
+    background-color: rgb(247, 247, 247);
+    width: 420px;
+    height: 200px;
+    padding: 10px;
+    z-index: 4;
+    border: solid 2px steelblue;
+    border-radius: 6px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.3);
+
+    span.count {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      line-height: 14px;
+      border-radius: 6px;
+      border: solid 2px steelblue;
+      padding: 5px;
+      background-color: rgb(255, 255, 255);
+      font-size: 14px;
+      font-weight: bold;
+      color: steelblue;
+    }
+
+    label {
+      display: inline;
+      padding: 4px;
+      background-color: rgb(237, 255, 232);
+      border: solid 2px rgb(195, 233, 199);
+      border-radius: 6px;
+      margin: 2px;
+      color: rgb(77, 77, 77);
+      font-size: 12px;
+      line-height: 30px;
+    }
+
+    a {
+      display: block;
+      margin-top: 15px;
+    }
+
+    .tail {
+      border-color: rgba(0,0,0,0) rgba(0,0,0,0) rgba(0,0,0,0) steelblue;
+      border-style: solid;
+      border-width: 20px;
+      width: 0px;
+      height: 0px;
+      position: absolute;
+      right: -40px;
+      top: 48px;
+    }
+
+    .tail2 {
+      border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) rgb(247, 247, 247);
+      border-style: solid;
+      border-width: 17px;
+      width: 0px;
+      height: 0px;
+      position: absolute;
+      right: -34px;
+      top: 51px;
+    }
+  }
+
   #api-tree {
     position: absolute;
     top: 50px;
