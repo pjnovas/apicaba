@@ -18,10 +18,12 @@ $(function(){
       .addClass('ready');    
 
     apicaba.views.splash.door.init('door', 'door');
-    apicaba.views.splash.sucker.init('sucker', 'sprites').begin();
+    apicaba.views.splash.sucker.init('sucker', 'sprites');
     apicaba.views.splash.bazooka.init('bazooka', 'sprites');
 
-    setTimeout(apicaba.views.splash.bazooka.begin, 1000);
+    apicaba.views.splash.sucker.onSucked(function(){
+      setTimeout(apicaba.views.splash.bazooka.shoot, 400);
+    }).begin();
 
     $('.machine-cover').hover(function(){
       apicaba.views.splash.door.open();

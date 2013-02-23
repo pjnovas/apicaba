@@ -7,24 +7,24 @@ apicaba.views.splash.bazooka = (function(){
   var requestAnimId = 0,
     canvas,
     ctx,
-    wait = 1000,
     timer,
-    steps = 5,
+    steps = -1,
     vel = 100,
     attr = { x: 0, y: 240, w: 170, h: 255 },
     image;
 
   var update = function(){
     
-    if (steps === 5)
-      steps = 0;
+    if (steps === 5) {
+      steps = -1;
+      clearInterval(timer);
+      stopLoop();
+    }
     else steps++;
 
     if (steps === 0){
       clearInterval(timer);
-      setTimeout(function(){
-        timer = setInterval(update, vel);
-      }, wait);
+      timer = setInterval(update, vel);
     }
 
     attr.x = steps * attr.w;
@@ -74,7 +74,7 @@ apicaba.views.splash.bazooka = (function(){
       return this;
     },
     
-    begin: function(){
+    shoot: function(){
       startLoop();
       return this;
     },

@@ -92,8 +92,8 @@ p.moreinfo {
   border: none;
 }
 .splash .object.cloudAPI {
-  top: -30px;
-  right: -30px;
+  top: -26px;
+  right: -28px;
   background-position: -680px 0;
   z-index: 5;
 }
@@ -242,6 +242,15 @@ path.link {
   fill: none;
   stroke: #e0e0e0;
   stroke-width: 2px;
+}
+.footer a.nolaborables {
+  background: url('/images/nolaborables.png') no-repeat;
+  width: 265px;
+  height: 33px;
+  display: block;
+  float: left;
+  margin: -5px 0;
+  background-size: 75%;
 }
 .footer p.copyright {
   float: right;

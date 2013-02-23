@@ -9,15 +9,18 @@ apicaba.views.splash.sucker = (function(){
     ctx,
     wait = 1000,
     timer,
-    steps = 5,
+    steps = -1,
     vel = 100,
     attr = { x: 0, y: 0, w: 170, h: 260 },
-    image;
+    image,
+    onSucked = function(){};
 
   var update = function(){
 
-    if (steps === 5)
+    if (steps === 5) {
       steps = 0;
+      onSucked();
+    }
     else steps++;
 
     if (steps === 0){
@@ -71,6 +74,11 @@ apicaba.views.splash.sucker = (function(){
       image = apicaba.utils.repository[imageId];
       draw();
 
+      return this;
+    },
+
+    onSucked: function(run){
+      onSucked = run;
       return this;
     },
     
