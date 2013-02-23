@@ -38,14 +38,17 @@ function apiTree(req, res){
   category.getAll(function(err, categories){
     if (err) return res.send(500);
     var categories = translate(categories);
+    categories = _.sortBy(categories, function(i){return i.nombre;});
 
     group.getAll(function(err, groups){
       if (err) return res.send(500);
       var groups = translate(groups);
+      groups = _.sortBy(groups, function(i){return i.nombre;});
 
       resource.getAll(function(err, resources){
         if (err) return res.send(500);
         var resources = translate(resources);
+        resources = _.sortBy(resources, function(i){return i.nombre;});
 
         buildTree(categories, groups, resources);
       });
@@ -56,7 +59,7 @@ function apiTree(req, res){
   function buildTree(categories, groups, resources){
     
     var tree = {
-      name: "API",
+      name: "Web API",
       children: []
     };
 

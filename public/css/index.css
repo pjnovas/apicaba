@@ -3,6 +3,25 @@ body {
   padding-bottom: 40px;
   background: url('/images/white_texture.png');
 }
+.masthead div.logo {
+  width: 186px;
+  height: 60px;
+  background: url('/images/logo.png') no-repeat;
+}
+.masthead p.intro {
+  margin: 5px 10px;
+  font-style: italic;
+  color: gray;
+}
+h3.surf {
+  color: #686868;
+  float: left;
+  margin-top: 0;
+}
+p.moreinfo {
+  float: right;
+  margin-top: 15px;
+}
 /* Custom container */
 .container-narrow {
   margin: 0 auto;
@@ -10,6 +29,12 @@ body {
 }
 .container-narrow > hr {
   margin: 30px 0;
+}
+.container-narrow > hr.no-topmargin {
+  margin-top: 0;
+}
+.container-narrow > hr.no-botmargin {
+  margin-bottom: 0;
 }
 /* Main marketing message and sign up button */
 .jumbotron {
@@ -113,6 +138,7 @@ body {
   width: 100%;
   text-align: center;
   margin: 0;
+  color: #555555;
   background-color: rgba(0, 0, 0, 0.1);
 }
 .api-tree-holder .col.categories {
@@ -141,6 +167,9 @@ body {
   left: 0;
   z-index: 3;
 }
+.node {
+  cursor: pointer;
+}
 .node circle {
   cursor: pointer;
   fill: #fff;
@@ -154,4 +183,16 @@ path.link {
   fill: none;
   stroke: #e0e0e0;
   stroke-width: 2px;
+}
+.footer p.copyright {
+  float: right;
+}
+.footer p.copyright span.copy {
+  float: left;
+}
+.footer p.copyright span.contactme {
+  float: right;
+}
+.footer p.copyright span.contactme span {
+  float: left;
 }

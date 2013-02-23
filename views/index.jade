@@ -6,28 +6,30 @@ block header
 block content
   .container-narrow
     .masthead
-      ul.nav.nav-pills.pull-right
-        li.active
-          a(href='#') Inicio
-        li
-          a(href='/docs') Docs
-        li
-          a(href='#') About
-        li
-          a(href='#') Contacto
-      h3.muted APICABA
-    hr
+      div.logo
+      p.intro La informaci&oacute;n de  
+        a(border='0', target='_blank', href='http://data.buenosaires.gob.ar') Buenos Aires Data 
+        | transformada en 
+        b Web API 
+    hr.no-topmargin
     .jumbotron
       .splash
-        .object.cloudBA
+        a.object.cloudBA(border='0', title="Buenos Aires Data", target='_blank', href='http://data.buenosaires.gob.ar')
         canvas#sucker(width='170px', height='270px')
         .object.machine
         canvas#door(width='160px', height='120px')
         a.object.machine-cover(border='0', title='Código Fuente', target='_blank', href='https://github.com/pjnovas/apicaba')
         canvas#bazooka(width='170px', height='240px')
-        .object.cloudAPI
+        a.object.cloudAPI(border='0', title="Documentación", target='_blank', href='/docs')
     hr
-    .row-fluid.marketing
+    .row-fluid
+      .span12
+        h3.surf Contenido actual de la Web API
+        p.moreinfo
+          a(border='0', target='_blank', href='/docs') Documentación
+          |  | 
+          a(border='0', target='_blank', href='https://github.com/pjnovas/apicaba') C&oacute;digo fuente
+    .row-fluid
       .span12
         div.api-tree-holder
           div.col.categories
@@ -39,7 +41,13 @@ block content
           div#api-tree
     hr
     .footer
-      p © Pablo Novas 2013
+      a.nolaborables(border='0', title="Buenos Aires Data", target='_blank', href='http://nolaborables.info/')
+      p.copyright 
+        span.copy copyright © 2013 Pablo Novas -&nbsp;
+        span.contactme
+          span pjnovas
+          span @
+          span gmail.com
 
 block scripts
   script(src='/scripts/vendor.js')

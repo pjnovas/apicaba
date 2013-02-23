@@ -3,6 +3,13 @@ body {
   padding-bottom: 40px;
   background: url('/images/white_texture.png');
 }
+div.logo {
+  width: 186px;
+  height: 60px;
+  background: url('/images/logo.png') no-repeat;
+  position: fixed;
+  top: 5px;
+}
 section {
   margin: 20px 0;
   padding-bottom: 20px;
@@ -194,7 +201,7 @@ section .dl-horizontal dd {
     margin-top: 20px;
   }
   .bs-docs-sidenav.affix {
-    top: 0;
+    top: 50px;
   }
 }
 /* Tablet
@@ -230,6 +237,10 @@ section .dl-horizontal dd {
   .show-grid [class*="span"] {
     margin-bottom: 5px;
   }
+  div.logo {
+    position: static;
+    top: 0;
+  }
   /* Sidenav */
   .bs-docs-sidenav {
     width: auto;
@@ -238,7 +249,7 @@ section .dl-horizontal dd {
   .bs-docs-sidenav.affix {
     position: static;
     width: auto;
-    top: 0;
+    top: 50px;
   }
   /* Unfloat the back to top link in footer */
   .footer {
