@@ -3,14 +3,14 @@ var Category = require('../../models/api/category')
   category = new Category(),
   translate = require('../../models/api/translate');
 
-app.get('/api/categorias', getCategoryList);
-app.get('/api/categorias/:category', getCategory);
+app.get('/api/categorias', app.allowCORS, getCategoryList);
+app.get('/api/categorias/:category', app.allowCORS, getCategory);
 
 function getCategoryList(req, res){
 
   category.getAll(function(err, categories){
     if (err) return res.send(500);
-    res.send(translate(categories));
+    res.jsonp(translate(categories));
   });
 }
 
@@ -19,6 +19,6 @@ function getCategory(req, res){
 
   category.get(canonical, function(err, found){
     if (err) return res.send(500);
-    res.send(translate(found));
+    res.jsonp(translate(found));
   });
 }

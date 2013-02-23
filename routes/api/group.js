@@ -3,14 +3,14 @@ var Group = require('../../models/api/group')
   , group = new Group(),
   translate = require('../../models/api/translate');
 
-app.get('/api/grupos', getGroupList);
-app.get('/api/grupos/:group', getGroup);
+app.get('/api/grupos', app.allowCORS, getGroupList);
+app.get('/api/grupos/:group', app.allowCORS, getGroup);
 
 function getGroupList(req, res){
 
   group.getAll(function(err, groups){
     if (err) return res.send(500);
-    res.send(translate(groups));
+    res.jsonp(translate(groups));
   });
 }
 
@@ -19,6 +19,6 @@ function getGroup(req, res){
 
   group.get(canonical, function(err, found){
     if (err) return res.send(500);
-    res.send(translate(found));
+    res.jsonp(translate(found));
   });
 }
