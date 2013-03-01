@@ -17,7 +17,7 @@ module.exports = function(grunt) {
         '<%= grunt.template.today("yyyy-mm-dd") %>\n' +
         '<%= pkg.homepage ? "* " + pkg.homepage + "\n" : "" %>' +
         '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;' +
-        ' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */'
+        ' Licensed <%= pkg.license %> */'
     },
     handlebars: {
       admin: {
@@ -72,11 +72,15 @@ module.exports = function(grunt) {
     min: {
       admin: {
         src: ['<banner:meta.banner>', '<config:concat.admin.dest>'],
-        dest: 'public/scripts/<%= pkg.name %>-<%= pkg.version %>-admin.js'
+        dest: 'public/scripts/<%= pkg.name %>-<%= pkg.version %>-admin.min.js'
       },
       brand: {
         src: ['<banner:meta.banner>', '<config:concat.brand.dest>'],
-        dest: 'public/scripts/<%= pkg.name %>-<%= pkg.version %>-brand.js'
+        dest: 'public/scripts/<%= pkg.name %>-<%= pkg.version %>-brand.min.js'
+      },
+      vendor: {
+        src: ['<config:concat.vendor.dest>'],
+        dest: 'public/scripts/vendor.min.js'
       }
     },
     watch: {
@@ -89,6 +93,6 @@ module.exports = function(grunt) {
 
   grunt.registerTask('default', 'handlebars concat');
   grunt.registerTask('admin', 'handlebars:admin concat:vendor concat:admin min:admin');
-  grunt.registerTask('brand', 'handlebars:brand concat:vendor concat:brand min:brand');
+  grunt.registerTask('brand', 'handlebars:brand concat:vendor concat:brand min:vendor min:brand');
 
 };
