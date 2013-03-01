@@ -1,6 +1,6 @@
 {
   "name": "apicaba",
-  "description": "",
+  "description": "La información de Buenos Aires Data transformada en Web API",
   "main" : "app.js",
   "version": "0.1.0",
   "private": false,

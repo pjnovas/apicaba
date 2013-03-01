@@ -4,6 +4,15 @@ block header
   link(rel='stylesheet', href='/css/index.css')
 
 block content
+  div#fb-root
+  script
+    (function(d, s, id) {
+      var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
+      js = d.createElement('script'); js.id = id; js.async = true;
+      js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=165101643641091";
+      d.getElementsByTagName('head')[0].appendChild(js);
+    }(document, 'script', 'facebook-jssdk'));
+
   .container-narrow
     .masthead
       div.logo
@@ -11,6 +20,12 @@ block content
         a(border='0', target='_blank', href='http://data.buenosaires.gob.ar') Buenos Aires Data 
         | transformada en 
         b Web API 
+      div.share 
+        div.fb-like(data-href='http://apicaba.com.ar', data-send='false', data-layout='button_count', data-width='120', data-show-faces='false', data-font='arial')
+        a.twitter-share-button(href='https://twitter.com/share', data-url='http://apicaba.com.ar', data-text='Apicaba - La info de Buenos Aires Data transformada en Web API', data-size='small') Tweet
+        script
+          !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+        iframe.github-star(src='http://ghbtns.com/github-btn.html?user=pjnovas&repo=apicaba&type=watch&count=true', allowtransparency='true', frameborder='0', scrolling='0', width='110', height='20')
     hr.no-topmargin
     .jumbotron
       .splash

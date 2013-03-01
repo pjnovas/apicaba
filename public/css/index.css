@@ -3,6 +3,9 @@ body {
   padding-bottom: 40px;
   background: url('/images/white_texture.png');
 }
+.masthead {
+  position: relative;
+}
 .masthead div.logo {
   width: 186px;
   height: 60px;
@@ -12,6 +15,30 @@ body {
   margin: 5px 10px;
   font-style: italic;
   color: gray;
+}
+.masthead .share {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.masthead .share div.fb-like {
+  float: right;
+  width: 100px;
+  display: block;
+  margin-bottom: 10px;
+  margin-top: 30px;
+}
+.masthead .share a,
+.masthead .share .twitter-share-button,
+.masthead .share iframe {
+  display: block;
+  margin-right: 0;
+  position: absolute;
+  right: 0;
+}
+.masthead .share .github-star {
+  top: 60px;
+  right: -10px;
 }
 h3.surf {
   color: #686868;
@@ -126,6 +153,7 @@ p.moreinfo {
   overflow: hidden;
   height: 1250px;
   width: 100%;
+  padding-bottom: 100px;
 }
 .api-tree-holder .col {
   position: absolute;
@@ -172,6 +200,16 @@ p.moreinfo {
   border-radius: 6px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
 }
+.api-tree-holder #resource-info h4 {
+  font-size: 14px;
+  margin-top: 0;
+}
+.api-tree-holder #resource-info p {
+  height: 50px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  font-size: 12px;
+}
 .api-tree-holder #resource-info span.count {
   position: absolute;
   top: 5px;
@@ -185,7 +223,12 @@ p.moreinfo {
   font-weight: bold;
   color: steelblue;
 }
-.api-tree-holder #resource-info label {
+.api-tree-holder #resource-info div.properties {
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: 70px;
+}
+.api-tree-holder #resource-info div.properties label {
   display: inline;
   padding: 4px;
   background-color: #edffe8;
@@ -198,7 +241,7 @@ p.moreinfo {
 }
 .api-tree-holder #resource-info a {
   display: block;
-  margin-top: 15px;
+  margin-top: 8px;
 }
 .api-tree-holder #resource-info .tail {
   border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #4682b4;

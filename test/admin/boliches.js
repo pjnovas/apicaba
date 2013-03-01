@@ -3,12 +3,12 @@ var expect = require('expect.js')
   , Preview = require('../../models/preview')
   , mockGBA = app.mockGBA
   , job = {
-    "url": mockGBA + "boliches.csv",
+    "url": mockGBA + "inspectores.csv",
     "parser": "csv",
     "delimiter": ","
   };
 
-describe('Preview Boliches', function(){
+describe('Preview Inspectores', function(){
   
   it("should create a Preview of a Resource", function(done){
     
@@ -16,8 +16,7 @@ describe('Preview Boliches', function(){
 
     prev.run(function(err, prevData){
       expect(err).to.not.be.ok();
-      console.dir(prevData.data);
-      /*
+      
       expect(prevData).to.be.an('object');
       expect(prevData.data).to.be.an('array');
       expect(prevData.data.length).to.be.equal(10);
@@ -31,7 +30,7 @@ describe('Preview Boliches', function(){
       expect(prevData.fields[5].name).to.be.equal('FOTO');
       expect(prevData.fields[6].name).to.be.equal('FICHA CENSAL');
       expect(prevData.fields[7].name).to.be.equal('SUPERVISOR');
-*/
+
       done();
     });
 

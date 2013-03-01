@@ -1,9 +1,11 @@
 <h4>{{item.name}}</h4>
 <span class="count" title="cantidad de registros">{{item.cantidad}}</span>
 <p>{{item.descripcion}}</p>
+<div class="properties">
 {{#item.propiedades}}
   <label>{{nombre}}</label>
 {{/item.propiedades}}
+</div>
 <a href="{{item.uri}}" target='_blank'>{{item.uri}}</a>
 <div class="tail"></div>
 <div class="tail2"></div>

@@ -2,6 +2,32 @@ doctype 5
 html(lang='es')
   head
     title Apicaba
+
+    meta(charset='utf-8')
+
+    link(href='/images/favicon.ico', rel='icon', type='image/x-icon')
+
+    meta(property='og:type', content='website')
+    meta(property='og:title', content='Apicaba')
+    meta(property='og:image', content='http://apicaba.com.ar/images/splash.png')
+    meta(property='og:description', content='La información de Buenos Aires Data transformada en Web API')
+    meta(property='og:url', content='http://apicaba.com.ar')
+
+    meta(name='title', content='Apicaba')
+    meta(name='description', content='La información de Buenos Aires Data transformada en Web API')
+    link(rel="image_src", href='http://apicaba.com.ar/images/splash.png')
+
+    script(type='text/javascript')
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-38960311-1']);
+      _gaq.push(['_setDomainName', 'apicaba.com.ar']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
     link(rel='stylesheet', href='/css/bootstrap.min.css')
     link(rel='stylesheet', href='/css/bootstrap-responsive.min.css')
     block header
