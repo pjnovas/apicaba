@@ -84,7 +84,7 @@ Por defecto estará ubicado en `http://localhost:3050`
 ```bash
 mongo
 use apicaba
-db.apicaba.insert("username" : "usuario", "password" : "pa$$w0rd" }
+db.apicaba.insert({"username" : "usuario", "password" : "pa$$w0rd" })
 ```
 
 ## Tests
@@ -108,7 +108,7 @@ Y abrir el archivo `./coverage.html`
 
 (The MIT License)
 
-Copyright (c) 2012 Pablo Novas &lt;pjnovas@gmail.com&gt;
+Copyright (c) 2013 Pablo Novas &lt;pjnovas@gmail.com&gt;
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
