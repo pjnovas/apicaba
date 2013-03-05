@@ -27,6 +27,9 @@ Fetcher.prototype.fetch = function() {
 
       res.on('data', function (buffer) {
         var decoded = iconv.decode(buffer, 'latin1');
+        if (self.preview) {
+          res.destroy();
+        }
         self.emit('data', decoded);
       });
 
