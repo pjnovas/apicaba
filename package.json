@@ -13,7 +13,6 @@
   },
   "dependencies": {
     "cron": "1.0.x",
-    "superagent": "0.10.x",
     "mongojs": "0.4.x",
     "express": "~3.0.5",
     "less-middleware": "~0.1.9",
@@ -21,9 +20,11 @@
     "jade": "0.27.x",
     "socket.io": "0.9.x",
     "passport": "0.1.x",
-    "passport-local": "0.1.x"
+    "passport-local": "0.1.x",
+    "iconv-lite": "0.2.x"
   },
   "devDependencies": {
+    "superagent": "0.10.x",
     "mocha": "*",
     "expect.js": ">=0.1.2",
     "blanket": "1.0.x",

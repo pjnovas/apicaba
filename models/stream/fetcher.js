@@ -1,7 +1,9 @@
 
-var request = require('superagent')
+var http = require('http')
+  , url = require('url')
   , Stream = require('stream').Stream
   , util = require('util')
+  , iconv = require('iconv-lite')
   , maxRetries = app.secrets.request_retries;
 
 var Fetcher = module.exports = function(url, preview) {
@@ -20,37 +22,23 @@ Fetcher.prototype.fetch = function() {
 
   function reTry(){ 
     retries++;
-    
-    var req = request.get(self.url);
-    req.buffer();
-    
-    req.parse( function (res, fn) {
 
-      res.setEncoding('ascii');
+    var req = http.request(url.parse(self.url), function(res) {
 
-      res.on('data', function(chunk){ 
-        if (self.preview) {
-          res.destroy();
-          self.emit('data', chunk);
-          fn(null, chunk);
-        }
-        else {
-          self.emit('data', chunk);
-        }
+      res.on('data', function (buffer) {
+        var decoded = iconv.decode(buffer, 'latin1');
+        self.emit('data', decoded);
       });
 
       res.on('end', function(){
         self.emit('end');
-        fn(null);
       });
 
-      res.on('error', function(){
-        console.log('RES >>>>> ERROR ', err);  
-      });
     });
 
-    req.on('error', function(err){
-      console.log('REQ >>>>> ERROR ', err);
+    req.on('error', function(e) {
+      console.log('RES >>>>> ERROR ' + e.message);  
+
       if (retries < maxRetries){
         console.log('retring [%s / %s] ...', retries, maxRetries);
         return reTry(); 
