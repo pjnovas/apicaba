@@ -11,7 +11,7 @@ app.post('/login', passport.authenticate('local', {
 }));
 
 function renderLogin(req, res){
-  res.render('login');
+  res.render('login', {error: req.flash('error')});
 };
 
 passport.use(new LocalStrategy(
