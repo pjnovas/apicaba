@@ -8,7 +8,8 @@ var express = require('express')
   , path = require('path')
   , socketIO = require('socket.io')
   , passport = require('passport')
-  , mongoJS = require('mongojs');
+  , mongoJS = require('mongojs')
+  , flash = require('connect-flash');
 
 app = express();
 
@@ -22,6 +23,7 @@ app.configure(function(){
   app.use(express.cookieParser());
   app.use(express.bodyParser());
   app.use(express.methodOverride());
+  app.use(flash());
 
   app.use(require('less-middleware')({ src: __dirname + '/public' }));
   app.use(express.static(path.join(__dirname, 'public')));
