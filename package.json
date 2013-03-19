@@ -1,14 +1,17 @@
 {
   "name": "apicaba",
   "description": "La información de Buenos Aires Data transformada en Web API",
-  "main" : "app.js",
+  "main": "app.js",
   "version": "0.1.0",
   "private": false,
   "scripts": {
     "start": "node server",
     "test": "make test",
     "blanket": {
-      "pattern": ["/models/", "/collections/"]
+      "pattern": [
+        "/models/",
+        "/collections/"
+      ]
     }
   },
   "dependencies": {
@@ -21,7 +24,8 @@
     "socket.io": "0.9.x",
     "passport": "0.1.x",
     "passport-local": "0.1.x",
-    "iconv-lite": "0.2.x"
+    "iconv-lite": "0.2.x",
+    "connect-flash": "~0.1.0"
   },
   "devDependencies": {
     "superagent": "0.10.x",
