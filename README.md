@@ -84,7 +84,7 @@ Por defecto estará ubicado en `http://localhost:3050`
 ```bash
 mongo
 use apicaba
-db.apicaba.insert({"username" : "usuario", "password" : "pa$$w0rd" })
+db.admins.insert({"username" : "usuario", "password" : "pa$$w0rd" })
 ```
 
 ## Tests
