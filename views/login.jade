@@ -5,7 +5,12 @@ block header
 
 block content
   .container
+
     form.form-signin(action="/login", method="post")
+
+      if("undefined" != typeof error)
+        .error #{error}
+
       input.input-block-level(type='text', name="username", placeholder='Username')
       input.input-block-level(type='password', name="password", placeholder='Password')
       button.btn.btn-large.btn-primary(type='submit') Sign in
