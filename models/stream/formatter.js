@@ -21,11 +21,11 @@ util.inherits(Formatter, Stream);
 
 
 Formatter.prototype.write = function(str) {
-  str = this.buf + str;
+  str = this.buffer + str;
   var lines = getLines(str);
 
   if(!/\r?\n$/.test(lines[lines.length - 1])) {
-    this.buf = lines.pop();
+    this.buffer = lines.pop();
   }
 
   try {
