@@ -14,18 +14,18 @@ var Formatter = module.exports = function(options) {
   this.fields = options && options.fields;
 
   this.firstRead = true;
+  this.buffer = '';
 };
 
 util.inherits(Formatter, Stream);
 
-var buf = '';
 
 Formatter.prototype.write = function(str) {
-  str = buf + str;
+  str = this.buf + str;
   var lines = getLines(str);
 
   if(!/\r?\n$/.test(lines[lines.length - 1])) {
-    buf = lines.pop();
+    this.buf = lines.pop();
   }
 
   try {
